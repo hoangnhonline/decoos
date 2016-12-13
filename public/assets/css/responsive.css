@@ -1,0 +1,48 @@
+@media (min-width: 1024px) {
+  .products-item:hover {
+    -webkit-box-shadow: -1px 15px 30px -1px rgba(102, 102, 102, 0.22);
+    -moz-box-shadow: -1px 15px 30px -1px rgba(102, 102, 102, 0.22);
+    box-shadow: -1px 15px 30px -1px rgba(102, 102, 102, 0.22);
+    transition: all 0.4s ease-out 0s;
+    -webkit-transition: all 0.4s ease-out 0s;
+    -o-transition: all 0.4s ease-out 0s;
+    -ms-transition: all 0.4s ease-out 0s;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -khtml-transform: translateY(0px);
+  }
+  .products-item:hover:before {
+    width: 100%;
+    transition: all 0.4s ease-out 0s;
+    -webkit-transition: all 0.4s ease-out 0s;
+    -o-transition: all 0.4s ease-out 0s;
+    -ms-transition: all 0.4s ease-out 0s;
+  }
+/*  .products-item:hover .products-img .img_hover {
+    left: 0;
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }*/
+}
+@media (max-width: 992px) and (min-width: 320px) {
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (min-width: 769px) {
+  .products-img { 
+    border: 1px dashed #A8A8A8;
+    transition: all 0.4s;
+  }
+}
