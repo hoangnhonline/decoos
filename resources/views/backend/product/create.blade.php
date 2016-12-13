@@ -263,7 +263,7 @@
                         <div class="form-group col-md-12" style="margin-top:10px;margin-bottom:10px">  
                           <label class="col-md-3 row">Ảnh quà tặng </label>
                           <div class="col-md-9">
-                            <img id="thumbnail_image_pro" src="{{ old('image_pro') ? Helper::showImage(old('image_pro')) : URL::asset('backend/dist/img/img.png') }}" class="img-thumbnail" width="150">
+                            <img id="thumbnail_image_pro" src="{{ old('image_pro') ? Helper::showImage(old('image_pro')) : URL::asset('admin/dist/img/img.png') }}" class="img-thumbnail" width="150">
                             
                             <input type="file" id="file-pro" style="display:none" />
                          
@@ -352,7 +352,7 @@ function filterAjax(type){
           async: true,      
           data: str_params + '&search_type=' + type,
           beforeSend:function(){
-            $('#contentSearch').html('<div style="text-align:center"><img src="{{ URL::asset('backend/dist/img/loading.gif')}}"></div>');
+            $('#contentSearch').html('<div style="text-align:center"><img src="{{ URL::asset('admin/dist/img/loading.gif')}}"></div>');
           },        
           success: function (response) {
             $('#contentSearch').html(response);

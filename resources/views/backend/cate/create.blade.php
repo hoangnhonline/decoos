@@ -65,7 +65,7 @@
                 <div class="form-group" style="margin-top:10px;margin-bottom:10px">  
                   <label class="col-md-3 row">Banner </label>    
                   <div class="col-md-9">
-                    <img id="thumbnail_icon" src="{{ old('icon_url') ? Helper::showImage(old('icon_url')) : URL::asset('backend/dist/img/img.png') }}" class="img-thumbnail" width="80">
+                    <img id="thumbnail_icon" src="{{ old('icon_url') ? Helper::showImage(old('icon_url')) : URL::asset('admin/dist/img/img.png') }}" class="img-thumbnail" width="80">
                     
                     <input type="file" id="file-icon" style="display:none" />
                  

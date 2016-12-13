@@ -203,7 +203,7 @@ function filterAjax(cate_id){
           async: true,      
           data: str_params + '&cate_id=' + cate_id,
           beforeSend:function(){
-            $('#contentSearch').html('<div style="text-align:center"><img src="{{ URL::asset('backend/dist/img/loading.gif')}}"></div>');
+            $('#contentSearch').html('<div style="text-align:center"><img src="{{ URL::asset('admin/dist/img/loading.gif')}}"></div>');
           },        
           success: function (response) {
             $('#contentSearchTuongThich').html(response);
