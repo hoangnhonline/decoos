@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\LoaiSp;
 use App\Models\Cate;
-use App\Models\SanPham;
+use App\Models\Product;
 use App\Models\SpThuocTinh;
 use App\Models\SpHinh;
 use App\Models\ThuocTinh;
@@ -42,7 +42,7 @@ class CompareController extends Controller
         $str_id = $request->id;
         if( $str_id ){
             $tmpArr = explode("-", $str_id);
-            $productTmpArr = SanPham::whereIn('san_pham.id', $tmpArr)
+            $productTmpArr = Product::whereIn('san_pham.id', $tmpArr)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->select('san_pham.id as sp_id', 'name', 'name_extend', 'slug', 'price', 'price_sale', 'sp_hinh.image_url')->get();                
         
@@ -55,7 +55,7 @@ class CompareController extends Controller
                 if( $tmp ){
                     $spThuocTinhArr[$sp_id] = json_decode( $tmp->thuoc_tinh, true);
                 }
-                $tmpDetail = SanPham::find( $sp_id );
+                $tmpDetail = Product::find( $sp_id );
                 $loai_id = $tmpDetail->loai_id;
             }
         }        

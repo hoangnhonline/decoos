@@ -24,6 +24,21 @@ class Settings extends Model  {
      *
      * @var array
      */
-    protected $fillable = ['site_title', 'site_description', 'site_keywords', 'admin_email', 'mail_login_name', 'mail_password', 'site_name', 'google_analystic', 'facebook_appid', 'google_fanpage', 'facebook_fanpage', 'twitter_fanpage', 'logo', 'favicon', 'home_banner'];
+    protected $fillable = [
+        'site_title', 
+        'site_description', 
+        'site_keywords', 
+        'admin_email', 
+        'mail_login_name', 
+        'mail_password', 
+        'site_name', 
+        'google_analystic', 
+        'facebook_appid', 
+        'google_fanpage', 
+        'facebook_fanpage', 
+        'twitter_fanpage', 
+        'logo', 
+        'favicon', 
+        'home_banner'];
     
 }

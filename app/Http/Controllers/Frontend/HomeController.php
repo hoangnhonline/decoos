@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\LoaiSp;
 use App\Models\Cate;
-use App\Models\SanPham;
+use App\Models\Product;
 use App\Models\SpThuocTinh;
 use App\Models\SpHinh;
 use App\Models\ThuocTinh;
@@ -72,7 +72,7 @@ class HomeController extends Controller
         $loaiSp = LoaiSp::where('status', 1)->get();
         $bannerArr = [];
         foreach( $loaiSp as $loai){
-            $query = SanPham::where('so_luong_ton', '>', 0)->where('price', '>', 0);
+            $query = Product::where('so_luong_ton', '>', 0)->where('price', '>', 0);
             if($loai->id == 6){
                 $query->whereIn('loai_id', [6, 13, 14, 15, 16]);
             }else{
@@ -136,7 +136,7 @@ class HomeController extends Controller
     {
         $tu_khoa = $request->keyword;       
 
-        $productArr = SanPham::where('alias', 'LIKE', '%'.$tu_khoa.'%')->where('so_luong_ton', '>', 0)->where('price', '>', 0)
+        $productArr = Product::where('alias', 'LIKE', '%'.$tu_khoa.'%')->where('so_luong_ton', '>', 0)->where('price', '>', 0)
                         ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                         ->leftJoin('sp_thuoctinh', 'sp_thuoctinh.sp_id', '=','san_pham.id')
                         ->select('sp_hinh.image_url', 'san_pham.*', 'thuoc_tinh')

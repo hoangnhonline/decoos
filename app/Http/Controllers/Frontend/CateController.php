@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\LoaiSp;
 use App\Models\Cate;
-use App\Models\SanPham;
+use App\Models\Product;
 use App\Models\SpThuocTinh;
 use App\Models\SpHinh;
 use App\Models\ThuocTinh;
@@ -46,7 +46,7 @@ class CateController extends Controller
             $loai_id = $rs->id;
             $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
             foreach( $cateArr as $cate){
-                $query = SanPham::where('cate_id', $cate->id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
+                $query = Product::where('cate_id', $cate->id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
                     ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                     ->leftJoin('sp_thuoctinh', 'sp_thuoctinh.sp_id', '=','san_pham.id')
                     ->select('sp_hinh.image_url', 'san_pham.*', 'thuoc_tinh');
@@ -98,7 +98,7 @@ class CateController extends Controller
         $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
 
         
-        $query = SanPham::where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
+        $query = Product::where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->leftJoin('sp_thuoctinh', 'sp_thuoctinh.sp_id', '=','san_pham.id')
                 ->select('sp_hinh.image_url', 'san_pham.*', 'thuoc_tinh')              
@@ -131,7 +131,7 @@ class CateController extends Controller
         $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
 
         
-        $query = SanPham::where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
+        $query = Product::where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->leftJoin('sp_thuoctinh', 'sp_thuoctinh.sp_id', '=','san_pham.id')
                 ->select('sp_hinh.image_url', 'san_pham.*', 'thuoc_tinh');
@@ -164,7 +164,7 @@ class CateController extends Controller
         $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
 
         
-        $productArr = SanPham::where('loai_id', $loai_id)->where('is_sale', 1)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
+        $productArr = Product::where('loai_id', $loai_id)->where('is_sale', 1)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->leftJoin('sp_thuoctinh', 'sp_thuoctinh.sp_id', '=','san_pham.id')
                 ->select('sp_hinh.image_url', 'san_pham.*', 'thuoc_tinh')
@@ -197,7 +197,7 @@ class CateController extends Controller
         $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
 
         
-        $query = SanPham::where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
+        $query = Product::where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->leftJoin('sp_thuoctinh', 'sp_thuoctinh.sp_id', '=','san_pham.id')
                 ->select('sp_hinh.image_url', 'san_pham.*', 'thuoc_tinh')
@@ -307,7 +307,7 @@ class CateController extends Controller
         $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
 
         
-        $query = SanPham::where('cate_id', $rsCate->id)->where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
+        $query = Product::where('cate_id', $rsCate->id)->where('loai_id', $loai_id)->where('so_luong_ton', '>', 0)->where('price', '>', 0)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->leftJoin('sp_thuoctinh', 'sp_thuoctinh.sp_id', '=','san_pham.id')
                 ->select('sp_hinh.image_url', 'san_pham.*', 'thuoc_tinh');

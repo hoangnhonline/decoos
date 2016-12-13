@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\SanPham;
+use App\Models\Product;
 use App\Models\LoaiSp;
 use App\Models\Cate;
 use App\Models\Color;
@@ -44,7 +44,7 @@ class ProductController extends Controller
 
         $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
         
-        $query = SanPham::where('san_pham.status', $status);
+        $query = Product::where('san_pham.status', $status);
         if( $is_hot ){
             $query->where('san_pham.is_hot', $is_hot);
         }
@@ -100,7 +100,7 @@ class ProductController extends Controller
         $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : null;
         $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
         
-        $query = SanPham::where('san_pham.status', $status);
+        $query = Product::where('san_pham.status', $status);
         if( $loai_id ){
             $query->where('san_pham.loai_id', $loai_id);
         }
@@ -128,7 +128,7 @@ class ProductController extends Controller
         
         $id = $request->id;
         
-        $detail = SanPham::find($id);
+        $detail = Product::find($id);
 
         $loaiSpArr = LoaiSp::all();  
         
@@ -139,7 +139,7 @@ class ProductController extends Controller
         if( $tmpArr->count() > 0){
             foreach ($tmpArr as $value) {
                 $spSelected[$value->cate_id][] = $value->sp_2;
-                $productArr[$value->sp_2] = SanPham::find($value->sp_2);
+                $productArr[$value->sp_2] = Product::find($value->sp_2);
                 if($value->cate_id == 31){
                     $str_sp_bo_mach_chinh .= $value->sp_2.",";
                 }
@@ -174,7 +174,7 @@ class ProductController extends Controller
         $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : -1;
         $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
         
-        $query = SanPham::whereRaw('1');
+        $query = Product::whereRaw('1');
         
         if( $loai_id ){
             $query->where('san_pham.loai_id', $loai_id);
@@ -210,7 +210,7 @@ class ProductController extends Controller
         $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : -1;
         $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
         
-        $query = SanPham::whereRaw('1');
+        $query = Product::whereRaw('1');
         
         
         $query->where('san_pham.loai_id', 7);
@@ -346,7 +346,7 @@ class ProductController extends Controller
             $dataArr['image_pro'] = $destionation;
         }  
 
-        $rs = SanPham::create($dataArr);
+        $rs = Product::create($dataArr);
 
         $sp_id = $rs->id;
 
@@ -377,7 +377,7 @@ class ProductController extends Controller
             $rs = MetaData::create( $arrData );
             $meta_id = $rs->id;
             //var_dump($meta_id);die;
-            $modelSp = SanPham::find( $id );
+            $modelSp = Product::find( $id );
             $modelSp->meta_id = $meta_id;
             $modelSp->save();
         }else {
@@ -453,7 +453,7 @@ class ProductController extends Controller
                     }
                 }
             }
-            $model = SanPham::find( $id );
+            $model = Product::find( $id );
             $model->thumbnail_id = $thumbnail_id;
             $model->save();
         }
@@ -472,7 +472,7 @@ class ProductController extends Controller
     public function saveSpTuongThich(Request $request){
         $id = $request->id;
         
-        $detail = SanPham::find($id);
+        $detail = Product::find($id);
         
         $sp_tuongthich_bo_mach_chinh = $request->sp_tuongthich_31;
         $sp_tuongthich_bo_vi_xu_ly = $request->sp_tuongthich_32;
@@ -572,7 +572,7 @@ class ProductController extends Controller
         $str_value = $request->str_value;
         if( $str_value ){
             $tmpArr = explode(',', $str_value);
-            $dataArr = SanPham::whereIn( 'id', $tmpArr)->select('id', 'name', 'name_extend', 'price', 'price_sale', 'is_sale')->get();
+            $dataArr = Product::whereIn( 'id', $tmpArr)->select('id', 'name', 'name_extend', 'price', 'price_sale', 'is_sale')->get();
         }
         return view('backend.product.save-related', compact('dataArr' , 'type'));
 
@@ -583,7 +583,7 @@ class ProductController extends Controller
         $str_value = $request->str_value;
         if( $str_value ){
             $tmpArr = explode(',', $str_value);
-            $dataArr = SanPham::whereIn( 'id', $tmpArr)->select('id', 'name', 'name_extend', 'price', 'price_sale', 'is_sale')->get();
+            $dataArr = Product::whereIn( 'id', $tmpArr)->select('id', 'name', 'name_extend', 'price', 'price_sale', 'is_sale')->get();
         }
         return view('backend.product.tuong-thich.save-tuong-thich', compact('dataArr' , 'cate_id'));
 
@@ -598,7 +598,7 @@ class ProductController extends Controller
     {
         $thuocTinhArr = $phuKienArr = $soSanhArr = $tuongTuArr = [];
         $hinhArr = (object) [];
-        $detail = SanPham::find($id);
+        $detail = Product::find($id);
 
         $hinhArr = SpHinh::where('sp_id', $id)->lists('image_url', 'id');
         //var_dump("<pre>", $hinhArr);die;
@@ -608,15 +608,15 @@ class ProductController extends Controller
             $spThuocTinhArr = json_decode( $tmp->thuoc_tinh, true);
         }
         $tmpPhuKien = explode(",", $detail->sp_phukien);
-        $phuKienArr = SanPham::whereIn('id', $tmpPhuKien)->lists('name', 'id');
+        $phuKienArr = Product::whereIn('id', $tmpPhuKien)->lists('name', 'id');
         //get compare
         $compare1 = Compare::where('sp_1', $id)->lists('sp_2')->toArray();              
         $compare2 = Compare::where('sp_2', $id)->lists('sp_1')->toArray();        
         $tmpSoSanh = array_merge($compare1, $compare2); 
-        $soSanhArr = SanPham::whereIn('id', $tmpSoSanh)->lists('name', 'id');
+        $soSanhArr = Product::whereIn('id', $tmpSoSanh)->lists('name', 'id');
 
         $tmpTuongTu = explode(",", $detail->sp_tuongtu);
-        $tuongTuArr = SanPham::whereIn('id', $tmpTuongTu)->lists('name', 'id');
+        $tuongTuArr = Product::whereIn('id', $tmpTuongTu)->lists('name', 'id');
 
         $loaiSpArr = LoaiSp::all();
         
@@ -645,7 +645,7 @@ class ProductController extends Controller
     public function ajaxDetail(Request $request)
     {       
         $id = $request->id;
-        $detail = SanPham::find($id);
+        $detail = Product::find($id);
         return view('backend.product.ajax-detail', compact( 'detail' ));
     }
     /**
@@ -717,7 +717,7 @@ class ProductController extends Controller
             
             $dataArr['image_pro'] = $destionation;
         }  
-        $model = SanPham::find($dataArr['id']);
+        $model = Product::find($dataArr['id']);
 
         $model->update($dataArr);
         
@@ -750,7 +750,7 @@ class ProductController extends Controller
         
         $dataArr['updated_user'] = Auth::user()->id;
         
-        $model = SanPham::find($dataArr['id']);
+        $model = Product::find($dataArr['id']);
 
         $model->update($dataArr);
         
@@ -785,7 +785,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         // delete
-        $model = SanPham::find($id);        
+        $model = Product::find($id);        
         $model->delete();
         SpHinh::where('sp_id', $id)->delete();
         SpMucDich::where('sp_id', $id)->delete();

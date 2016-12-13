@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\LoaiSp;
 use App\Models\Cate;
-use App\Models\SanPham;
+use App\Models\Product;
 use App\Models\SpThuocTinh;
 use App\Models\SpHinh;
 use App\Models\ThuocTinh;
@@ -42,7 +42,7 @@ class DetailController extends Controller
 
         $spThuocTinhArr = $productArr = [];
         $slug = $request->slug;
-        $detail = SanPham::where('slug', $slug)->where('cate_id', '>', 0)->where('loai_id', '>', 0)->first();
+        $detail = Product::where('slug', $slug)->where('cate_id', '>', 0)->where('loai_id', '>', 0)->first();
         if(!$detail){
             return redirect()->route('home');
         }
@@ -87,14 +87,14 @@ class DetailController extends Controller
         $tmpArr = array_merge($phuKienArr, $tuongtuArr, $sosanhArr);
         
         if( !empty($tmpArr)){
-            $productTmpArr = SanPham::whereIn('san_pham.id', $tmpArr)
+            $productTmpArr = Product::whereIn('san_pham.id', $tmpArr)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->select('san_pham.id as sp_id', 'name', 'name_extend', 'slug', 'price', 'price_sale', 'sp_hinh.image_url', 'is_sale')->get();
             foreach($productTmpArr as $product){
                 $productArr[$product->sp_id] = $product;
             }
         }
-        $lienquanArr = SanPham::where('san_pham.cate_id', $detail->cate_id)
+        $lienquanArr = Product::where('san_pham.cate_id', $detail->cate_id)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->where('san_pham.id', '<>', $detail->id)
                 ->select('san_pham.id as sp_id', 'name', 'name_extend', 'slug', 'price', 'price_sale', 'sp_hinh.image_url', 'is_sale')->orderBy('san_pham.id', 'desc')->limit(10)->get();        
@@ -160,7 +160,7 @@ class DetailController extends Controller
         $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
 
         
-        $productArr = SanPham::where('cate_id', $rsCate->id)->where('loai_id', $loai_id)
+        $productArr = Product::where('cate_id', $rsCate->id)->where('loai_id', $loai_id)
                 ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
                 ->select('sp_hinh.image_url', 'san_pham.*')
                 //->where('sp_hinh.image_url', '<>', '')

@@ -3,14 +3,14 @@
 use Illuminate\Database\Eloquent\Model;
 
 
-class HoverInfo extends Model  {
+class ProductImg extends Model  {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'hover_info';	
+	protected $table = 'product_img';	
 
 	 /**
      * Indicates if the model should be timestamped.
@@ -23,6 +23,6 @@ class HoverInfo extends Model  {
      *
      * @var array
      */
-    protected $fillable = ['text_hien_thi', 'str_thuoctinh_id', 'display_order', 'loai_id'];
-
+    protected $fillable = ['product_id', 'image_url', 'display_order'];
+    
 }

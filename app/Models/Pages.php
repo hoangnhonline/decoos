@@ -23,6 +23,21 @@ class Pages extends Model  {
      *
      * @var array
      */
-    protected $fillable = ['title', 'slug', 'alias', 'status', 'display_order', 'description', 'image_url', 'content', 'meta_title', 'meta_description', 'meta_keywords', 'custom_text', 'created_user', 'updated_user'];
+    protected $fillable = [        
+        'title_vi',
+        'title_en',
+        'alias_vi',
+        'alias_en',
+        'slug_vi',
+        'slug_en',
+        'description_vi',
+        'description_en',
+        'content_vi',
+        'content_en',                
+        'status',
+        'meta_id',
+        'created_user',
+        'updated_user'
+        ];
     
 }
