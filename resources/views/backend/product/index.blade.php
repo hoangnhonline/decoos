@@ -35,7 +35,7 @@
               <select class="form-control" name="loai_id" id="loai_id">
                 <option value="">--Tất cả--</option>
                 @foreach( $loaiSpArr as $value )
-                <option value="{{ $value->id }}" {{ $value->id == $arrSearch['loai_id'] ? "selected" : "" }}>{{ $value->name }}</option>
+                <option value="{{ $value->id }}" {{ $value->id == $arrSearch['loai_id'] ? "selected" : "" }}>{{ $value->name_vi }}</option>
                 @endforeach
               </select>
             </div>
@@ -45,7 +45,7 @@
               <select class="form-control" name="cate_id" id="cate_id">
                 <option value="">--Tất cả--</option>
                 @foreach( $cateArr as $value )
-                <option value="{{ $value->id }}" {{ $value->id == $arrSearch['cate_id'] ? "selected" : "" }}>{{ $value->name }}</option>
+                <option value="{{ $value->id }}" {{ $value->id == $arrSearch['cate_id'] ? "selected" : "" }}>{{ $value->name_vi }}</option>
                 @endforeach
               </select>
             </div>
@@ -63,19 +63,7 @@
             </div>
             <div class="form-group">
               <label><input type="checkbox" name="is_sale" value="1" {{ $arrSearch['is_sale'] == 1 ? "checked" : "" }}> Giảm giá</label>              
-            </div>
-            <div class="form-group">
-              <label><input type="checkbox" name="het_hang" value="1" {{ $arrSearch['het_hang'] == 1 ? "checked" : "" }}> Hết hàng</label>              
-            </div>
-            <div class="form-group">
-              <label><input type="checkbox" name="chua_nhap_gia" value="1" {{ $arrSearch['chua_nhap_gia'] == 1 ? "checked" : "" }}> Chưa nhập giá</label>
-            </div>
-            <div class="form-group">
-              <label><input type="checkbox" name="thieu_kich_thuoc" value="1" {{ $arrSearch['thieu_kich_thuoc'] == 1 ? "checked" : "" }}> Thiếu kích thước</label>
-            </div>
-            <div class="form-group">
-              <label><input type="checkbox" name="thieu_can_nang" value="1" {{ $arrSearch['thieu_can_nang'] == 1 ? "checked" : "" }}> Thiếu cân nặng</label>
-            </div>           
+            </div>            
             <button type="submit" style="margin-top:-5px" class="btn btn-primary btn-sm">Lọc</button>
           </form>         
         </div>
@@ -119,7 +107,7 @@
                   <img class="img-thumbnail lazy" width="80" data-original="{{ $item->image_url ? Helper::showImage($item->image_url) : URL::asset('admin/dist/img/no-image.jpg') }}" alt="Nổi bật" title="Nổi bật" />
                 </td>
                 <td>                  
-                  <a style="color:#333;font-weight:bold" href="{{ route( 'product.edit', [ 'id' => $item->id ]) }}">{{ $item->name }} {{ $item->name_extend }}</a> &nbsp; @if( $item->is_hot == 1 )
+                  <a style="color:#333;font-weight:bold" href="{{ route( 'product.edit', [ 'id' => $item->id ]) }}">{{ $item->name_vi }} {{ $item->name_vi_extend }}</a> &nbsp; @if( $item->is_hot == 1 )
                   <img class="img-thumbnail" src="{{ URL::asset('admin/dist/img/star.png')}}" alt="Nổi bật" title="Nổi bật" />
                   @endif<br />
                   <strong style="color:#337ab7;font-style:italic"> {{ $item->ten_loai }} / {{ $item->ten_cate }}</strong>
@@ -153,7 +141,7 @@
                   @endif
                   <a href="{{ route( 'product.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning btn-sm">Chỉnh sửa</a>                 
 
-                  <a onclick="return callDelete('{{ $item->name }}','{{ route( 'product.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm">Xóa</a>
+                  <a onclick="return callDelete('{{ $item->name_vi }}','{{ route( 'product.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm">Xóa</a>
 
                 </td>
               </tr> 

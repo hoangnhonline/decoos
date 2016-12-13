@@ -15,7 +15,7 @@
         <meta property="og:title" content="@yield('title')" />
         <meta property="og:description" content="@yield('site_description')" />
         <meta property="og:url" content="{{ url()->current() }}" />
-        <meta property="og:site_name" content="iCho.vn" />
+        <meta property="og:site_name" content="decoos.com" />
         <?php $socialImage = isset($socialImage) ? $socialImage : $settingArr['banner']; ?>
         <meta property="og:image" content="{{ Helper::showImage($socialImage) }}" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -128,7 +128,7 @@
       <div class="fb-page" data-tabs="messages" data-href="https://www.facebook.com/www.icho.vn" data-width="320px" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false">
           <div class="fb-xfbml-parse-ignore">
               <blockquote cite="https://www.facebook.com/www.icho.vn">
-                  <a href="https://www.facebook.com/www.icho.vn">iCho.vn</a>
+                  <a href="https://www.facebook.com/www.icho.vn">decoos.com</a>
               </blockquote>
           </div>
       </div>

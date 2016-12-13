@@ -105,67 +105,9 @@
                   <option value="3" {{ $detail->home_style == 3 ? "selected" : "" }}>Banner ngang</option>
                 </select>
               </div>   
-              <div class="form-group" style="margin-top:10px">  
-                <label class="col-md-3 row">Icon màu</label>    
-                <div class="col-md-9">
-                  <img id="thumbnail_mau" src="{{ $detail->icon_mau ? Helper::showImage($detail->icon_mau) : 'http://placehold.it/60x60' }}" class="img-thumbnail" width="60" height="60">
-                  
-                  <input type="file" id="file-mau" style="display:none" />
-               
-                  <button class="btn btn-default" id="btnUploadMau" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</button>
-                </div>
-              </div> 
-              <div class="form-group" style="margin-top:10px">  
-                <label class="col-md-3 row">Icon khuyến mãi</label>    
-                <div class="col-md-9">
-                  <img id="thumbnail_km" src="{{ $detail->icon_km ? Helper::showImage($detail->icon_km) : 'http://placehold.it/60x60' }}" class="img-thumbnail" width="60" height="60">
-                  
-                  <input type="file" id="file-km" style="display:none" />
-               
-                  <button class="btn btn-default" id="btnUploadKm" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</button>
-                </div>
-              </div> 
-              <div class="form-group" style="margin-top:10px">  
-                <label class="col-md-3 row">Icon trắng </label>    
-                <div class="col-md-9">
-                  <img id="thumbnail_icon" src="{{ $detail->icon_url ? Helper::showImage($detail->icon_url) : 'http://placehold.it/60x60' }}" class="img-thumbnail" width="60" height="60">
-                  
-                  <input type="file" id="file-icon" style="display:none" />
-               
-                  <button class="btn btn-default" id="btnUploadIcon" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</button>
-                </div>
-              </div> 
-                
-              <div class="form-group" style="margin-top:10px">  
-                <label class="col-md-3 row">Banner menu</label>    
-                <div class="col-md-9">
-                  <img id="thumbnail_banner" src="{{ $detail->banner_menu ? Helper::showImage($detail->banner_menu) : 'http://placehold.it/60x60' }}" class="img-thumbnail" width="120" height="120">
-                  
-                  <input type="file" id="file-banner" style="display:none" />
-               
-                  <button class="btn btn-default" id="btnUploadBanner" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</button>
-                </div>
-              </div>              
-              <div class="form-group">
-                <label>Màu nền</label>
-                <input type="text" class="form-control" name="bg_color" id="bg_color" value="{{ $detail->bg_color }}">
-              </div>
-              <div class="form-group">
-                  <label>Phí dịch vụ</label>
-                  <input type="text" class="form-control" name="phi_dich_vu" id="phi_dich_vu" value="{{ $detail->phi_dich_vu }}">
-                </div>
+              
             </div>         
-            <!-- /.box-body -->           
-            <input type="hidden" name="icon_url" id="icon_url" value="{{ $detail->icon_url }}"/>          
-            <input type="hidden" name="icon_mau" id="icon_mau" value="{{ $detail->icon_mau }}"/>
-            <input type="hidden" name="icon_name" id="icon_name" value="{{ old('icon_name') }}"/>             
-            <input type="hidden" name="image_name_mau" id="image_name_mau" value="{{ old('image_name_mau') }}"/>
-            
-            <input type="hidden" name="icon_km" id="icon_km" value="{{ $detail->icon_km }}"/>             
-            <input type="hidden" name="image_name_km" id="image_name_km" value="{{ old('image_name_km') }}"/>
-
-            <input type="hidden" name="banner_menu" id="banner_menu" value="{{ $detail->banner_menu }}"/>       
-            <input type="hidden" name="banner_name" id="banner_name" value="{{ old('banner_name') }}"/>  
+           
             <div class="box-footer">
               <button type="submit" class="btn btn-primary">Lưu</button>
               <a class="btn btn-default" class="btn btn-primary" href="{{ route('loai-sp.index')}}">Hủy</a>

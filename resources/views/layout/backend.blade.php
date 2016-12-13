@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <title>icho.vn | Dashboard</title>
+  <title>decoos.com | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{{ URL::asset('http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css') }}">
@@ -61,7 +61,6 @@
         </form>
     </div>
 </div>
-@include('backend.customer.customer-notification-modal')
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
@@ -109,72 +108,16 @@
 <script src="{{ URL::asset('admin/dist/js/ckeditor/ckeditor.js') }}"></script>
 
 <script type="text/javascript" type="text/javascript">
-$(document).on('click', '#btnSaveNoti', function(){
-  var content = CKEDITOR.instances['contentNoti'].getData();
-  if(content != ''){    
-    $.ajax({
-      url : $('#formNoti').attr('action'),
-      type : "POST",
-      data : {
-        data : $('#formNoti').serialize(),
-        content : content
-      },
-      success : function(data){
-        alert('Gửi tin nhắn thành công.');
-        $('#notifiModal').modal('hide');
-      }
-    });
-  }
-});
+
 $(document).ready(function(){
   $('img.lazy').lazyload();
   $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
-  });
+  });  
 
-  $('.sendNoti').click(function(){
-    var customer_id = $(this).data('customer-id');
-    var order_id = $(this).data('order-id');
-    var notiType = $(this).data('type');
-    $('#customer_id_noti').val(customer_id);
-    $('#order_id_noti').val(order_id);
-    $('#notifiModal').modal('show');
-    $('#notifiModal  #type').val(notiType);
-    processNotiType(notiType);
-  });
-  $('#notifiModal  #type').change(function(){
-    processNotiType($(this).val())
-  });
-  CKEDITOR.editorConfig = function( config ) {
-  config.toolbarGroups = [
-    { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-    { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-  
-  ];
-
-  config.removeButtons = 'Underline,Subscript,Superscript';
-};
-  var editor2 = CKEDITOR.replace('contentNoti',{
-          language : 'vi',
-          height : 100,
-          toolbarGroups : [            
-            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },          
-            { name: 'links', groups: [ 'links' ] },           
-            '/',
-            
-          ]
-      });
 });
-
-function processNotiType(type){
-  if(type == 1){
-    $('#notifiModal #url-km').show();
-  }else{
-    $('#notifiModal #url-km').hide();
-  }
-}
 </script>
 <style type="text/css">
   .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{

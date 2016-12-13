@@ -9,15 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\LoaiSp;
 use App\Models\Cate;
-use App\Models\Color;
-use App\Models\LoaiThuocTinh;
-use App\Models\ThuocTinh;
-use App\Models\SpThuocTinh;
-use App\Models\SpHinh;
+use App\Models\ProductImg;
 use App\Models\MetaData;
-use App\Models\Compare;
-use App\Models\SpTuongThich;
-use App\Models\SpMucDich;
 
 use Helper, File, Session, Auth, Hash, URL;
 
@@ -35,52 +28,32 @@ class ProductController extends Controller
         $arrSearch['is_hot'] = $is_hot = isset($request->is_hot) ? $request->is_hot : null;
         $arrSearch['is_sale'] = $is_sale = isset($request->is_sale) ? $request->is_sale : null;
         $arrSearch['loai_id'] = $loai_id = isset($request->loai_id) ? $request->loai_id : null;
-        $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : null;
-
-        $arrSearch['het_hang'] = $het_hang = isset($request->het_hang) ? $request->het_hang : null;
-        $arrSearch['chua_nhap_gia'] = $chua_nhap_gia = isset($request->chua_nhap_gia) ? $request->chua_nhap_gia : null;
-        $arrSearch['thieu_can_nang'] = $thieu_can_nang = isset($request->thieu_can_nang) ? $request->thieu_can_nang : null;
-        $arrSearch['thieu_kich_thuoc'] = $thieu_kich_thuoc = isset($request->thieu_kich_thuoc) ? $request->thieu_kich_thuoc : null;
-
+        $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : null;      
         $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
         
-        $query = Product::where('san_pham.status', $status);
+        $query = Product::where('product.status', $status);
         if( $is_hot ){
-            $query->where('san_pham.is_hot', $is_hot);
+            $query->where('product.is_hot', $is_hot);
         }
         if( $is_sale ){
-            $query->where('san_pham.is_sale', $is_sale);
+            $query->where('product.is_sale', $is_sale);
         }
         if( $loai_id ){
-            $query->where('san_pham.loai_id', $loai_id);
+            $query->where('product.loai_id', $loai_id);
         }
         if( $cate_id ){
-            $query->where('san_pham.cate_id', $cate_id);
-        }
-        if( $het_hang ){
-            $query->where('san_pham.so_luong_ton', 0);
-        }
-        if( $chua_nhap_gia ){
-            $query->where('san_pham.price', 0);
-        }
-        if( $thieu_can_nang ){
-            $query->where('san_pham.can_nang', 0);
-        }
-        if( $thieu_kich_thuoc ){
-            $query->where('san_pham.chieu_dai', 0);
-            $query->orWhere('san_pham.chieu_rong', 0);
-            $query->orWhere('san_pham.chieu_cao', 0);
-        }
+            $query->where('product.cate_id', $cate_id);
+        }       
         if( $name != ''){
-            $query->where('san_pham.name', 'LIKE', '%'.$name.'%');
-            $query->orWhere('name_extend', 'LIKE', '%'.$name.'%');
+            $query->where('product.name_vi', 'LIKE', '%'.$name.'%');
+            $query->orWhere('product.name_en', 'LIKE', '%'.$name.'%');
         }
-        $query->join('users', 'users.id', '=', 'san_pham.created_user');
-        $query->join('loai_sp', 'loai_sp.id', '=', 'san_pham.loai_id');
-        $query->join('cate', 'cate.id', '=', 'san_pham.cate_id');
-        $query->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id');        
-        $query->orderBy('san_pham.id', 'desc');
-        $items = $query->select(['sp_hinh.image_url','san_pham.*','san_pham.id as sp_id', 'full_name' , 'san_pham.created_at as time_created', 'users.full_name', 'loai_sp.name as ten_loai', 'cate.name as ten_cate'])
+        $query->join('users', 'users.id', '=', 'product.created_user');
+        $query->join('loai_sp', 'loai_sp.id', '=', 'product.loai_id');
+        $query->join('cate', 'cate.id', '=', 'product.cate_id');
+        $query->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id');        
+        $query->orderBy('product.id', 'desc');
+        $items = $query->select(['product_img.image_url','product.*','product.id as sp_id', 'full_name' , 'product.created_at as time_created', 'users.full_name', 'loai_sp.name as ten_loai', 'cate.name as ten_cate'])
         ->paginate(50);   
 
         $loaiSpArr = LoaiSp::all();  
@@ -91,154 +64,7 @@ class ProductController extends Controller
         }
 
         return view('backend.product.index', compact( 'items', 'arrSearch', 'loaiSpArr', 'cateArr'));
-    }
-    public function short(Request $request)
-    {
-        
-        $arrSearch['status'] = $status = isset($request->status) ? $request->status : 1;
-        $arrSearch['loai_id'] = $loai_id = isset($request->loai_id) ? $request->loai_id : null;
-        $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : null;
-        $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
-        
-        $query = Product::where('san_pham.status', $status);
-        if( $loai_id ){
-            $query->where('san_pham.loai_id', $loai_id);
-        }
-        if( $cate_id ){
-            $query->where('san_pham.cate_id', $cate_id);
-        }
-        if( $name != ''){
-            $query->where('san_pham.name', 'LIKE', '%'.$name.'%');
-            $query->orWhere('name_extend', 'LIKE', '%'.$name.'%');
-        }        
-        $query->orderBy('san_pham.id', 'desc');
-        $items = $query->select(['san_pham.*','san_pham.id as sp_id' , 'san_pham.created_at as time_created'])
-        ->paginate(50);
-
-        $loaiSpArr = LoaiSp::all();  
-        if( $loai_id ){
-            $cateArr = Cate::where('loai_id', $loai_id)->orderBy('display_order', 'desc')->get();
-        }else{
-            $cateArr = (object) [];
-        }
-
-        return view('backend.product.short', compact( 'items', 'arrSearch', 'loaiSpArr', 'cateArr'));
-    }
-    public function spTuongThich(Request $request){
-        
-        $id = $request->id;
-        
-        $detail = Product::find($id);
-
-        $loaiSpArr = LoaiSp::all();  
-        
-        $tmpArr = SpTuongThich::where('sp_1', $id)->get();
-        
-        $spSelected = $productArr = [];
-        $str_sp_bo_mach_chinh = $str_sp_bo_vi_xu_ly = $str_sp_card_man_hinh = $str_sp_bo_nho = $str_sp_nguon = $str_sp_case = "";
-        if( $tmpArr->count() > 0){
-            foreach ($tmpArr as $value) {
-                $spSelected[$value->cate_id][] = $value->sp_2;
-                $productArr[$value->sp_2] = Product::find($value->sp_2);
-                if($value->cate_id == 31){
-                    $str_sp_bo_mach_chinh .= $value->sp_2.",";
-                }
-                if($value->cate_id == 32){
-                    $str_sp_bo_vi_xu_ly .= $value->sp_2.",";
-                }
-                if($value->cate_id == 35){
-                    $str_sp_bo_nho .= $value->sp_2.",";
-                }
-                if($value->cate_id == 85){
-                    $str_sp_card_man_hinh .= $value->sp_2.",";
-                }
-                if($value->cate_id == 85){
-                    $str_sp_card_man_hinh .= $value->sp_2.",";
-                }
-                if($value->cate_id == 33){
-                    $str_sp_nguon .= $value->sp_2.",";
-                }
-                if($value->cate_id == 89){
-                    $str_sp_case .= $value->sp_2.",";
-                }
-            }
-        }
-
-        $cateArr = Cate::where('loai_id', 7)->orderBy('display_order', 'desc')->get();
-        
-        return view('backend.product.tuong-thich', compact( 'detail', 'loaiSpArr', 'cateArr', 'spSelected', 'productArr', 'str_sp_bo_mach_chinh','str_sp_bo_vi_xu_ly', 'str_sp_card_man_hinh', 'str_sp_bo_nho', 'str_sp_case', 'str_sp_nguon'));   
-    }
-    public function ajaxSearch(Request $request){    
-        $search_type = $request->search_type;
-        $arrSearch['loai_id'] = $loai_id = isset($request->loai_id) ? $request->loai_id : -1;
-        $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : -1;
-        $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
-        
-        $query = Product::whereRaw('1');
-        
-        if( $loai_id ){
-            $query->where('san_pham.loai_id', $loai_id);
-        }
-        if( $cate_id ){
-            $query->where('san_pham.cate_id', $cate_id);
-        }
-        if( $name != ''){
-            $query->where('san_pham.name', 'LIKE', '%'.$name.'%');
-            $query->orWhere('name_extend', 'LIKE', '%'.$name.'%');
-        }
-        $query->join('users', 'users.id', '=', 'san_pham.created_user');
-        $query->join('loai_sp', 'loai_sp.id', '=', 'san_pham.loai_id');
-        $query->join('cate', 'cate.id', '=', 'san_pham.cate_id');
-        $query->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id');        
-        $query->orderBy('san_pham.id', 'desc');
-        $items = $query->select(['sp_hinh.image_url','san_pham.*','san_pham.id as sp_id', 'full_name' , 'san_pham.created_at as time_created', 'users.full_name', 'loai_sp.name as ten_loai', 'cate.name as ten_cate'])
-        ->paginate(1000);
-
-        $loaiSpArr = LoaiSp::all();  
-        if( $loai_id ){
-            $cateArr = Cate::where('loai_id', $loai_id)->orderBy('display_order', 'desc')->get();
-        }else{
-            $cateArr = (object) [];
-        }
-
-        return view('backend.product.content-search', compact( 'items', 'arrSearch', 'loaiSpArr', 'cateArr', 'search_type'));
-    }
-
-    public function ajaxSearchTuongThich(Request $request){    
-        $search_type = $request->search_type;
-        $arrSearch['loai_id'] = $loai_id = 7;
-        $arrSearch['cate_id'] = $cate_id = isset($request->cate_id) ? $request->cate_id : -1;
-        $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
-        
-        $query = Product::whereRaw('1');
-        
-        
-        $query->where('san_pham.loai_id', 7);
-        
-        if( $cate_id ){
-            $query->where('san_pham.cate_id', $cate_id);
-        }
-        if( $name != ''){
-            $query->where('san_pham.name', 'LIKE', '%'.$name.'%');
-            $query->orWhere('name_extend', 'LIKE', '%'.$name.'%');
-        }
-        $query->join('users', 'users.id', '=', 'san_pham.created_user');
-        $query->join('loai_sp', 'loai_sp.id', '=', 'san_pham.loai_id');
-        $query->join('cate', 'cate.id', '=', 'san_pham.cate_id');
-        $query->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id');        
-        $query->orderBy('san_pham.id', 'desc');
-        $items = $query->select(['sp_hinh.image_url','san_pham.*','san_pham.id as sp_id', 'full_name' , 'san_pham.created_at as time_created', 'users.full_name', 'loai_sp.name as ten_loai', 'cate.name as ten_cate'])
-        ->paginate(1000);
-
-        $loaiSpArr = LoaiSp::all();  
-        if( $loai_id ){
-            $cateArr = Cate::where('loai_id', $loai_id)->orderBy('display_order', 'desc')->get();
-        }else{
-            $cateArr = (object) [];
-        }
-
-        return view('backend.product.tuong-thich.content-search-tuong-thich', compact( 'items', 'arrSearch', 'loaiSpArr', 'cateArr', 'search_type', 'cate_id'));
-    }
+    }    
     /**
     * Show the form for creating a new resource.
     *
@@ -252,26 +78,11 @@ class ProductController extends Controller
         $thuocTinhArr = [];
         $loaiSpArr = LoaiSp::all();
         
-        if( $loai_id ){
-            
+        if( $loai_id ){            
             $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name')->orderBy('display_order', 'desc')->get();
-            
-            $loaiThuocTinhArr = LoaiThuocTinh::where('loai_id', $loai_id)->orderBy('display_order')->get();
-
-            if( $loaiThuocTinhArr->count() > 0){
-                foreach ($loaiThuocTinhArr as $value) {
-
-                    $thuocTinhArr[$value->id]['id'] = $value->id;
-                    $thuocTinhArr[$value->id]['name'] = $value->name;
-
-                    $thuocTinhArr[$value->id]['child'] = ThuocTinh::where('loai_thuoc_tinh_id', $value->id)->select('id', 'name')->orderBy('display_order')->get()->toArray();
-                }
-                
-            }
-        }
-        $colorArr = Color::all();
+        } 
         $mucDichArr = [];
-        return view('backend.product.create', compact('loaiSpArr', 'cateArr', 'colorArr', 'loai_id', 'thuocTinhArr', 'cate_id', 'mucDichArr'));
+        return view('backend.product.create', compact('loaiSpArr', 'cateArr', 'loai_id', 'cate_id'));
     }
 
     /**
@@ -285,82 +96,44 @@ class ProductController extends Controller
         $dataArr = $request->all();        
         
         $this->validate($request,[
-            'name' => 'required',
-            'slug' => 'required' ,
-            'price' => 'required|numeric',
-            'so_luong_ton' => 'required|numeric',
-            'can_nang' => 'required|numeric',
-            'chieu_dai' => 'required|numeric',
-            'chieu_rong' => 'required|numeric',
-            'chieu_cao' => 'required|numeric',
+            'code' => 'required',
+            'name_vi' => 'required',
+            'slug_vi' => 'required' ,
+            'name_en' => 'required',
+            'slug_en' => 'required' ,
+            'price' => 'required|numeric'           
         ],
         [
-            'name.required' => 'Bạn chưa nhập tên sản phẩm',
-            'slug.required' => 'Bạn chưa nhập slug',
+            'code.required' => 'Bạn chưa nhập mã sản phẩm',
+            'name_vi.required' => 'Bạn chưa nhập tên sản phẩm tiếng Việt ',
+            'slug_vi.required' => 'Bạn chưa nhập slug tiếng Việt',
+            'name_en.required' => 'Bạn chưa nhập tên sản phẩm tiếng Anh',
+            'slug_en.required' => 'Bạn chưa nhập slug tiếng Anh',
             'price.numeric' => 'Vui lòng nhập giá hợp lệ',
             'price.required' => 'Bạn chưa nhập giá',
-            'so_luong_ton.required' => 'Bạn chưa nhập số lượng tồn',
-            'so_luong_ton.numeric' => 'Vui lòng nhập số lượng tồn hợp lệ',
-            'can_nang.required' => 'Bạn chưa nhập cân nặng',
-            'can_nang.numeric' => 'Vui lòng nhập cân nặng hợp lệ',
-            'chieu_dai.required' => 'Bạn chưa nhập chiều dài',
-            'chieu_dai.numeric' => 'Vui lòng nhập chiều dài hợp lệ',
-            'chieu_rong.required' => 'Bạn chưa nhập chiều rộng',
-            'chieu_rong.numeric' => 'Vui lòng nhập chiều rộng hợp lệ',
-            'chieu_cao.required' => 'Bạn chưa nhập chiều cao',
-            'chieu_cao.numeric' => 'Vui lòng nhập chiều cao hợp lệ',
         ]);
 
-        $dataArr['is_primary'] = isset($dataArr['is_primary']) ? 1 : 0;
         $dataArr['is_hot'] = isset($dataArr['is_hot']) ? 1 : 0;
         $dataArr['is_sale'] = isset($dataArr['is_sale']) ? 1 : 0;        
         
-        $dataArr['alias'] = Helper::stripUnicode($dataArr['name']);
-        $dataArr['slug'] = str_replace(".", "-", $dataArr['slug']);
-        $dataArr['slug'] = str_replace("(", "-", $dataArr['slug']);
-        $dataArr['slug'] = str_replace(")", "", $dataArr['slug']);
-        $dataArr['alias_extend'] = Helper::stripUnicode($dataArr['name_extend']);
+        $dataArr['slug_vi'] = str_replace(".", "-", $dataArr['slug_vi']);
+        $dataArr['slug_vi'] = str_replace("(", "-", $dataArr['slug_vi']);
+        $dataArr['slug_vi'] = str_replace(")", "", $dataArr['slug_vi']);
 
-        $dataArr['sp_phukien'] = rtrim( $dataArr['str_sp_phukien'], ',');
-        $dataArr['sp_sosanh'] = rtrim( $dataArr['str_sp_sosanh'], ',');
-        $dataArr['sp_tuongtu'] = rtrim( $dataArr['str_sp_tuongtu'], ',');
+        $dataArr['slug_en'] = str_replace(".", "-", $dataArr['slug_en']);
+        $dataArr['slug_en'] = str_replace("(", "-", $dataArr['slug_en']);
+        $dataArr['slug_en'] = str_replace(")", "", $dataArr['slug_en']);
+
+        $dataArr['alias_vi'] = Helper::stripUnicode($dataArr['name_vi']);
+        $dataArr['alias_en'] = Helper::stripUnicode($dataArr['name_en']); 
         
         $dataArr['status'] = 1;
 
         $dataArr['created_user'] = Auth::user()->id;
 
-        $dataArr['updated_user'] = Auth::user()->id;
+        $dataArr['updated_user'] = Auth::user()->id;    
 
-        if($dataArr['image_pro'] && $dataArr['pro_name']){
-            
-            $tmp = explode('/', $dataArr['image_pro']);
-
-            if(!is_dir('uploads/'.date('Y/m/d'))){
-                mkdir('uploads/'.date('Y/m/d'), 0777, true);
-            }
-
-            $destionation = date('Y/m/d'). '/'. end($tmp);
-            
-            File::move(config('icho.upload_path').$dataArr['image_pro'], config('icho.upload_path').$destionation);
-            
-            $dataArr['image_pro'] = $destionation;
-        }  
-
-        $rs = Product::create($dataArr);
-
-        $sp_id = $rs->id;
-
-        //muc_dich
-        $mucDichArr = $request->muc_dich;
-        SpMucDich::where('sp_id', $sp_id)->delete();
-        if(!empty($mucDichArr)){
-            foreach ($mucDichArr as $muc_dich) {
-                SpMucDich::create(['sp_id' => $sp_id, 'muc_dich' => $muc_dich]);
-            }
-        }
-
-        $this->storeThuocTinh( $sp_id, $dataArr);
-
+        $rs = Product::create($dataArr);     
         $this->storeImage( $sp_id, $dataArr);
         $this->storeMeta($sp_id, 0, $dataArr);
         Session::flash('message', 'Tạo mới sản phẩm thành công');
@@ -370,7 +143,17 @@ class ProductController extends Controller
 
     public function storeMeta( $id, $meta_id, $dataArr ){
        
-        $arrData = ['title' => $dataArr['meta_title'], 'description' => $dataArr['meta_description'], 'keywords'=> $dataArr['meta_keywords'], 'custom_text' => $dataArr['custom_text'], 'updated_user' => Auth::user()->id];
+        $arrData = [
+            'title_vi' => $dataArr['meta_title_vi'], 
+            'description_vi' => $dataArr['meta_description_vi'], 
+            'keywords_vi'=> $dataArr['meta_keywords_vi'], 
+            'custom_text_vi' => $dataArr['custom_text_vi'], 
+            'title_en' => $dataArr['meta_title_en'], 
+            'description_en' => $dataArr['meta_description_en'], 
+            'keywords_en'=> $dataArr['meta_keywords_en'], 
+            'custom_text_en' => $dataArr['custom_text_en'], 
+            'updated_user' => Auth::user()->id
+        ];
         if( $meta_id == 0){
             $arrData['created_user'] = Auth::user()->id;
             //var_dump(MetaData::create( $arrData ));die;
@@ -381,34 +164,19 @@ class ProductController extends Controller
             $modelSp->meta_id = $meta_id;
             $modelSp->save();
         }else {
-            $model = MetaData::find($meta_id);           
+            $model = MetaData::find($meta_id);
             $model->update( $arrData );
         }              
-    }
-    public function storeThuocTinh($id, $dataArr){
-        
-        SpThuocTinh::where('sp_id', $id)->delete();
-
-        if( !empty($dataArr['thuoc_tinh'])){
-            foreach( $dataArr['thuoc_tinh'] as $k => $value){
-                if( $value == ""){
-                    unset( $dataArr['thuoc_tinh'][$k]);
-                }
-            }
-            
-            SpThuocTinh::create(['sp_id' => $id, 'thuoc_tinh' => json_encode($dataArr['thuoc_tinh'])]);
-        }
-    }
-
+    }    
     public function storeImage($id, $dataArr){        
         //process old image
         $imageIdArr = isset($dataArr['image_id']) ? $dataArr['image_id'] : [];
-        $hinhXoaArr = SpHinh::where('sp_id', $id)->whereNotIn('id', $imageIdArr)->lists('id');
+        $hinhXoaArr = ProductImg::where('sp_id', $id)->whereNotIn('id', $imageIdArr)->lists('id');
         if( $hinhXoaArr )
         {
             foreach ($hinhXoaArr as $image_id_xoa) {
-                $model = SpHinh::find($image_id_xoa);
-                $urlXoa = config('icho.upload_path')."/".$model->image_url;
+                $model = ProductImg::find($image_id_xoa);
+                $urlXoa = config('decoos.upload_path')."/".$model->image_url;
                 if(is_file($urlXoa)){
                     unlink($urlXoa);
                 }
@@ -436,7 +204,7 @@ class ProductController extends Controller
 
                         $destionation = date('Y/m/d'). '/'. end($tmp);
                         
-                        File::move(config('icho.upload_path').$image_url, config('icho.upload_path').$destionation);
+                        File::move(config('decoos.upload_path').$image_url, config('decoos.upload_path').$destionation);
 
                         $imageArr['name'][] = $destionation;
 
@@ -446,7 +214,7 @@ class ProductController extends Controller
             }
             if( !empty($imageArr['name']) ){
                 foreach ($imageArr['name'] as $key => $name) {
-                    $rs = SpHinh::create(['sp_id' => $id, 'image_url' => $name, 'display_order' => 1]);                
+                    $rs = ProductImg::create(['sp_id' => $id, 'image_url' => $name, 'display_order' => 1]);                
                     $image_id = $rs->id;
                     if( $imageArr['is_thumbnail'][$key] == 1){
                         $thumbnail_id = $image_id;
@@ -469,125 +237,8 @@ class ProductController extends Controller
     {
     //
     }
-    public function saveSpTuongThich(Request $request){
-        $id = $request->id;
-        
-        $detail = Product::find($id);
-        
-        $sp_tuongthich_bo_mach_chinh = $request->sp_tuongthich_31;
-        $sp_tuongthich_bo_vi_xu_ly = $request->sp_tuongthich_32;
-        $sp_tuongthich_card_man_hinh = $request->sp_tuongthich_85;
-        $sp_tuongthich_bo_nho = $request->sp_tuongthich_35;
-
-        $sp_tuongthich_nguon = $request->sp_tuongthich_33;
-        $sp_tuongthich_case = $request->sp_tuongthich_89;
-        
-        SpTuongThich::where(['sp_1' => $id, 'cate_id' => 31])->delete();
-        SpTuongThich::where(['sp_1' => $id, 'cate_id' => 32])->delete();
-        SpTuongThich::where(['sp_1' => $id, 'cate_id' => 35])->delete();
-        SpTuongThich::where(['sp_1' => $id, 'cate_id' => 85])->delete();
-        SpTuongThich::where(['sp_1' => $id, 'cate_id' => 33])->delete();
-        SpTuongThich::where(['sp_1' => $id, 'cate_id' => 89])->delete();
-
-        SpTuongThich::where(['sp_2' => $id, 'cate_id' => $detail->cate_id])->delete();
-
-        if( !empty($sp_tuongthich_bo_mach_chinh)){
-            foreach( $sp_tuongthich_bo_mach_chinh as $sp_2){
-                if( $sp_2 > 0){
-                    $check1 = SpTuongThich::where('sp_1', $id)->where('sp_2', $sp_2)->first();
-                    $check2 = SpTuongThich::where('sp_1', $sp_2)->where('sp_2', $id)->first();
-                    if( !$check1 && !$check2){
-                        SpTuongThich::create(['sp_1' => $id, 'sp_2' => $sp_2, 'cate_id' => 31]);
-                        SpTuongThich::create(['sp_1' => $sp_2, 'sp_2' => $id, 'cate_id' => $detail->cate_id]);
-                    }
-                }
-            }
-        }
-        if( !empty($sp_tuongthich_bo_vi_xu_ly)){
-            foreach( $sp_tuongthich_bo_vi_xu_ly as $sp_2){
-                if( $sp_2 > 0){
-                    $check1 = SpTuongThich::where('sp_1', $id)->where('sp_2', $sp_2)->first();
-                    $check2 = SpTuongThich::where('sp_1', $sp_2)->where('sp_2', $id)->first();
-                    if( !$check1 && !$check2){
-                        SpTuongThich::create(['sp_1' => $id, 'sp_2' => $sp_2, 'cate_id' => 32]);
-                        SpTuongThich::create(['sp_1' => $sp_2, 'sp_2' => $id, 'cate_id' => $detail->cate_id]);
-                    }
-                }
-            }
-        }
-        if( !empty($sp_tuongthich_bo_nho)){
-            foreach( $sp_tuongthich_bo_nho as $sp_2){
-                if( $sp_2 > 0){
-                    $check1 = SpTuongThich::where('sp_1', $id)->where('sp_2', $sp_2)->first();
-                    $check2 = SpTuongThich::where('sp_1', $sp_2)->where('sp_2', $id)->first();
-                    if( !$check1 && !$check2){
-                        SpTuongThich::create(['sp_1' => $id, 'sp_2' => $sp_2, 'cate_id' => 35]);
-                        SpTuongThich::create(['sp_1' => $sp_2, 'sp_2' => $id, 'cate_id' => $detail->cate_id]);
-                    }
-                }
-            }
-        }
-        if( !empty($sp_tuongthich_card_man_hinh)){
-            foreach( $sp_tuongthich_card_man_hinh as $sp_2){
-                if( $sp_2 > 0){
-                    $check1 = SpTuongThich::where('sp_1', $id)->where('sp_2', $sp_2)->first();
-                    $check2 = SpTuongThich::where('sp_1', $sp_2)->where('sp_2', $id)->first();
-                    if( !$check1 && !$check2){
-                        SpTuongThich::create(['sp_1' => $id, 'sp_2' => $sp_2, 'cate_id' => 85]);
-                        SpTuongThich::create(['sp_1' => $sp_2, 'sp_2' => $id, 'cate_id' => $detail->cate_id]);
-                    }
-                }
-            }
-        }
-        if( !empty($sp_tuongthich_nguon)){
-            foreach( $sp_tuongthich_nguon as $sp_2){
-                if( $sp_2 > 0){
-                    $check1 = SpTuongThich::where('sp_1', $id)->where('sp_2', $sp_2)->first();
-                    $check2 = SpTuongThich::where('sp_1', $sp_2)->where('sp_2', $id)->first();
-                    if( !$check1 && !$check2){
-                        SpTuongThich::create(['sp_1' => $id, 'sp_2' => $sp_2, 'cate_id' => 33]);
-                        SpTuongThich::create(['sp_1' => $sp_2, 'sp_2' => $id, 'cate_id' => $detail->cate_id]);
-                    }
-                }
-            }
-        }
-        if( !empty($sp_tuongthich_case)){
-            foreach( $sp_tuongthich_case as $sp_2){
-                if( $sp_2 > 0){
-                    $check1 = SpTuongThich::where('sp_1', $id)->where('sp_2', $sp_2)->first();
-                    $check2 = SpTuongThich::where('sp_1', $sp_2)->where('sp_2', $id)->first();
-                    if( !$check1 && !$check2){
-                        SpTuongThich::create(['sp_1' => $id, 'sp_2' => $sp_2, 'cate_id' => 89]);
-                        SpTuongThich::create(['sp_1' => $sp_2, 'sp_2' => $id, 'cate_id' => $detail->cate_id]);
-                    }
-                }
-            }
-        }
-        return redirect($request->back_url);
-        
-    }
-    public function ajaxSaveRelated(Request $request){
-        $type = $request->type;
-        $dataArr = (object) [];
-        $str_value = $request->str_value;
-        if( $str_value ){
-            $tmpArr = explode(',', $str_value);
-            $dataArr = Product::whereIn( 'id', $tmpArr)->select('id', 'name', 'name_extend', 'price', 'price_sale', 'is_sale')->get();
-        }
-        return view('backend.product.save-related', compact('dataArr' , 'type'));
-
-    }
-    public function ajaxSaveTuongThich(Request $request){
-        $cate_id = $request->cate_id;
-        $dataArr = (object) [];
-        $str_value = $request->str_value;
-        if( $str_value ){
-            $tmpArr = explode(',', $str_value);
-            $dataArr = Product::whereIn( 'id', $tmpArr)->select('id', 'name', 'name_extend', 'price', 'price_sale', 'is_sale')->get();
-        }
-        return view('backend.product.tuong-thich.save-tuong-thich', compact('dataArr' , 'cate_id'));
-
-    }
+    
+   
     /**
     * Show the form for editing the specified resource.
     *
@@ -600,23 +251,7 @@ class ProductController extends Controller
         $hinhArr = (object) [];
         $detail = Product::find($id);
 
-        $hinhArr = SpHinh::where('sp_id', $id)->lists('image_url', 'id');
-        //var_dump("<pre>", $hinhArr);die;
-        $tmp = SpThuocTinh::where('sp_id', $id)->select('thuoc_tinh')->first();
-
-        if( $tmp ){
-            $spThuocTinhArr = json_decode( $tmp->thuoc_tinh, true);
-        }
-        $tmpPhuKien = explode(",", $detail->sp_phukien);
-        $phuKienArr = Product::whereIn('id', $tmpPhuKien)->lists('name', 'id');
-        //get compare
-        $compare1 = Compare::where('sp_1', $id)->lists('sp_2')->toArray();              
-        $compare2 = Compare::where('sp_2', $id)->lists('sp_1')->toArray();        
-        $tmpSoSanh = array_merge($compare1, $compare2); 
-        $soSanhArr = Product::whereIn('id', $tmpSoSanh)->lists('name', 'id');
-
-        $tmpTuongTu = explode(",", $detail->sp_tuongtu);
-        $tuongTuArr = Product::whereIn('id', $tmpTuongTu)->lists('name', 'id');
+        $hinhArr = ProductImg::where('sp_id', $id)->lists('image_url', 'id');      
 
         $loaiSpArr = LoaiSp::all();
         
@@ -624,23 +259,8 @@ class ProductController extends Controller
             
         $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name')->orderBy('display_order', 'desc')->get();
         
-        $loaiThuocTinhArr = LoaiThuocTinh::where('loai_id', $loai_id)->orderBy('display_order')->get();
-        $meta = (object) [];
-        if ( $detail->meta_id > 0){
-            $meta = MetaData::find( $detail->meta_id );
-        }       
-        if( $loaiThuocTinhArr->count() > 0){
-            foreach ($loaiThuocTinhArr as $value) {
-
-                $thuocTinhArr[$value->id]['id'] = $value->id;
-                $thuocTinhArr[$value->id]['name'] = $value->name;
-
-                $thuocTinhArr[$value->id]['child'] = ThuocTinh::where('loai_thuoc_tinh_id', $value->id)->select('id', 'name')->orderBy('display_order')->get()->toArray();
-            }
-            
-        }        
-        $colorArr = Color::all();        
-        return view('backend.product.edit', compact( 'detail', 'hinhArr', 'thuocTinhArr', 'spThuocTinhArr', 'colorArr', 'loaiSpArr', 'cateArr', 'meta', 'phuKienArr', 'tuongTuArr', 'soSanhArr'));
+             
+        return view('backend.product.edit', compact( 'detail', 'hinhArr', 'loaiSpArr', 'cateArr', 'meta'));
     }
     public function ajaxDetail(Request $request)
     {       
@@ -660,121 +280,53 @@ class ProductController extends Controller
         $dataArr = $request->all();
         
         $this->validate($request,[
-            'name' => 'required',
-            'slug' => 'required',
-            'price' => 'required|numeric',
-            'so_luong_ton' => 'required|numeric',
-            'can_nang' => 'required|numeric',
-            'chieu_dai' => 'required|numeric',
-            'chieu_rong' => 'required|numeric',
-            'chieu_cao' => 'required|numeric',
+            'code' => 'required',
+            'name_vi' => 'required',
+            'slug_vi' => 'required' ,
+            'name_en' => 'required',
+            'slug_en' => 'required' ,
+            'price' => 'required|numeric'           
         ],
         [
-            'name.required' => 'Bạn chưa nhập tên sản phẩm',
-            'slug.required' => 'Bạn chưa nhập slug',
+            'code.required' => 'Bạn chưa nhập mã sản phẩm',
+            'name_vi.required' => 'Bạn chưa nhập tên sản phẩm tiếng Việt ',
+            'slug_vi.required' => 'Bạn chưa nhập slug tiếng Việt',
+            'name_en.required' => 'Bạn chưa nhập tên sản phẩm tiếng Anh',
+            'slug_en.required' => 'Bạn chưa nhập slug tiếng Anh',
             'price.numeric' => 'Vui lòng nhập giá hợp lệ',
             'price.required' => 'Bạn chưa nhập giá',
-            'so_luong_ton.required' => 'Bạn chưa nhập số lượng tồn',
-            'so_luong_ton.numeric' => 'Vui lòng nhập số lượng tồn hợp lệ',
-            'can_nang.required' => 'Bạn chưa nhập cân nặng',
-            'can_nang.numeric' => 'Vui lòng nhập cân nặng hợp lệ',
-            'chieu_dai.required' => 'Bạn chưa nhập chiều dài',
-            'chieu_dai.numeric' => 'Vui lòng nhập chiều dài hợp lệ',
-            'chieu_rong.required' => 'Bạn chưa nhập chiều rộng',
-            'chieu_rong.numeric' => 'Vui lòng nhập chiều rộng hợp lệ',
-            'chieu_cao.required' => 'Bạn chưa nhập chiều cao',
-            'chieu_cao.numeric' => 'Vui lòng nhập chiều cao hợp lệ',
         ]);
-
-        $dataArr['is_primary'] = isset($dataArr['is_primary']) ? 1 : 0;
+        
         $dataArr['is_hot'] = isset($dataArr['is_hot']) ? 1 : 0;
         $dataArr['is_sale'] = isset($dataArr['is_sale']) ? 1 : 0;                
-        $dataArr['slug'] = str_replace(".", "-", $dataArr['slug']);
-        $dataArr['slug'] = str_replace("(", "-", $dataArr['slug']);
-        $dataArr['slug'] = str_replace(")", "", $dataArr['slug']);
-        $dataArr['alias'] = Helper::stripUnicode($dataArr['name']);
+        $dataArr['slug_vi'] = str_replace(".", "-", $dataArr['slug_vi']);
+        $dataArr['slug_vi'] = str_replace("(", "-", $dataArr['slug_vi']);
+        $dataArr['slug_vi'] = str_replace(")", "", $dataArr['slug_vi']);
 
-        $dataArr['alias_extend'] = Helper::stripUnicode($dataArr['name_extend']);
+        $dataArr['slug_en'] = str_replace(".", "-", $dataArr['slug_en']);
+        $dataArr['slug_en'] = str_replace("(", "-", $dataArr['slug_en']);
+        $dataArr['slug_en'] = str_replace(")", "", $dataArr['slug_en']);
 
-        $dataArr['sp_phukien'] = rtrim( $dataArr['str_sp_phukien'], ',');
-        $soSanhArr = isset($dataArr['sp_sosanh']) ? $dataArr['sp_sosanh'] : [];        
-        $dataArr['sp_tuongtu'] = rtrim( $dataArr['str_sp_tuongtu'], ',');
+        $dataArr['alias_vi'] = Helper::stripUnicode($dataArr['name_vi']);
+        $dataArr['alias_en'] = Helper::stripUnicode($dataArr['name_en']);
 
         $dataArr['updated_user'] = Auth::user()->id;
-        //echo "<pre>";
-        //print_r($dataArr);die;
-        if($dataArr['image_pro'] && $dataArr['pro_name']){
-            
-            $tmp = explode('/', $dataArr['image_pro']);
 
-            if(!is_dir('uploads/'.date('Y/m/d'))){
-                mkdir('uploads/'.date('Y/m/d'), 0777, true);
-            }
-
-            $destionation = date('Y/m/d'). '/'. end($tmp);
-            
-            File::move(config('icho.upload_path').$dataArr['image_pro'], config('icho.upload_path').$destionation);
-            
-            $dataArr['image_pro'] = $destionation;
-        }  
+        
         $model = Product::find($dataArr['id']);
 
         $model->update($dataArr);
         
         $sp_id = $dataArr['id'];
-        //muc_dich
-        $mucDichArr = $request->muc_dich;
-        SpMucDich::where('sp_id', $sp_id)->delete();
-        if(!empty($mucDichArr)){
-            foreach ($mucDichArr as $muc_dich) {
-                SpMucDich::create(['sp_id' => $sp_id, 'muc_dich' => $muc_dich]);
-            }
-        }
-
-        $this->storeThuocTinh( $sp_id, $dataArr);
-
         $this->storeMeta( $sp_id, $dataArr['meta_id'], $dataArr);
         $this->storeImage( $sp_id, $dataArr);
-        $this->storeSoSanh( $sp_id, $soSanhArr);
-
+     
         Session::flash('message', 'Chỉnh sửa sản phẩm thành công');
 
         return redirect()->route('product.edit', $sp_id);
         
-    }
-    public function ajaxSaveInfo(Request $request){
-        
-        $dataArr = $request->all();
-
-        $dataArr['alias'] = Helper::stripUnicode($dataArr['name']);
-        
-        $dataArr['updated_user'] = Auth::user()->id;
-        
-        $model = Product::find($dataArr['id']);
-
-        $model->update($dataArr);
-        
-        $sp_id = $dataArr['id'];        
-
-        Session::flash('message', 'Chỉnh sửa sản phẩm thành công');
-
-    }
-    public function storeSoSanh($sp_1, $soSanhArr){
-        Compare::where('sp_1', $sp_1)->delete();              
-        Compare::where('sp_2', $sp_1)->delete();  
-        if( !empty($soSanhArr)){
-            foreach( $soSanhArr as $sp_2){
-                if( $sp_2 > 0){
-                    $check1 = Compare::where('sp_1', $sp_1)->where('sp_2', $sp_2)->first();
-                    $check2 = Compare::where('sp_1', $sp_2)->where('sp_2', $sp_1)->first();
-                    if( !$check1 && !$check2){
-                        Compare::create(['sp_1' => $sp_1, 'sp_2' => $sp_2]);
-                    }
-                }
-            }
-        }
-        
-    }
+    } 
+    
 
     /**
     * Remove the specified resource from storage.
@@ -787,11 +339,7 @@ class ProductController extends Controller
         // delete
         $model = Product::find($id);        
         $model->delete();
-        SpHinh::where('sp_id', $id)->delete();
-        SpMucDich::where('sp_id', $id)->delete();
-        SpThuocTinh::where('sp_id', $id)->delete();
-        SpTuongThich::where('sp_1', $id)->delete();
-        SpTuongThich::where('sp_2', $id)->delete();
+        ProductImg::where('sp_id', $id)->delete();      
         // redirect
         Session::flash('message', 'Xóa sản phẩm thành công');
         

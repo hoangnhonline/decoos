@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cate;
 use App\Models\LoaiSp;
 use App\Models\MetaData;
+
 use Helper, File, Session, Auth;
 
 class CateController extends Controller
@@ -19,34 +20,25 @@ class CateController extends Controller
     * @return Response
     */
     public function index(Request $request)
-    {        
-        if( $request->loai_id ){
-            $loai_id = $request->loai_id;
-            $loaiSp = LoaiSp::find($loai_id);
-        }else{
-            $loaiSp = LoaiSp::orderBy('id')->first();
-            $loai_id = $loaiSp->id;    
-        }
-
-        $items = Cate::where('loai_id', '=', $loai_id)->orderBy('display_order')->get();
+    {
         $loaiSpArr = LoaiSp::all();
-        return view('backend.cate.index', compact( 'items', 'loaiSp' , 'loai_id', 'loaiSpArr'));
+        $loaiSp = LoaiSp::whereRaw('1')->first();
+        $loai_id = $loaiSp->loai_id;
+        $items = Cate::all()->sortBy('display_order');
+        return view('backend.cate.index', compact( 'items', 'loaiSpArr', 'loaiSp', 'loai_id'));
     }
-
     /**
     * Show the form for creating a new resource.
     *
     * @return Response
     */
-    public function create(Request $request)
+    public function create()
     {
-        $loai_id = isset($request->loai_id) ? $request->loai_id : 0;
-        
-        $loaiSpArr = LoaiSp::all()->sortBy('display_order');
+        $loaiSpArr = LoaiSp::all();
+        return view('backend.cate.create', compact('loaiSpArr'));
+    }  
 
-        return view('backend.cate.create', compact( 'loai_id', 'loaiSpArr'));
-    }
-
+    
     /**
     * Store a newly created resource in storage.
     *
@@ -58,51 +50,33 @@ class CateController extends Controller
         $dataArr = $request->all();
         
         $this->validate($request,[
-            'name' => 'required',
-            'slug' => 'required',
+            'name_vi' => 'required',
+            'slug_vi' => 'required',
+            'name_en' => 'required',
+            'slug_en' => 'required'
         ],
         [
-            'name.required' => 'Bạn chưa nhập tên danh mục',
-            'slug.required' => 'Bạn chưa nhập slug',
-        ]);
-
-        $dataArr['bg_color'] = $dataArr['bg_color'] != '' ? $dataArr['bg_color'] : '#EE484F';
+            'name_vi.required' => 'Bạn chưa nhập tên danh mục VI',
+            'slug_vi.required' => 'Bạn chưa nhập slug VI',
+            'name_en.required' => 'Bạn chưa nhập tên danh mục EN',
+            'slug_en.required' => 'Bạn chưa nhập slug EN',
+        ]);        
         
-        $dataArr['alias'] = Helper::stripUnicode($dataArr['name']);
-        
+        $dataArr['alias_vi'] = Helper::stripUnicode($dataArr['name_vi']);
+        $dataArr['alias_en'] = Helper::stripUnicode($dataArr['name_en']);       
+       
+        $dataArr['is_menu'] = isset($dataArr['is_menu']) ? 1 : 0;            
         $dataArr['created_user'] = Auth::user()->id;
 
         $dataArr['updated_user'] = Auth::user()->id;
-
-        if($dataArr['icon_url'] && $dataArr['icon_name']){
-            
-            $tmp = explode('/', $dataArr['icon_url']);
-
-            if(!is_dir('uploads/'.date('Y/m/d'))){
-                mkdir('uploads/'.date('Y/m/d'), 0777, true);
-            }
-
-            $destionation = date('Y/m/d'). '/'. end($tmp);
-            
-            File::move(config('icho.upload_path').$dataArr['icon_url'], config('icho.upload_path').$destionation);
-            
-            $dataArr['icon_url'] = $destionation;
-        }
-        
-        $dataArr['is_hot'] = isset($dataArr['is_hot']) ? 1 : 0;    
-        $dataArr['menu_ngang'] = isset($dataArr['menu_ngang']) ? 1 : 0;    
-        $dataArr['menu_doc'] = isset($dataArr['menu_doc']) ? 1 : 0;  
-
-        $dataArr['display_order'] = 1;
-
-        $rs = Cate::create($dataArr);        
+        $rs = Cate::create($dataArr);
         $id = $rs->id;
 
         $this->storeMeta( $id, 0, $dataArr);
 
         Session::flash('message', 'Tạo mới danh mục thành công');
 
-        return redirect()->route('cate.index',[$dataArr['loai_id']]);
+        return redirect()->route('cate.index');
     }
 
     /**
@@ -115,22 +89,7 @@ class CateController extends Controller
     {
     //
     }
-    public function storeMeta( $id, $meta_id, $dataArr ){
-       
-        $arrData = [ 'title' => $dataArr['meta_title'], 'description' => $dataArr['meta_description'], 'keywords'=> $dataArr['meta_keywords'], 'custom_text' => $dataArr['custom_text'], 'updated_user' => Auth::user()->id ];
-        if( $meta_id == 0){
-            $arrData['created_user'] = Auth::user()->id;            
-            $rs = MetaData::create( $arrData );
-            $meta_id = $rs->id;
-            
-            $modelSp = Cate::find( $id );
-            $modelSp->meta_id = $meta_id;
-            $modelSp->save();
-        }else {
-            $model = MetaData::find($meta_id);           
-            $model->update( $arrData );
-        }              
-    }
+
     /**
     * Show the form for editing the specified resource.
     *
@@ -140,13 +99,13 @@ class CateController extends Controller
     public function edit($id)
     {
         $detail = Cate::find($id);
-        $loaiSpArr = LoaiSp::all();
+
         $meta = (object) [];
         if ( $detail->meta_id > 0){
             $meta = MetaData::find( $detail->meta_id );
-        }       
-        $loaiSp = LoaiSp::find($detail->loai_id); 
-        return view('backend.cate.edit', compact( 'detail', 'loaiSpArr', 'meta', 'loaiSp'));
+        }
+
+        return view('backend.cate.edit', compact( 'detail', 'meta'));
     }
 
     /**
@@ -161,47 +120,58 @@ class CateController extends Controller
         $dataArr = $request->all();
         
         $this->validate($request,[
-            'name' => 'required',
-            'slug' => 'required',
+            'name_vi' => 'required',
+            'slug_vi' => 'required',
+            'name_en' => 'required',
+            'slug_en' => 'required'
         ],
         [
-            'name.required' => 'Bạn chưa nhập tên danh mục',
-            'slug.required' => 'Bạn chưa nhập slug',
-        ]);
-
-        $dataArr['bg_color'] = $dataArr['bg_color'] != '' ? $dataArr['bg_color'] : '#EE484F';
-
-        $dataArr['alias'] = Helper::stripUnicode($dataArr['name']);
+            'name_vi.required' => 'Bạn chưa nhập tên danh mục VI',
+            'slug_vi.required' => 'Bạn chưa nhập slug VI',
+            'name_en.required' => 'Bạn chưa nhập tên danh mục EN',
+            'slug_en.required' => 'Bạn chưa nhập slug EN',
+        ]);        
+        
+        $dataArr['alias_vi'] = Helper::stripUnicode($dataArr['name_vi']);
+        $dataArr['alias_en'] = Helper::stripUnicode($dataArr['name_en']);
+        $dataArr['is_menu'] = isset($dataArr['is_menu']) ? 1 : 0;        
+        $dataArr['updated_user'] = Auth::user()->id; 
 
         $model = Cate::find($dataArr['id']);
-
-        $dataArr['updated_user'] = Auth::user()->id;
-        if($dataArr['icon_url'] && $dataArr['icon_name']){
-            
-            $tmp = explode('/', $dataArr['icon_url']);
-
-            if(!is_dir('uploads/'.date('Y/m/d'))){
-                mkdir('uploads/'.date('Y/m/d'), 0777, true);
-            }
-
-            $destionation = date('Y/m/d'). '/'. end($tmp);
-            
-            File::move(config('icho.upload_path').$dataArr['icon_url'], config('icho.upload_path').$destionation);
-            
-            $dataArr['icon_url'] = $destionation;
-        }
-        $dataArr['is_hot'] = isset($dataArr['is_hot']) ? 1 : 0;    
-        $dataArr['menu_ngang'] = isset($dataArr['menu_ngang']) ? 1 : 0;    
-        $dataArr['menu_doc'] = isset($dataArr['menu_doc']) ? 1 : 0;
-
         $model->update($dataArr);
 
         $this->storeMeta( $dataArr['id'], $dataArr['meta_id'], $dataArr);
+
         Session::flash('message', 'Cập nhật danh mục thành công');
 
         return redirect()->route('cate.edit', $dataArr['id']);
     }
-
+    public function storeMeta( $id, $meta_id, $dataArr ){
+       
+        $arrData = [
+            'title_vi' => $dataArr['meta_title_vi'], 
+            'description_vi' => $dataArr['meta_description_vi'], 
+            'keywords_vi'=> $dataArr['meta_keywords_vi'], 
+            'custom_text_vi' => $dataArr['custom_text_vi'], 
+            'title_en' => $dataArr['meta_title_en'], 
+            'description_en' => $dataArr['meta_description_en'], 
+            'keywords_en'=> $dataArr['meta_keywords_en'], 
+            'custom_text_en' => $dataArr['custom_text_en'], 
+            'updated_user' => Auth::user()->id
+        ];
+        if( $meta_id == 0){
+            $arrData['created_user'] = Auth::user()->id;            
+            $rs = MetaData::create( $arrData );
+            $meta_id = $rs->id;
+            
+            $modelSp = Cate::find( $id );
+            $modelSp->meta_id = $meta_id;
+            $modelSp->save();
+        }else {
+            $model = MetaData::find($meta_id);           
+            $model->update( $arrData );
+        }              
+    }
     /**
     * Remove the specified resource from storage.
     *
@@ -216,6 +186,6 @@ class CateController extends Controller
 
         // redirect
         Session::flash('message', 'Xóa danh mục thành công');
-        return redirect()->route('cate.index',[$model->loai_id]);
-    }
+        return redirect()->route('cate.index');
+    }   
 }
