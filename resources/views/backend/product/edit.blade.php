@@ -138,12 +138,26 @@
                          
                             <button class="btn btn-primary" id="btnUploadImage" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</button>
                             <div class="clearfix"></div>
-                            <div id="div-image" style="margin-top:10px"></div>
+                            <div id="div-image" style="margin-top:10px">                              
+                              @if( $hinhArr )
+                                @foreach( $hinhArr as $k => $hinh)
+                                  <div class="col-md-3">
+                                    <img class="img-thumbnail" src="{{ Helper::showImage($hinh) }}" style="width:100%">
+                                    <div class="checkbox">                                   
+                                      <label><input type="radio" name="thumbnail_id" class="thumb" value="{{ $k }}" {{ $detail->thumbnail_id == $k ? "checked" : "" }}> Ảnh đại diện </label>
+                                      <button class="btn btn-danger btn-sm remove-image" type="button" data-value="{{  $hinh }}" data-id="{{ $k }}" >Xóa</button>
+                                    </div>
+                                    <input type="hidden" name="image_id[]" value="{{ $k }}">
+                                  </div>
+                                @endforeach
+                              @endif
+
+                            </div>
                           </div>
                           <div style="clear:both"></div>
                         </div>
 
-                     </div><!--end hinh anh--> 
+                     </div><!--end hinh anh-->
                   </div>
 
                 </div>
