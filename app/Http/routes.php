@@ -56,7 +56,22 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => '
         Route::post('/update', ['as' => 'contact.update', 'uses' => 'ContactController@update']);
         Route::get('{id}/destroy', ['as' => 'contact.destroy', 'uses' => 'ContactController@destroy']);
     });    
-    
+    Route::group(['prefix' => 'album'], function () {
+        Route::get('/', ['as' => 'album.index', 'uses' => 'AlbumController@index']);
+        Route::get('/create', ['as' => 'album.create', 'uses' => 'AlbumController@create']);
+        Route::post('/store', ['as' => 'album.store', 'uses' => 'AlbumController@store']);
+        Route::get('{id}/edit',   ['as' => 'album.edit', 'uses' => 'AlbumController@edit']);
+        Route::post('/update', ['as' => 'album.update', 'uses' => 'AlbumController@update']);
+        Route::get('{id}/destroy', ['as' => 'album.destroy', 'uses' => 'AlbumController@destroy']);
+    });
+    Route::group(['prefix' => 'video'], function () {
+        Route::get('/', ['as' => 'video.index', 'uses' => 'VideoController@index']);
+        Route::post('/store', ['as' => 'video.store', 'uses' => 'VideoController@store']);
+        Route::get('{id}/edit',   ['as' => 'video.edit', 'uses' => 'VideoController@edit']);
+        Route::get('/export',   ['as' => 'video.export', 'uses' => 'VideoController@download']);
+        Route::post('/update', ['as' => 'video.update', 'uses' => 'VideoController@update']);
+        Route::get('{id}/destroy', ['as' => 'video.destroy', 'uses' => 'VideoController@destroy']);
+    });
     Route::group(['prefix' => 'loai-sp'], function () {
         Route::get('/', ['as' => 'loai-sp.index', 'uses' => 'LoaiSpController@index']);
         Route::get('/create', ['as' => 'loai-sp.create', 'uses' => 'LoaiSpController@create']);        

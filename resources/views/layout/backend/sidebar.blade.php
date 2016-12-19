@@ -30,7 +30,19 @@
           <li {{ in_array(\Request::route()->getName(), ['cate.index', 'cate.edit', 'cate.create']) ? "class=active" : "" }}><a href="{{ route('cate.index') }}"><i class="fa fa-circle-o"></i> Danh mục con</a></li>
         </ul>
       </li>
-      
+      <li class="treeview {{ in_array(\Request::route()->getName(), ['album.index', 'album.create', 'album.edit']) ? 'active' : '' }}">
+        <a href="#">
+          <i class="fa fa-opencart"></i> 
+          <span>Bộ sưu tập</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li {{ in_array(\Request::route()->getName(), ['album.index', 'album.edit']) ? "class=active" : "" }}><a href="{{ route('album.index') }}"><i class="fa fa-circle-o"></i> Bộ sưu tập</a></li>
+          <li {{ \Request::route()->getName() == "album.create" ? "class=active" : "" }}><a href="{{ route('album.create') }}"><i class="fa fa-circle-o"></i> Thêm bộ sưu tập</a></li>          
+        </ul>
+      </li>
      
       <li class="treeview {{ in_array(\Request::route()->getName(), ['pages.index', 'pages.create']) ? 'active' : '' }}">
         <a href="#">
