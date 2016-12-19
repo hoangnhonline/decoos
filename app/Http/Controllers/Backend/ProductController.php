@@ -53,7 +53,7 @@ class ProductController extends Controller
         $query->join('cate', 'cate.id', '=', 'product.cate_id');
         $query->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id');        
         $query->orderBy('product.id', 'desc');
-        $items = $query->select(['product_img.image_url','product.*','product.id as sp_id', 'full_name' , 'product.created_at as time_created', 'users.full_name', 'loai_sp.name as ten_loai', 'cate.name as ten_cate'])
+        $items = $query->select(['product_img.image_url','product.*','product.id as sp_id', 'full_name' , 'product.created_at as time_created', 'users.full_name', 'loai_sp.name_vi as ten_loai', 'cate.name_vi as ten_cate'])
         ->paginate(50);   
 
         $loaiSpArr = LoaiSp::all();  
@@ -79,7 +79,7 @@ class ProductController extends Controller
         $loaiSpArr = LoaiSp::all();
         
         if( $loai_id ){            
-            $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name')->orderBy('display_order', 'desc')->get();
+            $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name_vi')->orderBy('display_order', 'desc')->get();
         } 
         $mucDichArr = [];
         return view('backend.product.create', compact('loaiSpArr', 'cateArr', 'loai_id', 'cate_id'));
@@ -134,6 +134,7 @@ class ProductController extends Controller
         $dataArr['updated_user'] = Auth::user()->id;    
 
         $rs = Product::create($dataArr);     
+        $sp_id = $rs->id;
         $this->storeImage( $sp_id, $dataArr);
         $this->storeMeta($sp_id, 0, $dataArr);
         Session::flash('message', 'Tạo mới sản phẩm thành công');
@@ -155,11 +156,9 @@ class ProductController extends Controller
             'updated_user' => Auth::user()->id
         ];
         if( $meta_id == 0){
-            $arrData['created_user'] = Auth::user()->id;
-            //var_dump(MetaData::create( $arrData ));die;
+            $arrData['created_user'] = Auth::user()->id;            
             $rs = MetaData::create( $arrData );
-            $meta_id = $rs->id;
-            //var_dump($meta_id);die;
+            $meta_id = $rs->id;            
             $modelSp = Product::find( $id );
             $modelSp->meta_id = $meta_id;
             $modelSp->save();
@@ -171,7 +170,7 @@ class ProductController extends Controller
     public function storeImage($id, $dataArr){        
         //process old image
         $imageIdArr = isset($dataArr['image_id']) ? $dataArr['image_id'] : [];
-        $hinhXoaArr = ProductImg::where('sp_id', $id)->whereNotIn('id', $imageIdArr)->lists('id');
+        $hinhXoaArr = ProductImg::where('product_id', $id)->whereNotIn('id', $imageIdArr)->lists('id');
         if( $hinhXoaArr )
         {
             foreach ($hinhXoaArr as $image_id_xoa) {
@@ -251,14 +250,18 @@ class ProductController extends Controller
         $hinhArr = (object) [];
         $detail = Product::find($id);
 
-        $hinhArr = ProductImg::where('sp_id', $id)->lists('image_url', 'id');      
+        $hinhArr = ProductImg::where('product_id', $id)->lists('image_url', 'id');      
 
         $loaiSpArr = LoaiSp::all();
         
         $loai_id = $detail->loai_id; 
             
-        $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name')->orderBy('display_order', 'desc')->get();
+        $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name_vi')->orderBy('display_order', 'desc')->get();
         
+        $meta = (object) [];
+        if ( $detail->meta_id > 0){
+            $meta = MetaData::find( $detail->meta_id );
+        }
              
         return view('backend.product.edit', compact( 'detail', 'hinhArr', 'loaiSpArr', 'cateArr', 'meta'));
     }
@@ -339,7 +342,7 @@ class ProductController extends Controller
         // delete
         $model = Product::find($id);        
         $model->delete();
-        ProductImg::where('sp_id', $id)->delete();      
+        ProductImg::where('product_id', $id)->delete();      
         // redirect
         Session::flash('message', 'Xóa sản phẩm thành công');
         

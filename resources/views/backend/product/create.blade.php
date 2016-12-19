@@ -55,7 +55,7 @@
                           <select class="form-control" name="loai_id" id="loai_id">
                             <option value="">--Chọn--</option>
                             @foreach( $loaiSpArr as $value )
-                            <option value="{{ $value->id }}" {{ $value->id == old('loai_id') || $value->id == $loai_id ? "selected" : "" }}>{{ $value->name }}</option>
+                            <option value="{{ $value->id }}" {{ $value->id == old('loai_id') || $value->id == $loai_id ? "selected" : "" }}>{{ $value->name_vi }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -65,7 +65,7 @@
                           <select class="form-control" name="cate_id" id="cate_id">
                             <option value="">--Chọn--</option>
                             @foreach( $cateArr as $value )
-                            <option value="{{ $value->id }}" {{ $value->id == old('cate_id') || $value->id == $cate_id ? "selected" : "" }}>{{ $value->name }}</option>
+                            <option value="{{ $value->id }}" {{ $value->id == old('cate_id') || $value->id == $cate_id ? "selected" : "" }}>{{ $value->name_vi }}</option>
                             @endforeach
                           </select>
                         </div>  
@@ -146,7 +146,7 @@
             </div>
             <div class="box-footer">             
               <button type="button" class="btn btn-default" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i></button>
-              <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+              <button type="submit" class="btn btn-primary" id="btnSave" onclick="return validateData(); ">Lưu</button>
               <a class="btn btn-default" class="btn btn-primary" href="{{ route('product.index')}}">Hủy</a>
             </div>
             
@@ -251,11 +251,32 @@ $(document).on('click', '.remove-image', function(){
     $(this).parents('.col-md-3').remove();
   }
 });
+function validateData(){
+  if($('#loai_id').val() == 0){
+    alert('Chưa chọn danh mục cha.'); return false;
+  }
+  if($('#cate_id').val() == 0){
+    alert('Chưa chọn danh mục con.'); return false; 
+  }
+  return true;  
+}
     $(document).ready(function(){
          
       $('#loai_id').change(function(){
-        location.href="{{ route('product.create') }}?loai_id=" + $(this).val();
-      })
+        var loai_id = $(this).val();
+        
+        $.ajax({
+              url: "{{ route('cate.ajax-list-by-parent') }}",
+              type: "POST",
+              async: false,      
+              data: {
+                loai_id : loai_id
+              },              
+              success: function (response) {
+                $('#cate_id').html(response);              
+              }              
+            });
+      });
       $(".select2").select2();
       $('#dataForm').submit(function(){
         
@@ -335,9 +356,9 @@ $(document).on('click', '.remove-image', function(){
       });
      
 
-      $('#name').change(function(){
+      $('#name_vi').change(function(){
          var name = $.trim( $(this).val() );
-         if( name != '' && $('#slug').val() == ''){
+         if( name != '' ){
             $.ajax({
               url: $('#route_get_slug').val(),
               type: "POST",
@@ -347,7 +368,7 @@ $(document).on('click', '.remove-image', function(){
               },              
               success: function (response) {
                 if( response.str ){                  
-                  $('#slug').val( response.str );
+                  $('#slug_vi').val( response.str );
                 }                
               },
               error: function(response){                             
@@ -360,7 +381,33 @@ $(document).on('click', '.remove-image', function(){
               }
             });
          }
-      });  
+      });
+      $('#name_en').change(function(){
+         var name = $.trim( $(this).val() );
+         if( name != '' ){
+            $.ajax({
+              url: $('#route_get_slug').val(),
+              type: "POST",
+              async: false,      
+              data: {
+                str : name
+              },              
+              success: function (response) {
+                if( response.str ){                  
+                  $('#slug_en').val( response.str );
+                }                
+              },
+              error: function(response){                             
+                  var errors = response.responseJSON;
+                  for (var key in errors) {
+                    
+                  }
+                  //$('#btnLoading').hide();
+                  //$('#btnSave').show();
+              }
+            });
+         }
+      }); 
     });
     
 </script>

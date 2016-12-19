@@ -24,7 +24,7 @@ class CateController extends Controller
         $loaiSpArr = LoaiSp::all();
         $loaiSp = LoaiSp::whereRaw('1')->first();
         $loai_id = $loaiSp->loai_id;
-        $items = Cate::all()->sortBy('display_order');
+        $items = Cate::all()->sortBy('display_order');        
         return view('backend.cate.index', compact( 'items', 'loaiSpArr', 'loaiSp', 'loai_id'));
     }
     /**
@@ -34,10 +34,21 @@ class CateController extends Controller
     */
     public function create()
     {
-        $loaiSpArr = LoaiSp::all();
-        return view('backend.cate.create', compact('loaiSpArr'));
+        $loai_id = isset($request->loai_id) ? $request->loai_id : 0;
+        
+        $loaiSpArr = LoaiSp::all()->sortBy('display_order');
+
+        return view('backend.cate.create', compact( 'loai_id', 'loaiSpArr'));        
     }  
 
+    public function ajaxListByParent(Request $request){
+        $cateList = (object) [];
+        $loai_id = $request->loai_id;
+        if($loai_id > 0){
+            $cateList = Cate::where('loai_id', $loai_id)->get();
+        }
+        return view('backend.cate.ajax-list-by-parent', compact( 'loai_id', 'cateList'));
+    }
     
     /**
     * Store a newly created resource in storage.
@@ -99,13 +110,13 @@ class CateController extends Controller
     public function edit($id)
     {
         $detail = Cate::find($id);
-
+        $loaiSpArr = LoaiSp::all();
         $meta = (object) [];
         if ( $detail->meta_id > 0){
             $meta = MetaData::find( $detail->meta_id );
         }
-
-        return view('backend.cate.edit', compact( 'detail', 'meta'));
+        $loaiSp = LoaiSp::find($detail->loai_id); 
+        return view('backend.cate.edit', compact( 'detail', 'loaiSpArr', 'meta', 'loaiSp'));
     }
 
     /**

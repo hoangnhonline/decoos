@@ -187,183 +187,11 @@
 @stop
 @section('javascript_page')
 <script type="text/javascript">
-    $(document).ready(function(){
-      $('#btnUploadMau').click(function(){ 
-        $('#file-mau').click();
-      });
-      $('#btnUploadKm').click(function(){ 
-        $('#file-km').click();
-      });
-      $('#btnUploadIcon').click(function(){        
-        $('#file-icon').click();
-      });
-      $('#btnUploadBanner').click(function(){        
-        $('#file-banner').click();
-      });
-      var files = "";
-      $('#file-mau').change(function(e){
-         files = e.target.files;
-         
-         if(files != ''){
-           var dataForm = new FormData();        
-          $.each(files, function(key, value) {
-             dataForm.append('file', value);
-          });   
-          
-          dataForm.append('date_dir', 0);
-          dataForm.append('folder', 'tmp');
-
-          $.ajax({
-            url: $('#route_upload_tmp_image').val(),
-            type: "POST",
-            async: false,      
-            data: dataForm,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-              if(response.image_path){
-                $('#thumbnail_mau').attr('src',$('#upload_url').val() + response.image_path);
-                $( '#icon_mau' ).val( response.image_path );
-                $( '#image_name_mau' ).val( response.image_name);
-              }
-              console.log(response.image_path);
-                //window.location.reload();
-            },
-            error: function(response){                             
-                var errors = response.responseJSON;
-                for (var key in errors) {
-                  
-                }
-                //$('#btnLoading').hide();
-                //$('#btnSave').show();
-            }
-          });
-        }
-      });
-      var filesIcon = '';
-      $('#file-icon').change(function(e){
-         filesIcon = e.target.files;
-         
-         if(filesIcon != ''){
-           var dataForm = new FormData();        
-          $.each(filesIcon, function(key, value) {
-             dataForm.append('file', value);
-          });
-          
-          dataForm.append('date_dir', 0);
-          dataForm.append('folder', 'tmp');
-
-          $.ajax({
-            url: $('#route_upload_tmp_image').val(),
-            type: "POST",
-            async: false,      
-            data: dataForm,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-              if(response.image_path){
-                $('#thumbnail_icon').attr('src',$('#upload_url').val() + response.image_path);                
-                $('#icon_url').val( response.image_path );
-                $('#icon_name' ).val( response.image_name );
-              }
-            },
-            error: function(response){                             
-                var errors = response.responseJSON;
-                for (var key in errors) {
-                  
-                }
-                //$('#btnLoading').hide();
-                //$('#btnSave').show();
-            }
-          });
-        }
-      });
-
-      var filesKm = '';
-      $('#file-km').change(function(e){
-         filesKm = e.target.files;
-         
-         if(filesKm != ''){
-           var dataForm = new FormData();        
-          $.each(filesKm, function(key, value) {
-             dataForm.append('file', value);
-          });
-          
-          dataForm.append('date_dir', 0);
-          dataForm.append('folder', 'tmp');
-
-          $.ajax({
-            url: $('#route_upload_tmp_image').val(),
-            type: "POST",
-            async: false,      
-            data: dataForm,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-              if(response.image_path){
-                $('#thumbnail_km').attr('src',$('#upload_url').val() + response.image_path);
-                $('#icon_km').val( response.image_path );
-                $('#image_name_km' ).val( response.image_name );
-              }
-              console.log(response.image_path);
-                //window.location.reload();
-            },
-            error: function(response){                             
-                var errors = response.responseJSON;
-                for (var key in errors) {
-                  
-                }
-                //$('#btnLoading').hide();
-                //$('#btnSave').show();
-            }
-          });
-        }
-      });
-
-      var filesBanner = '';
-      $('#file-banner').change(function(e){
-         filesBanner = e.target.files;
-         
-         if(filesBanner != ''){
-           var dataForm = new FormData();        
-          $.each(filesBanner, function(key, value) {
-             dataForm.append('file', value);
-          });
-          
-          dataForm.append('date_dir', 0);
-          dataForm.append('folder', 'tmp');
-
-          $.ajax({
-            url: $('#route_upload_tmp_image').val(),
-            type: "POST",
-            async: false,      
-            data: dataForm,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-              if(response.image_path){
-                $('#thumbnail_banner').attr('src',$('#upload_url').val() + response.image_path);
-                $('#banner_menu').val( response.image_path );
-                $('#banner_name' ).val( response.image_name);
-              }
-              console.log(response.image_path);
-                //window.location.reload();
-            },
-            error: function(response){                             
-                var errors = response.responseJSON;
-                for (var key in errors) {
-                  
-                }
-                //$('#btnLoading').hide();
-                //$('#btnSave').show();
-            }
-          });
-        }
-      });
+    $(document).ready(function(){     
       
-      $('#name').change(function(){
+      $('#name_vi').change(function(){
          var name = $.trim( $(this).val() );
-         if( name != '' && $('#slug').val() == ''){
+         if( name != '' && $('#slug_vi').val() == ''){
             $.ajax({
               url: $('#route_get_slug').val(),
               type: "POST",
@@ -373,7 +201,33 @@
               },              
               success: function (response) {
                 if( response.str ){                  
-                  $('#slug').val( response.str );
+                  $('#slug_vi').val( response.str );
+                }                
+              },
+              error: function(response){                             
+                  var errors = response.responseJSON;
+                  for (var key in errors) {
+                    
+                  }
+                  //$('#btnLoading').hide();
+                  //$('#btnSave').show();
+              }
+            });
+         }
+      });
+      $('#name_en').change(function(){
+         var name = $.trim( $(this).val() );
+         if( name != '' && $('#slug_en').val() == ''){
+            $.ajax({
+              url: $('#route_get_slug').val(),
+              type: "POST",
+              async: false,      
+              data: {
+                str : name
+              },              
+              success: function (response) {
+                if( response.str ){                  
+                  $('#slug_en').val( response.str );
                 }                
               },
               error: function(response){                             

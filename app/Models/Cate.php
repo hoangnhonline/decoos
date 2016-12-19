@@ -43,7 +43,7 @@ class Cate extends Model  {
 
     public function sanPham()
     {
-        return $this->hasMany('App\Models\SanPham', 'cate_id');
+        return $this->hasMany('App\Models\Product', 'cate_id');
     }
 
     public function banners()
