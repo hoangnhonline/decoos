@@ -24,7 +24,7 @@ class CateController extends Controller
         $loaiSpArr = LoaiSp::all();
         $loaiSp = LoaiSp::whereRaw('1')->first();
         $loai_id = $request->loai_id ? $request->loai_id : $loaiSp->loai_id;
-        $items = Cate::where('loai_id', $loai_id)->orderBy('display_order');        
+        $items = Cate::where('loai_id', $loai_id)->orderBy('display_order')->get();        
         return view('backend.cate.index', compact( 'items', 'loaiSpArr', 'loaiSp', 'loai_id'));
     }
     /**
