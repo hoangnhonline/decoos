@@ -125,7 +125,7 @@
                         </div>
                          <div class="form-group">
                           <label>Detail</label>
-                          <textarea class="form-control" rows="10" name="content_en" id="content_en">{{ old('name_en') ? old('name_en') : $detail->name_en }}</textarea>
+                          <textarea class="form-control" rows="10" name="content_en" id="content_en">{{ old('content_en') ? old('content_en') : $detail->content_en }}</textarea>
                         </div>
                         <div class="clearfix"></div>
                     </div><!--end thong tin co ban--> 
