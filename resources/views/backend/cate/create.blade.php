@@ -285,9 +285,9 @@
         }
       });
       
-      $('#name').change(function(){
+       $('#name_vi').change(function(){
          var name = $.trim( $(this).val() );
-         if( name != '' && $('#slug').val() == ''){
+         if( name != '' && $('#slug_vi').val() == ''){
             $.ajax({
               url: $('#route_get_slug').val(),
               type: "POST",
@@ -297,7 +297,33 @@
               },              
               success: function (response) {
                 if( response.str ){                  
-                  $('#slug').val( response.str );
+                  $('#slug_vi').val( response.str );
+                }                
+              },
+              error: function(response){                             
+                  var errors = response.responseJSON;
+                  for (var key in errors) {
+                    
+                  }
+                  //$('#btnLoading').hide();
+                  //$('#btnSave').show();
+              }
+            });
+         }
+      });
+      $('#name_en').change(function(){
+         var name = $.trim( $(this).val() );
+         if( name != '' && $('#slug_en').val() == ''){
+            $.ajax({
+              url: $('#route_get_slug').val(),
+              type: "POST",
+              async: false,      
+              data: {
+                str : name
+              },              
+              success: function (response) {
+                if( response.str ){                  
+                  $('#slug_en').val( response.str );
                 }                
               },
               error: function(response){                             
