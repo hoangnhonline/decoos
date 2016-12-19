@@ -78,6 +78,7 @@ class CateController extends Controller
        
         $dataArr['is_menu'] = isset($dataArr['is_menu']) ? 1 : 0;            
         $dataArr['created_user'] = Auth::user()->id;
+        $dataArr['status'] = 1;
 
         $dataArr['updated_user'] = Auth::user()->id;
         $rs = Cate::create($dataArr);
