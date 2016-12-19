@@ -213,7 +213,7 @@ class ProductController extends Controller
             }
             if( !empty($imageArr['name']) ){
                 foreach ($imageArr['name'] as $key => $name) {
-                    $rs = ProductImg::create(['sp_id' => $id, 'image_url' => $name, 'display_order' => 1]);                
+                    $rs = ProductImg::create(['product_id' => $id, 'image_url' => $name, 'display_order' => 1]);                
                     $image_id = $rs->id;
                     if( $imageArr['is_thumbnail'][$key] == 1){
                         $thumbnail_id = $image_id;
