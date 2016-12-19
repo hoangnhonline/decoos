@@ -68,7 +68,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => '
         Route::get('/', ['as' => 'video.index', 'uses' => 'VideoController@index']);
         Route::post('/store', ['as' => 'video.store', 'uses' => 'VideoController@store']);
         Route::get('{id}/edit',   ['as' => 'video.edit', 'uses' => 'VideoController@edit']);
-        Route::get('/export',   ['as' => 'video.export', 'uses' => 'VideoController@download']);
+        Route::get('/create', ['as' => 'video.create', 'uses' => 'VideoController@create']);
         Route::post('/update', ['as' => 'video.update', 'uses' => 'VideoController@update']);
         Route::get('{id}/destroy', ['as' => 'video.destroy', 'uses' => 'VideoController@destroy']);
     });

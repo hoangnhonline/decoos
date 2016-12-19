@@ -20,8 +20,16 @@ class VideoController extends Controller
     */
     public function index(Request $request)
     {
-        $items = Video::all()->sortBy('display_order');
-        return view('backend.album.index', compact( 'items' ));
+        $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
+        
+        $query = Video::where('video.status', 1);
+              
+        if( $name != ''){
+            $query->where('video.name_vi', 'LIKE', '%'.$name.'%');
+            $query->orWhere('video.name_en', 'LIKE', '%'.$name.'%');
+        }
+        $items = $query->paginate(50);
+        return view('backend.video.index', compact( 'items', 'arrSearch'));
     }
 
     /**
@@ -31,7 +39,7 @@ class VideoController extends Controller
     */
     public function create()
     {
-        return view('backend.album.create');
+        return view('backend.video.create');
     }  
 
     
@@ -49,13 +57,15 @@ class VideoController extends Controller
             'name_vi' => 'required',
             'slug_vi' => 'required',
             'name_en' => 'required',
-            'slug_en' => 'required'
+            'slug_en' => 'required',
+            'video_url' => 'required'
         ],
         [
-            'name_vi.required' => 'Bạn chưa nhập tên bộ sưu tập VI',
+            'name_vi.required' => 'Bạn chưa nhập tên video VI',
             'slug_vi.required' => 'Bạn chưa nhập slug VI',
-            'name_en.required' => 'Bạn chưa nhập tên bộ sưu tập EN',
+            'name_en.required' => 'Bạn chưa nhập tên video EN',
             'slug_en.required' => 'Bạn chưa nhập slug EN',
+            'video_url.required' => 'Bạn chưa nhập VIDEO URL',
         ]);        
         
         if($dataArr['image_url'] && $dataArr['image_name']){
@@ -77,16 +87,15 @@ class VideoController extends Controller
         $dataArr['alias_en'] = Helper::stripUnicode($dataArr['name_en']);
                    
         $dataArr['created_user'] = Auth::user()->id;
-
         $dataArr['updated_user'] = Auth::user()->id;
         $rs = Video::create($dataArr);
         $id = $rs->id;
 
         $this->storeMeta( $id, 0, $dataArr);
 
-        Session::flash('message', 'Tạo mới bộ sưu tập thành công');
+        Session::flash('message', 'Tạo mới video thành công');
 
-        return redirect()->route('album.index');
+        return redirect()->route('video.index');
     }
 
     /**
@@ -115,7 +124,7 @@ class VideoController extends Controller
             $meta = MetaData::find( $detail->meta_id );
         }
 
-        return view('backend.album.edit', compact( 'detail', 'meta'));
+        return view('backend.video.edit', compact( 'detail', 'meta'));
     }
 
     /**
@@ -136,9 +145,9 @@ class VideoController extends Controller
             'slug_en' => 'required'
         ],
         [
-            'name_vi.required' => 'Bạn chưa nhập tên bộ sưu tập VI',
+            'name_vi.required' => 'Bạn chưa nhập tên video VI',
             'slug_vi.required' => 'Bạn chưa nhập slug VI',
-            'name_en.required' => 'Bạn chưa nhập tên bộ sưu tập EN',
+            'name_en.required' => 'Bạn chưa nhập tên video EN',
             'slug_en.required' => 'Bạn chưa nhập slug EN',
         ]);
 
@@ -166,9 +175,9 @@ class VideoController extends Controller
 
         $this->storeMeta( $dataArr['id'], $dataArr['meta_id'], $dataArr);
 
-        Session::flash('message', 'Cập nhật bộ sưu tập thành công');
+        Session::flash('message', 'Cập nhật video thành công');
 
-        return redirect()->route('album.edit', $dataArr['id']);
+        return redirect()->route('video.edit', $dataArr['id']);
     }
     public function storeMeta( $id, $meta_id, $dataArr ){
        
@@ -209,7 +218,7 @@ class VideoController extends Controller
         $model->delete();
 
         // redirect
-        Session::flash('message', 'Xóa bộ sưu tập thành công');
-        return redirect()->route('album.index');
+        Session::flash('message', 'Xóa video thành công');
+        return redirect()->route('video.index');
     }   
 }

@@ -43,7 +43,12 @@
           <li {{ \Request::route()->getName() == "album.create" ? "class=active" : "" }}><a href="{{ route('album.create') }}"><i class="fa fa-circle-o"></i> Thêm bộ sưu tập</a></li>          
         </ul>
       </li>
-     
+      <li {{ in_array(\Request::route()->getName(), ['video.edit', 'video.index', 'video.create']) ? "class=active" : "" }}>
+        <a href="{{ route('video.index') }}">
+          <i class="fa fa-pencil-square-o"></i> 
+          <span>Video</span>         
+        </a>       
+      </li>
       <li class="treeview {{ in_array(\Request::route()->getName(), ['pages.index', 'pages.create']) ? 'active' : '' }}">
         <a href="#">
           <i class="fa fa-twitch"></i> 
