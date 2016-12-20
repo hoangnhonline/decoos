@@ -19,6 +19,7 @@ class Helper
         return strpos($image_url, 'http') === false ? config('decoos.upload_url') . $image_url : $image_url;        
 
     }
+        
     public static function seo(){
         $seo = [];
         $arrTmpSeo = DB::table('info_seo')->get();
