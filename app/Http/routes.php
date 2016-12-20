@@ -157,22 +157,22 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => '
 Route::group(['namespace' => 'Frontend'], function()
 {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+    Route::get('/{slug}', ['as' => 'danh-muc-cha', 'uses' => 'CateController@index']);
     Route::post('/send-contact', ['as' => 'send-contact', 'uses' => 'ContactController@store']);
     Route::post('/set-service', ['as' => 'set-service', 'uses' => 'CartController@setService']);    
-    Route::get('san-pham/{slug}', ['as' => 'chi-tiet', 'uses' => 'DetailController@index']);
-    Route::get('/tin-tuc/{slug}-{id}.html', ['as' => 'news-detail', 'uses' => 'HomeController@newsDetail']);
-    Route::get('{slugLoaiSp}/gia-{slugGia}', ['as' => 'theo-gia-danh-muc-cha', 'uses' => 'CateController@theoGia']);
-    Route::get('{slugLoaiSp}/ban-chay/', ['as' => 'ban-chay', 'uses' => 'CateController@banChay']);
-    Route::get('{slugLoaiSp}/san-pham-moi/', ['as' => 'san-pham-moi', 'uses' => 'CateController@sanPhamMoi']);
-    Route::get('{slugLoaiSp}/giam-gia/', ['as' => 'giam-gia', 'uses' => 'CateController@giamGia']);  
-    Route::get('{slugLoaiSp}/{slug}/', ['as' => 'danh-muc-con', 'uses' => 'CateController@cate']);
-    Route::post('/dang-ki-newsletter', ['as' => 'register.newsletter', 'uses' => 'HomeController@registerNews']);
-    Route::get('/cap-nhat-thong-tin', ['as' => 'cap-nhat-thong-tin', 'uses' => 'CartController@updateUserInformation']);
-    Route::get('/{slug}', ['as' => 'news-list', 'uses' => 'HomeController@newsList']);
+    
+    Route::get('chi-tiet/{slug}-{id}.html', ['as' => 'chi-tiet-vi', 'uses' => 'DetailController@index']);
+    Route::get('detail/{slug}-{id}.html', ['as' => 'chi-tiet-en', 'uses' => 'DetailController@index']);
+
+    Route::get('{slugLoaiSp}/{slug}/', ['as' => 'danh-muc-con', 'uses' => 'CateController@cate']);  
+    
+
+  
+  
     Route::get('/tin-tuc/{slug}-{id}.html', ['as' => 'news-detail', 'uses' => 'HomeController@newsDetail']);
     Route::get('/tim-kiem.html', ['as' => 'search', 'uses' => 'HomeController@search']);   
     Route::get('lien-he.html', ['as' => 'contact', 'uses' => 'HomeController@contact']);
-    Route::get('{slug}.html', ['as' => 'danh-muc-cha', 'uses' => 'CateController@index']);
+    
 
 });
 

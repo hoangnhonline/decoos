@@ -44,14 +44,13 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="products-item">
                     <div class="products-img">
-                      <a href="#" class="" >
+                      <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
                         <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
-                        <!-- <img src="{{ URL::asset('assets/images/products/pro_new/1.jpg') }}" alt="Bóp nam" class="img_hover"> -->
                       </a>
                     </div>
                     <div class="products-info">
                       <h2 class="products-info-name">
-                        <a id="" class="ten_sp " title="Bóp nam" href="#">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
+                        <a class="ten_sp " title="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}" href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
                       </h2>
                       <p class="products-info-price">
                         @if($product->is_sale == 1 && $product->price_sale > 0)
@@ -81,14 +80,13 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="products-item">
                     <div class="products-img">
-                      <a href="#" class="" >
+                       <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
                         <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
-                        <!-- <img src="{{ URL::asset('assets/images/products/pro_new/1.jpg') }}" alt="Bóp nam" class="img_hover"> -->
                       </a>
                     </div>
                     <div class="products-info">
                       <h2 class="products-info-name">
-                        <a id="" class="ten_sp " title="Bóp nam" href="#">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
+                         <a class="ten_sp " title="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}" href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
                       </h2>
                       <p class="products-info-price">
                         @if($product->is_sale == 1 && $product->price_sale > 0)
@@ -117,14 +115,13 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="products-item">
                     <div class="products-img">
-                      <a href="#" class="" >
+                      <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
                         <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
-                        <!-- <img src="{{ URL::asset('assets/images/products/pro_new/1.jpg') }}" alt="Bóp nam" class="img_hover"> -->
                       </a>
                     </div>
                     <div class="products-info">
                       <h2 class="products-info-name">
-                        <a id="" class="ten_sp " title="Bóp nam" href="#">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
+                         <a class="ten_sp " title="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}" href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
                       </h2>
                       <p class="products-info-price">
                       @if($product->is_sale == 1 && $product->price_sale > 0)
@@ -177,13 +174,13 @@
                       <div class="col-md-3 col-sm-4 col-xs-6">
                         <div class="products-item">
                           <div class="products-img">
-                            <a href="#" class="" >
+                            <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
                               <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
                             </a>
                           </div>
                           <div class="products-info">
                             <h2 class="products-info-name">
-                              <a id="" class="ten_sp " title="Bóp nam" href="#">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
+                               <a class="ten_sp " title="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}" href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
                             </h2>
                             <p class="products-info-price">
                               @if($product->is_sale == 1 && $product->price_sale > 0)
@@ -217,13 +214,13 @@
                         <div class="col-md-3 col-sm-4 col-xs-6">
                           <div class="products-item">
                             <div class="products-img">
-                              <a href="#" class="" >
+                              <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
                                 <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
                               </a>
                             </div>
                             <div class="products-info">
                               <h2 class="products-info-name">
-                                <a id="" class="ten_sp " title="Bóp nam" href="#">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
+                                 <a class="ten_sp " title="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}" href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
                               </h2>
                               <p class="products-info-price">
                                 @if($product->is_sale == 1 && $product->price_sale > 0)
@@ -256,4 +253,264 @@
       </div><!-- end contents -->
     </div><!-- end products -->
     @endforeach
+<div class="block-news">
+  <div class="block-title block-title-b2">
+    <div class="container">
+      <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+        <li role="presentation" class="active"><a href="#tln" aria-controls="home" role="tab" data-toggle="tab">Tin Tức Mới</a></li>
+      </ul><!-- end nav tabs -->
+    </div><!-- end title -->
+  </div>
+  <div class="block-contents">
+    <div class="container">
+      <div class="row">
+        <div class="tab-content">
+
+          <div role="tabpanel" class="tab-pane fade in active" id="tln">
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="news-item">
+                <div class="news-img">
+                  <a href="#" title="">
+                      <img src="{{ URL::asset('assets/images/news/1.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="news-info">
+                  <h2 class="news-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="news-item">
+                <div class="news-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/2.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="news-info">
+                  <h2 class="news-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="news-item">
+                <div class="news-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/3.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="news-info">
+                  <h2 class="news-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="news-item">
+                <div class="news-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="news-info">
+                  <h2 class="news-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+
+            <div class="clearfix">
+              <a href="#" class="view-all pull-right">Xem tất cả</a>
+            </div>
+          </div><!-- end spn -->
+
+        </div><!-- end tab panes -->
+      </div>
+    </div>
+  </div><!-- end contents -->
+</div><!-- end news -->
+
+<div class="block-album">
+  <div class="block-title block-title-b2">
+    <div class="container">
+      <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+        <li role="presentation" class="active"><a href="#bst" aria-controls="home" role="tab" data-toggle="tab">Bộ Sưu Tập</a></li>
+      </ul><!-- end nav tabs -->
+    </div><!-- end title -->
+  </div>
+  <div class="block-contents">
+    <div class="container">
+      <div class="row">
+        <div class="tab-content">
+
+          <div role="tabpanel" class="tab-pane fade in active" id="bst">
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+
+            <div class="clearfix">
+              <a href="#" class="view-all pull-right">Xem tất cả</a>
+            </div>
+          </div><!-- end spn -->
+
+        </div><!-- end tab panes -->
+      </div>
+    </div>
+  </div><!-- end contents -->
+</div><!-- end album -->
+
+<div class="block-video">
+  <div class="block-title block-title-b2">
+    <div class="container">
+      <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+        <li role="presentation" class="active"><a href="#bst" aria-controls="home" role="tab" data-toggle="tab">Bộ Sưu Tập</a></li>
+      </ul><!-- end nav tabs -->
+    </div><!-- end title -->
+  </div>
+  <div class="block-contents">
+    <div class="container">
+      <div class="row">
+        <div class="tab-content">
+
+          <div role="tabpanel" class="tab-pane fade in active" id="bst">
+
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6">
+              <div class="album-item">
+                <div class="album-img">
+                  <a href="#" title="">
+                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
+                      </a>
+                </div>
+                <div class="album-info">
+                  <h2 class="album-info-name">
+                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                  </h2>
+                  <p class="album-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                </div>
+              </div><!-- end news-item -->
+            </div>
+
+            <div class="clearfix">
+              <a href="#" class="view-all pull-right">Xem tất cả</a>
+            </div>
+          </div><!-- end spn -->
+
+        </div><!-- end tab panes -->
+      </div>
+    </div>
+  </div><!-- end contents -->
+</div><!-- end video -->
 @endsection

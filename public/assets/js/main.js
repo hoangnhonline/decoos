@@ -54,7 +54,7 @@
   });
 
   /** Block SideBar Category **/
-  $('.block-sidebar .list-category li.has-child a').click(function () {
+  $('.block-sidebar .list-category li.has-child a.parent-cate').click(function () {
     $(this).next().slideToggle();
     $(this).parent().toggleClass('open');
     return false;

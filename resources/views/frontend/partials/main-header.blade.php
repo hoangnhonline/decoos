@@ -37,6 +37,6 @@
     </div>
   </div><!-- end menu -->
   <h1 class="container text-center">
-    <a href="index.html" class="logo"><img src="{{ URL::asset('assets/images/decoos.jpg') }}" alt="Logo"></a>
+    <a href="{{ route('home') }}" class="logo"><img src="{{ URL::asset('assets/images/decoos.jpg') }}" alt="Logo decoos.com"></a>
   </h1>
 </header>

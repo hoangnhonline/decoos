@@ -34,6 +34,7 @@ class Product extends Model  {
         'content_vi',     
         'content_en',
         'thumbnail_id',
+        'video_url',
         'loai_id',
         'cate_id',
         'is_hot',

@@ -9,7 +9,7 @@ use App\Models\LoaiSp;
 use App\Models\Cate;
 use App\Models\Product;
 use App\Models\SpThuocTinh;
-use App\Models\SpHinh;
+use App\Models\ProductImg;
 use App\Models\ThuocTinh;
 use App\Models\LoaiThuocTinh;
 use App\Models\Banner;
@@ -42,20 +42,20 @@ class CompareController extends Controller
         $str_id = $request->id;
         if( $str_id ){
             $tmpArr = explode("-", $str_id);
-            $productTmpArr = Product::whereIn('san_pham.id', $tmpArr)
-                ->leftJoin('sp_hinh', 'sp_hinh.id', '=','san_pham.thumbnail_id')
-                ->select('san_pham.id as sp_id', 'name', 'name_extend', 'slug', 'price', 'price_sale', 'sp_hinh.image_url')->get();                
+            $productTmpArr = Product::whereIn('product.id', $tmpArr)
+                ->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id')
+                ->select('product.id as product_id', 'name_vi', 'slug_vi', 'name_en', 'slug_en', 'price', 'price_sale', 'product_img.image_url')->get();                
         
             foreach($productTmpArr as $product){
-                $productArr[$product->sp_id] = $product;
+                $productArr[$product->product_id] = $product;
             }
-            foreach( $tmpArr as $sp_id){                
-                $tmp = SpThuocTinh::where('sp_id', $sp_id)->select('thuoc_tinh')->first();
+            foreach( $tmpArr as $product_id){                
+                $tmp = SpThuocTinh::where('product_id', $product_id)->select('thuoc_tinh')->first();
         
                 if( $tmp ){
-                    $spThuocTinhArr[$sp_id] = json_decode( $tmp->thuoc_tinh, true);
+                    $spThuocTinhArr[$product_id] = json_decode( $tmp->thuoc_tinh, true);
                 }
-                $tmpDetail = Product::find( $sp_id );
+                $tmpDetail = Product::find( $product_id );
                 $loai_id = $tmpDetail->loai_id;
             }
         }        
