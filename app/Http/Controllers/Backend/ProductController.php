@@ -12,6 +12,8 @@ use App\Models\Cate;
 use App\Models\ProductImg;
 use App\Models\MetaData;
 use App\Models\Color;
+use App\Models\Tag;
+use App\Models\TagObjects;
 
 use Helper, File, Session, Auth, Hash, URL;
 
@@ -83,8 +85,10 @@ class ProductController extends Controller
         if( $loai_id ){            
             $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name_vi')->orderBy('display_order', 'desc')->get();
         } 
-        $mucDichArr = [];
-        return view('backend.product.create', compact('loaiSpArr', 'cateArr', 'loai_id', 'cate_id', 'colorList'));
+        $tagViList = Tag::where('type', 1)->orderBy('id', 'desc')->get();
+        $tagEnList = Tag::where('type', 2)->orderBy('id', 'desc')->get();
+
+        return view('backend.product.create', compact('loaiSpArr', 'cateArr', 'loai_id', 'cate_id', 'colorList', 'tagViList', 'tagEnList'));
     }
 
     /**
@@ -137,6 +141,28 @@ class ProductController extends Controller
 
         $rs = Product::create($dataArr);     
         $sp_id = $rs->id;
+
+        // xu ly tags
+        if( !empty( $dataArr['tags_vi'] ) && $sp_id ){           
+
+            foreach ($dataArr['tags_vi'] as $tag_id) {
+                $model = new TagObjects;
+                $model->object_id = $sp_id;
+                $model->tag_id  = $tag_id;
+                $model->type = 1;
+                $model->save();
+            }
+        }
+        if( !empty( $dataArr['tags_en'] ) && $sp_id ){           
+
+            foreach ($dataArr['tags_en'] as $tag_id) {
+                $model = new TagObjects;
+                $model->object_id = $sp_id;
+                $model->tag_id  = $tag_id;
+                $model->type = 2;
+                $model->save();
+            }
+        }
         $this->storeImage( $sp_id, $dataArr);
         $this->storeMeta($sp_id, 0, $dataArr);
         Session::flash('message', 'Tạo mới sản phẩm thành công');
@@ -264,8 +290,22 @@ class ProductController extends Controller
         if ( $detail->meta_id > 0){
             $meta = MetaData::find( $detail->meta_id );
         }
-             
-        return view('backend.product.edit', compact( 'detail', 'hinhArr', 'loaiSpArr', 'cateArr', 'meta', 'colorList'));
+        $tagViList = Tag::where('type', 1)->orderBy('id', 'desc')->get();
+        $tagEnList = Tag::where('type', 2)->orderBy('id', 'desc')->get();
+        
+        $tmpArr = TagObjects::where('object_id', $id)->get();
+        $tagSelectedVi = $tagSelectedEn = [];
+        if( $tmpArr->count() > 0 ){
+            foreach ($tmpArr as $value) {
+                if($value->type == 1){
+                    $tagSelectedVi[] = $value->tag_id;
+                }else{
+                    $tagSelectedEn[] = $value->tag_id;
+                }
+            }
+        }
+
+        return view('backend.product.edit', compact( 'detail', 'hinhArr', 'loaiSpArr', 'cateArr', 'meta', 'colorList', 'tagViList', 'tagEnList', 'tagSelectedVi', 'tagSelectedEn'));
     }
     public function ajaxDetail(Request $request)
     {       
@@ -323,6 +363,29 @@ class ProductController extends Controller
         $model->update($dataArr);
         
         $sp_id = $dataArr['id'];
+        // xu ly tags
+        TagObjects::where(['object_id' => $sp_id])->delete();
+        if( !empty( $dataArr['tags_vi'] ) && $sp_id ){           
+
+            foreach ($dataArr['tags_vi'] as $tag_id) {
+                $model = new TagObjects;
+                $model->object_id = $sp_id;
+                $model->tag_id  = $tag_id;
+                $model->type = 1;
+                $model->save();
+            }
+        }
+        if( !empty( $dataArr['tags_en'] ) && $sp_id ){           
+
+            foreach ($dataArr['tags_en'] as $tag_id) {
+                $model = new TagObjects;
+                $model->object_id = $sp_id;
+                $model->tag_id  = $tag_id;
+                $model->type = 2;
+                $model->save();
+            }
+        }
+
         $this->storeMeta( $sp_id, $dataArr['meta_id'], $dataArr);
         $this->storeImage( $sp_id, $dataArr);
      

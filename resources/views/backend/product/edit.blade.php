@@ -122,6 +122,16 @@
                           <input type="text" class="form-control" name="video_url" id="video_url" value="{{ old('video_url') ? old('video_url') : $detail->video_url }}">
                         </div>
                          <div class="form-group">
+                          <label>Tags VI</label>
+                          <select class="form-control select2" name="tags_vi[]" id="tags_vi" multiple="multiple">                  
+                            @if( $tagViList->count() > 0)
+                              @foreach( $tagViList as $value )
+                              <option value="{{ $value->id }}" {{ in_array($value->id, $tagSelectedVi) ? "selected" : "" }}>{{ $value->name }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
+                         <div class="form-group">
                           <label>Chi tiết</label>
                           <textarea class="form-control" rows="10" name="content_vi" id="content_vi">{{ old('content_vi') ? old('content_vi') : $detail->content_vi }}</textarea>
                         </div>
@@ -135,6 +145,16 @@
                         <div class="form-group">                  
                           <label>Slug <span class="red-star">*</span></label>                  
                           <input type="text" class="form-control" name="slug_en" id="slug_en" value="{{ old('slug_en') ? old('slug_en') : $detail->slug_en }}">
+                        </div>
+                        <div class="form-group">
+                          <label>Tags EN</label>
+                          <select class="form-control select2" name="tags_en[]" id="tags_en" multiple="multiple">                  
+                            @if( $tagEnList->count() > 0)
+                              @foreach( $tagEnList as $value )
+                              <option value="{{ $value->id }}" {{ in_array($value->id, $tagSelectedEn) ? "selected" : "" }}>{{ $value->name }}</option>
+                              @endforeach
+                            @endif
+                          </select>
                         </div>
                          <div class="form-group">
                           <label>Detail</label>

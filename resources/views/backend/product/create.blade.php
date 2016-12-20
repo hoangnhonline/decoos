@@ -109,14 +109,24 @@
                             <option value="0">--select--</option>
                             @foreach($colorList as $color)
                             <option value="{{ $color->id  }}" {{ old('color_id') == $color->id ? "selected" : ""}}>{{ $color->name }}</option>
-                            @endif
+                            @endforeach
                           </select>
                         </div>
+                       
                         <div class="form-group">                  
                           <label>Video URL</label>                  
                           <input type="text" class="form-control" name="video_url" id="video_url" value="{{ old('video_url') }}">
                         </div>
-
+                         <div class="form-group">
+                          <label>Tags VI</label>
+                          <select class="form-control select2" name="tags_vi[]" id="tags_vi" multiple="multiple">                  
+                            @if( $tagViList->count() > 0)
+                              @foreach( $tagViList as $value )
+                              <option value="{{ $value->id }}" {{ old('tags') && in_array($value->id, old('tags_vi') ) ? "selected" : "" }}>{{ $value->name }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
                          <div class="form-group">
                           <label>Chi tiết</label>
                           <textarea class="form-control" rows="10" name="content_vi" id="content_vi">{{ old('content_vi') }}</textarea>
@@ -135,6 +145,16 @@
                          <div class="form-group">
                           <label>Detail</label>
                           <textarea class="form-control" rows="10" name="content_en" id="content_en">{{ old('content_en') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                          <label>Tags EN</label>
+                          <select class="form-control select2" name="tags_en[]" id="tags_en" multiple="multiple">                  
+                            @if( $tagEnList->count() > 0)
+                              @foreach( $tagEnList as $value )
+                              <option value="{{ $value->id }}" {{ old('tags') && in_array($value->id, old('tags_en') ) ? "selected" : "" }}>{{ $value->name }}</option>
+                              @endforeach
+                            @endif
+                          </select>
                         </div>
                         <div class="clearfix"></div>
                     </div><!--end thong tin co ban--> 
