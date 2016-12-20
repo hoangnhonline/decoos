@@ -11,6 +11,7 @@ use App\Models\LoaiSp;
 use App\Models\Cate;
 use App\Models\ProductImg;
 use App\Models\MetaData;
+use App\Models\Color;
 
 use Helper, File, Session, Auth, Hash, URL;
 
@@ -77,12 +78,13 @@ class ProductController extends Controller
         $cateArr = $loaiThuocTinhArr = (object) [];
         $thuocTinhArr = [];
         $loaiSpArr = LoaiSp::all();
+        $colorList = Color::all();
         
         if( $loai_id ){            
             $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name_vi')->orderBy('display_order', 'desc')->get();
         } 
         $mucDichArr = [];
-        return view('backend.product.create', compact('loaiSpArr', 'cateArr', 'loai_id', 'cate_id'));
+        return view('backend.product.create', compact('loaiSpArr', 'cateArr', 'loai_id', 'cate_id', 'colorList'));
     }
 
     /**
@@ -253,17 +255,17 @@ class ProductController extends Controller
         $hinhArr = ProductImg::where('product_id', $id)->lists('image_url', 'id');      
 
         $loaiSpArr = LoaiSp::all();
-        
+            
         $loai_id = $detail->loai_id; 
             
         $cateArr = Cate::where('loai_id', $loai_id)->select('id', 'name_vi')->orderBy('display_order', 'desc')->get();
-        
+        $colorList = Color::all();
         $meta = (object) [];
         if ( $detail->meta_id > 0){
             $meta = MetaData::find( $detail->meta_id );
         }
              
-        return view('backend.product.edit', compact( 'detail', 'hinhArr', 'loaiSpArr', 'cateArr', 'meta'));
+        return view('backend.product.edit', compact( 'detail', 'hinhArr', 'loaiSpArr', 'cateArr', 'meta', 'colorList'));
     }
     public function ajaxDetail(Request $request)
     {       

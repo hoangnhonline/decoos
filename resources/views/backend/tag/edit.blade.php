@@ -37,13 +37,12 @@
                           @endforeach
                       </ul>
                   </div>
-              @endif
+              @endif      
               <div class="form-group">
                 <label for="email">Loại </label>
                 <select class="form-control" name="type">                                
-                  <option value="1" {{ 1 ==  $detail->type ? "selected" : "" }}>Phim</option>
-                  <option value="2" {{ 2 ==  $detail->type ? "selected" : "" }}>Bài viết</option>
-                  <!--<option value="3" {{ 3 ==  $detail->type ? "selected" : "" }}>Ảnh</option>-->
+                  <option value="1" {{ 1 ==  $detail->type ? "selected" : "" }}>Tiếng Việt</option>
+                  <option value="2" {{ 2 ==  $detail->type ? "selected" : "" }}>Tiếng Anh</option>                  
                 </select>
               </div>
                <!-- text input -->
@@ -55,6 +54,14 @@
                 <label>Slug <span class="red-star">*</span></label>
                 <input type="text" class="form-control" name="slug" id="slug" value="{{ $detail->slug }}">
               </div>
+              <div class="form-group">
+                  <label>Level <span class="red-star">*</span></label>                 
+                  <select name="level" class="form-control">
+                    @for($i = 1; $i<6; $i++)
+                    <option value="{{ $i }}" {{ $detail->level == $i ? "selected" : "" }}>{{ $i }}</option>
+                    @endfor
+                  </select>
+                </div> 
               <!-- textarea -->
               <div class="form-group">
                 <label>Mô tả</label>

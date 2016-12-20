@@ -42,6 +42,7 @@ class Product extends Model  {
         'price',
         'price_sale',
         'views',
+        'color_id',
         'display_order',
         'sale_percent',
         'status',
@@ -51,6 +52,7 @@ class Product extends Model  {
         ];
     
     public static function getList($is_hot, $is_sale, $cate_id, $loai_id, $limit){
+        
         $query = self::where('status', 1)->where('thumbnail_id', '>', 0);
         if($is_hot == 1){
             $query->where('is_hot', 1);

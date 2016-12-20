@@ -108,8 +108,6 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => '
         Route::post('/update', ['as' => 'product.update', 'uses' => 'ProductController@update']);
         Route::post('/ajax-search', ['as' => 'product.ajax-search', 'uses' => 'ProductController@ajaxSearch']);        
         Route::get('{id}/destroy', ['as' => 'product.destroy', 'uses' => 'ProductController@destroy']);
-              
-
     });
     Route::post('/tmp-upload', ['as' => 'image.tmp-upload', 'uses' => 'UploadController@tmpUpload']);
     Route::post('/tmp-upload-multiple', ['as' => 'image.tmp-upload-multiple', 'uses' => 'UploadController@tmpUploadMultiple']);
@@ -151,6 +149,14 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => '
         Route::get('{id}/edit',   ['as' => 'articles.edit', 'uses' => 'ArticlesController@edit']);
         Route::post('/update', ['as' => 'articles.update', 'uses' => 'ArticlesController@update']);
         Route::get('{id}/destroy', ['as' => 'articles.destroy', 'uses' => 'ArticlesController@destroy']);
+    });
+    Route::group(['prefix' => 'color'], function () {
+        Route::get('/', ['as' => 'color.index', 'uses' => 'ColorController@index']);
+        Route::get('/create', ['as' => 'color.create', 'uses' => 'ColorController@create']);
+        Route::post('/store', ['as' => 'color.store', 'uses' => 'ColorController@store']);
+        Route::get('{id}/edit',   ['as' => 'color.edit', 'uses' => 'ColorController@edit']);
+        Route::post('/update', ['as' => 'color.update', 'uses' => 'ColorController@update']);
+        Route::get('{id}/destroy', ['as' => 'color.destroy', 'uses' => 'ColorController@destroy']);
     });
 
 });

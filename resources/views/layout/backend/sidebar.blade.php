@@ -49,7 +49,7 @@
           <span>Video</span>         
         </a>       
       </li>
-      <li class="treeview {{ in_array(\Request::route()->getName(), ['pages.index', 'pages.create']) ? 'active' : '' }}">
+      <li class="treeview {{ in_array(\Request::route()->getName(), ['pages.index', 'pages.create', 'pages.edit']) ? 'active' : '' }}">
         <a href="#">
           <i class="fa fa-twitch"></i> 
           <span>Trang</span>
@@ -60,6 +60,19 @@
         <ul class="treeview-menu">
           <li {{ in_array(\Request::route()->getName(), ['pages.index', 'pages.edit']) ? "class=active" : "" }}><a href="{{ route('pages.index') }}"><i class="fa fa-circle-o"></i> Trang</a></li>
           <li {{ in_array(\Request::route()->getName(), ['pages.create']) ? "class=active" : "" }}><a href="{{ route('pages.create') }}"><i class="fa fa-circle-o"></i> Thêm trang</a></li>          
+        </ul>
+      </li> 
+      <li class="treeview {{ in_array(\Request::route()->getName(), ['tag.index', 'tag.create', 'tag.edit']) ? 'active' : '' }}">
+        <a href="#">
+          <i class="fa fa-twitch"></i> 
+          <span>Tags</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li {{ in_array(\Request::route()->getName(), ['tag.index', 'tag.edit']) ? "class=active" : "" }}><a href="{{ route('tag.index') }}"><i class="fa fa-circle-o"></i> Tags</a></li>
+          <li {{ in_array(\Request::route()->getName(), ['tag.create']) ? "class=active" : "" }}><a href="{{ route('tag.create') }}"><i class="fa fa-circle-o"></i> Thêm tag</a></li>          
         </ul>
       </li>     
       <li {{ in_array(\Request::route()->getName(), ['newsletter.edit', 'newsletter.index']) ? "class=active" : "" }}>
@@ -85,6 +98,7 @@
         </a>
         <ul class="treeview-menu">
           <li {{ \Request::route()->getName() == "settings.index" ? "class=active" : "" }}><a href="{{ route('settings.index') }}"><i class="fa fa-circle-o"></i> Thông tin decoos.com</a></li>
+          <li {{ \Request::route()->getName() == "color.index" ? "class=active" : "" }}><a href="{{ route('color.index') }}"><i class="fa fa-circle-o"></i> Color</a></li>
           <li {{ \Request::route()->getName() == "info-seo.index" ? "class=active" : "" }}><a href="{{ route('info-seo.index') }}"><i class="fa fa-circle-o"></i> Cài đặt SEO</a></li>   
         </ul>
       </li>

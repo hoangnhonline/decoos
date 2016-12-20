@@ -40,11 +40,10 @@
                   </div>
               @endif
                 <div class="form-group">
-                  <label for="email">Loại </label>
-                  <select class="form-control" name="type">                                
-                    <option value="1" {{ 1 ==  old('type') ? "selected" : "" }}>Phim</option>
-                    <option value="2" {{ 2 ==  old('type') ? "selected" : "" }}>Bài viết</option>
-                    <!--<option value="3" {{ 3 ==  old('type') ? "selected" : "" }}>Ảnh</option>-->
+                  <label for="email">Ngôn ngữ </label>
+                  <select class="form-control" name="type">                                 
+                    <option value="1" {{ 1 ==  old('type') ? "selected" : "" }}>Tiếng Việt</option>
+                    <option value="2" {{ 2 ==  old('type') ? "selected" : "" }}>Tiếng Anh</option>                    
                   </select>
                 </div>
                  <!-- text input -->
@@ -55,7 +54,15 @@
                 <div class="form-group">
                   <label>Slug <span class="red-star">*</span></label>
                   <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug') }}">
-                </div>               
+                </div>
+                <div class="form-group">
+                  <label>Level <span class="red-star">*</span></label>                 
+                  <select name="level" class="form-control">
+                    @for($i = 1; $i<6; $i++)
+                    <option value="{{ $i }}" {{ old('level') == $i ? "selected" : "" }}>{{ $i }}</option>
+                    @endfor
+                  </select>
+                </div> 
                 <!-- textarea -->
                 <div class="form-group">
                   <label>Mô tả</label>
@@ -128,14 +135,6 @@ $(document).ready(function(){
                 if( response.str ){                  
                   $('#slug').val( response.str );
                 }                
-              },
-              error: function(response){                             
-                  var errors = response.responseJSON;
-                  for (var key in errors) {
-                    
-                  }
-                  //$('#btnLoading').hide();
-                  //$('#btnSave').show();
               }
             });
          }

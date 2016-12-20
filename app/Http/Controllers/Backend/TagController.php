@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
-use App\Models\SystemMetadata;
+use App\Models\Metadata;
 use Helper, File, Session, Auth;
 
 class TagController extends Controller
@@ -93,7 +93,7 @@ class TagController extends Controller
         $metaArr['meta_keywords'] = $dataArr['meta_keywords'];
         $metaArr['custom_text'] = $dataArr['custom_text'];
         
-        $rsMeta = SystemMetadata::create( $metaArr );
+        $rsMeta = Metadata::create( $metaArr );
 
         if( $rsMeta->id ){
             $modelTag = Tag::find($object_id);
@@ -156,7 +156,7 @@ class TagController extends Controller
         $metadata = (object) [];
         $detail = Tag::find($id);
         if( $detail->meta_id > 0){
-            $metadata = SystemMetadata::find( $detail->meta_id );
+            $metadata = Metadata::find( $detail->meta_id );
         }
 
         return view('backend.tag.edit', compact( 'detail', 'metadata'));
@@ -197,7 +197,7 @@ class TagController extends Controller
             $metaArr['meta_keywords'] = $dataArr['meta_keywords'];
             $metaArr['custom_text'] = $dataArr['custom_text'];
             $metaArr['id'] = $dataArr['meta_id'];
-            $modelMetadata = SystemMetadata::find( $dataArr['meta_id'] );
+            $modelMetadata = Metadata::find( $dataArr['meta_id'] );
             $modelMetadata->update( $metaArr );
         }
 

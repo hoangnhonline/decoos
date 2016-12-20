@@ -28,18 +28,17 @@
         <div class="panel-body">
           <form class="form-inline" role="form" method="GET" action="{{ route('tag.index') }}">
             <div class="form-group">
-              <label for="email">Loại :</label>
+              <label for="email">Ngôn ngữ :</label>
               <select class="form-control" name="type" id="type">                                
-                <option value="1" {{ 1 == $type ? "selected" : "" }}>Phim</option>
-                <option value="2" {{ 2 == $type ? "selected" : "" }}>Bài viết</option>
-                <!--<option value="3" {{ 3 == $type ? "selected" : "" }}>Ảnh</option>-->
+                <option value="1" {{ 1 == $type ? "selected" : "" }}>Tiếng Việt</option>
+                <option value="2" {{ 2 == $type ? "selected" : "" }}>Tiếng Anh</option>                
               </select>
-            </div>
+           </div>
             <div class="form-group">
               <label for="email">Từ khóa :</label>
               <input type="text" class="form-control" id="name" name="name" value="{{ $name }}">
             </div>       
-            <button type="submit" class="btn btn-primary" style="margin-top:-10px">Lọc</button>
+            <button type="submit" class="btn btn-primary">Lọc</button>
           </form>         
         </div>
       </div>
@@ -58,6 +57,7 @@
               <th style="width: 1%">#</th>
               <th>Tag</th> 
               <th>Slug</th>
+              <th>Level</th>
               <th>Mô tả</th>
               <th width="1%;white-space:nowrap">Thao tác</th>
             </tr>
@@ -73,6 +73,7 @@
                   
                 </td>                
                 <td>{{ $item->slug }}</td>
+                <td>{{ $item->level }}</td>
                 <td>{{ $item->description }}</td>
                 <td style="white-space:nowrap">                  
                   <a href="{{ route( 'tag.edit', [ 'id' => $item->id ]) }}" class="btn-sm btn btn-warning">Chỉnh sửa</a>                  

@@ -70,7 +70,7 @@
                   <a style="color:#333;font-weight:bold" href="{{ route( 'album.edit', [ 'id' => $item->id ]) }}">{{ $item->name_vi }} {{ $item->name_vi_extend }}</a>                  
                 </td>
                 <td style="white-space:nowrap; text-align:right">
-                  <a class="btn btn-default btn-sm" href="{{ route('chi-tiet', $item->slug ) }}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i> Xem</a>                  
+                  <a class="btn btn-default btn-sm" href="{{ route('chi-tiet-vi', [$item->slug_vi, $item->id] ) }}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i> Xem</a>                  
                   <a href="{{ route( 'album.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning btn-sm">Chỉnh sửa</a>                 
 
                   <a onclick="return callDelete('{{ $item->name_vi }}','{{ route( 'album.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm">Xóa</a>

@@ -103,6 +103,20 @@
                             <label>Phần trăm sale (%) </label>
                             <input type="text" class="form-control" name="sale_percent" id="sale_percent" value="{{ old('price_sale') }}">
                         </div>
+                        <div class="form-group" >                  
+                          <label>Màu sắc</label>
+                          <select name="color_id" class="form-control">
+                            <option value="0">--select--</option>
+                            @foreach($colorList as $color)
+                            <option value="{{ $color->id  }}" {{ old('color_id') == $color->id ? "selected" : ""}}>{{ $color->name }}</option>
+                            @endif
+                          </select>
+                        </div>
+                        <div class="form-group">                  
+                          <label>Video URL</label>                  
+                          <input type="text" class="form-control" name="video_url" id="video_url" value="{{ old('video_url') }}">
+                        </div>
+
                          <div class="form-group">
                           <label>Chi tiết</label>
                           <textarea class="form-control" rows="10" name="content_vi" id="content_vi">{{ old('content_vi') }}</textarea>
