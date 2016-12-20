@@ -1015,3 +1015,7 @@ footer {
   height: 330px;
   border: 0;
 }
+.products-img img {
+  width: 268px;
+  height: 268px;
+}
