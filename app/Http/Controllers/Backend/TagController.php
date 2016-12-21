@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
-use App\Models\Metadata;
+use App\Models\MetaData;
 use Helper, File, Session, Auth;
 
 class TagController extends Controller
