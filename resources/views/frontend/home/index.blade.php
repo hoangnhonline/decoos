@@ -401,13 +401,13 @@
             <div class="col-md-3 col-sm-4 col-xs-6">
               <div class="album-item">
                 <div class="album-img">
-                  <a href="{{ $lang == 'vi' ? route('detail-video', [$video->slug_vi, $video->id]) : route('detail-video', [$video->slug_en, $video->id]) }}" title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
+                  <a href="{{ $lang == 'vi' ? route('video-detail', [$video->slug_vi, $video->id]) : route('video-detail', [$video->slug_en, $video->id]) }}" title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
                         <img src="{{ Helper::showImage($video->image_url) }}" alt="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
                       </a>
                 </div>
                 <div class="album-info">
                   <h2 class="album-info-name">
-                    <a title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}" href="{{ $lang == 'vi' ? route('detail-video', [$video->slug_vi, $video->id]) : route('detail-video', [$video->slug_en, $video->id]) }}">{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}</a>
+                    <a title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}" href="{{ $lang == 'vi' ? route('video-detail', [$video->slug_vi, $video->id]) : route('video-detail', [$video->slug_en, $video->id]) }}">{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}</a>
                   </h2>
                   <p class="album-contents">{{ $lang == 'vi' ? $video->description_vi : $video->description_en }}</p>
                 </div>
