@@ -14,6 +14,8 @@ use App\Models\ArticlesCate;
 use App\Models\Customer;
 use App\Models\Newsletter;
 use App\Models\Settings;
+use App\Models\Album;
+use App\Models\Video;
 
 use App\Models\CustomerNotification;
 use Helper, File, Session, Auth, Hash;
@@ -41,7 +43,10 @@ class HomeController extends Controller
         $newProduct = Product::getList(0, 0, 0, 0, 4);        
         $hotProduct = Product::getList(1, 0, 0, 0, 4);
         $saleProduct = Product::getList(0, 1, 0, 0, 4);
-
+        $albumList = Album::where('status', 1)->join('album_img', 'thumbnail_id', '=', 'album_img.id')
+                                ->select('album.*', 'album_img.image_url')
+                                ->orderBy('id', 'desc')->limit(4)->get();
+        $videoList = Video::where('status', 1)->orderBy('id', 'desc')->limit(4)->get();
         $bannerArr = [];
         foreach( $loaiSp as $loai){
             $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();
@@ -67,7 +72,7 @@ class HomeController extends Controller
         }    
         //$articlesArr = Articles::where(['cate_id' => 1, 'is_hot' => 1])->orderBy('id', 'desc')->get();
                 
-        return view('frontend.home.index', compact('loaiSp', 'cateList', 'productArr', 'socialImage', 'seo', 'newProduct', 'hotProduct', 'saleProduct', 'lang'));
+        return view('frontend.home.index', compact('loaiSp', 'cateList', 'productArr', 'socialImage', 'seo', 'newProduct', 'hotProduct', 'saleProduct', 'lang', 'albumList', 'videoList'));
     }
 
     public function getNoti(){

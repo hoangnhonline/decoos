@@ -32,6 +32,8 @@ class Album extends Model  {
         'slug_en',
         'description_vi',
         'description_en',
+        'content_vi',
+        'content_en',
         'thumbnail_id',        
         'status',
         'meta_id',

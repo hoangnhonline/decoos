@@ -74,10 +74,13 @@
                           <label>Slug <span class="red-star">*</span></label>                  
                           <input type="text" class="form-control" name="slug_vi" id="slug_vi" value="{{ old('slug_vi') }}">
                         </div>                       
-                        
+                        <div class="form-group">
+                          <label>Mô tả </label>
+                          <textarea class="form-control" rows="6" name="description_vi" id="description_vi">{{ old('description_vi') }}</textarea>
+                        </div>
                          <div class="form-group">
                           <label>Chi tiết</label>
-                          <textarea class="form-control" rows="10" name="description_vi" id="description_vi">{{ old('description_vi') }}</textarea>
+                          <textarea class="form-control" rows="10" name="content_vi" id="content_vi">{{ old('content_vi') }}</textarea>
                         </div>
                         <div class="clearfix"></div>
                     </div><!--end thong tin co ban--> 
@@ -90,9 +93,13 @@
                           <label>Slug <span class="red-star">*</span></label>                  
                           <input type="text" class="form-control" name="slug_en" id="slug_en" value="{{ old('slug_en') }}">
                         </div>
+                        <div class="form-group">
+                          <label>Description</label>
+                          <textarea class="form-control" rows="6" name="description_en" id="description_en">{{ old('description_en') }}</textarea>
+                        </div>
                          <div class="form-group">
                           <label>Detail</label>
-                          <textarea class="form-control" rows="10" name="description_en" id="description_en">{{ old('description_en') }}</textarea>
+                          <textarea class="form-control" rows="10" name="content_en" id="content_en">{{ old('content_en') }}</textarea>
                         </div>
                         <div class="clearfix"></div>
                     </div><!--end thong tin co ban--> 
@@ -211,7 +218,7 @@ $(document).on('click', '.remove-image', function(){
     $(document).ready(function(){        
       
       $(".select2").select2();     
-      var editor = CKEDITOR.replace( 'description_vi',{
+      var editor = CKEDITOR.replace( 'content_vi',{
           language : 'vi',
           height: 300,
           filebrowserBrowseUrl: "{{ URL::asset('/backend/dist/js/kcfinder/browse.php?type=files') }}",
@@ -221,7 +228,7 @@ $(document).on('click', '.remove-image', function(){
           filebrowserImageUploadUrl: "{{ URL::asset('/backend/dist/js/kcfinder/upload.php?type=images') }}",
           filebrowserFlashUploadUrl: "{{ URL::asset('/backend/dist/js/kcfinder/upload.php?type=flash') }}"
       });
-      var editor2 = CKEDITOR.replace( 'description_en',{
+      var editor2 = CKEDITOR.replace( 'content_en',{
           language : 'vi',
           height: 300,
           filebrowserBrowseUrl: "{{ URL::asset('/backend/dist/js/kcfinder/browse.php?type=files') }}",

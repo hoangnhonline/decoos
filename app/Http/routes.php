@@ -170,10 +170,14 @@ Route::group(['namespace' => 'Frontend'], function()
     Route::get('chi-tiet/{slug}-{id}.html', ['as' => 'chi-tiet-vi', 'uses' => 'DetailController@index']);
     Route::get('detail/{slug}-{id}.html', ['as' => 'chi-tiet-en', 'uses' => 'DetailController@index']);
 
-    Route::get('{slugLoaiSp}/{slug}/', ['as' => 'danh-muc-con', 'uses' => 'CateController@cate']);  
-    
+    Route::get('album/{slug}-{id}.html', ['as' => 'chi-tiet-album', 'uses' => 'AlbumController@detail']);
+    Route::get('bo-suu-tap.html', ['as' => 'album-vi', 'uses' => 'AlbumController@index']);
+    Route::get('collection.html', ['as' => 'album-en', 'uses' => 'AlbumController@index']);
 
-  
+    Route::get('video/{slug}-{id}.html', ['as' => 'video-detail', 'uses' => 'VideoController@detail']);
+    Route::get('video.html', ['as' => 'video', 'uses' => 'VideoController@index']);
+
+    Route::get('{slugLoaiSp}/{slug}/', ['as' => 'danh-muc-con', 'uses' => 'CateController@cate']);  
   
     Route::get('/tin-tuc/{slug}-{id}.html', ['as' => 'news-detail', 'uses' => 'HomeController@newsDetail']);
     Route::get('/tim-kiem.html', ['as' => 'search', 'uses' => 'HomeController@search']);   
