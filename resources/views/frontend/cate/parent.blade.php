@@ -1,35 +1,32 @@
 @extends('frontend.layout')
 
 @section('content')
-<div class="container block-filter">
+        @if($maxPrice > -1)
+        <div class="container block-filter">
             <div class="block-title">
                 <h2>Chọn Điều Kiện Lọc Nâng Cao</h2>
             </div>
             <div class="block-content">
                 <div class="filter-total">
+                    @if($cateList[$rs->id]->count() > 0)
                     <div class="filter-attr clearfix">
                         <div class="col-sm-2 block-title">
-                            <h2>Danh Mục</h2>
+                            <h2>Danh mục</h2>
                         </div>
                         <div class="col-sm-10 block-content">
                             <div class="row">
                                 <a href="javascript:void(0);" class="btn-opened" title="Down Up"></a>
                                 <ul>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
-                                    <li><a href="#" class="filter-category" alt="">Thắt lưng Montblanc (20)</a></li>
+                                    @foreach($cateList[$rs->id] as $cate)
+                                    @if($productCount[$cate->id] > 0)
+                                    <li><a href="#" data-value="{{ $cate->id }}" class="filter-category" alt="">{{ $lang == 'vi' ? $cate->name_vi : $cate->name_en }} ({{ $productCount[$cate->id] }})</a></li>
+                                    @endif
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div><!--/ end attr attr_2 -->
-
+                    @endif
                     <div class="filter-price clearfix">
                         <div class="col-sm-2 block-title">
                             <h2>Khoảng giá</h2>
@@ -40,73 +37,63 @@
                                     <div class="slider-range">
                                         <div id="slider-range"></div>
                                         <div class="action">
-                                            <span class="price-range">Range: <span id="amount-left"></span> - <span id="amount-right"></span></span>
+                                            <span class="price-range"><span id="amount-left"></span> - <span id="amount-right"></span></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div><!--/ end filter-price -->
-
+                    @if($colorList->count() > 0)
                     <div class="filter-color clearfix">
                         <div class="col-sm-2 block-title">
-                            <h2>Danh Mục</h2>
+                            <h2>Màu sắc</h2>
                         </div>
                         <div class="col-sm-10 block-content">
                             <div class="row">
                                 <a href="javascript:void(0);" class="btn-opened" title="Down Up"></a>
                                 <ul>
+                                    @foreach($colorList as $color)
+                                    @if($productColorCount[$color->id] > 0)
                                     <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
+                                        <a href="javascript:void(0);" data-value="{{ $color->id }}"  data-color="{{ $color->color_code }}" style="background:{{ $color->color_code }}">{{ $color->color_code }}</a>
+                                        <span>({{ $productColorCount[$color->id] }})</span>
                                     </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
-                                    <li class="filter-color-item">
-                                        <a href="javascript:void(0);" data-color="#FFCC00" style="background:#FFCC00">#FFCC00</a>
-                                        <span>(5)</span>
-                                    </li>
+                                    @endif
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div><!--/ end filter-color -->
+                    @endif
                 </div><!--/ end filter-total -->
             </div>
         </div><!--/ end block-filter -->
-
+        @endif
+        @if($p_from != 0 || $p_to != $maxPrice || $cid > 0 || $mid > 0 )
+        <div class="container block-filter block-filter-rule">
+            <div class="block-title">
+                <h2>Điều Kiện Lọc</h2>
+            </div>
+            <div class="block-content">
+                <ul>
+                    @if($p_from != 0 || $p_to != $maxPrice )
+                    <li id="filter-price"><b>Giá:</b> <a href="javascript:;">{{ number_format($p_from) }} VNĐ - {{ number_format($p_to) }} VNĐ</a></li>
+                    @endif
+                    @if($cid > 0)             
+                    <li ><b>Danh mục:</b> <a href="javascript:;" id="filter-category">{{ $lang == 'vi' ? $cateSelected->name_vi : $cateSelected->name_en }}</a></li>
+                    @endif
+                    @if($mid > 0)
+                    <li id="filter-color"><b>Màu sắc:</b> <a href="javascript:;"  style="background:{{ $colorSelected->color_code }} url(images/filter_close.png) no-repeat right center;border-radius:5px;padding:0px 15px 0px 15px;text-indent:-9999px;width:20px;border:1px solid #CCC"><span>#000000</span></a></li>
+                    @endif
+                </ul>
+                <a href="javascript:;" class="clear-filter" title="Xóa tất cả điều kiện lọc"></a>
+            </div>
+        </div>
+        @endif
         <div class="block-headline-detail container">
             <ul class="breadcrumb breadcrumb-customize">
-                <li><a href="{{ route('home') }}">Trang Chủ</a></li>                
+                <li><a href="{{ route('home') }}">Trang chủ</a></li>                
                 <li><a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$rs->slug_vi]) : route('danh-muc-cha', [$rs->slug_en]) }}">{{ $lang == 'vi' ? $rs->name_vi : $rs->name_en }}</a></li>                
             </ul>
         </div>
@@ -114,7 +101,7 @@
             <div class="row">                
                 @include('frontend.detail.sidebar')
                 <div class="block-main col-lg-9 col-md-8 col-sm-8">
-                    <div class="product-view">
+                    <div class="product-view" id="listProduct">
 
                         <div class="title-page">
                             <h1 class="page-title">{{ $lang == 'vi' ? $rs->name_vi : $rs->name_en }}</h1>
@@ -122,38 +109,28 @@
 
                         <div class="clearfix"></div>
 
+                       <?php $desc = $lang == 'vi' ? $rs->description_vi : $rs->description_en; ?>
+                        @if($desc)
                         <div class="des-cate">
-                            <?php echo $lang == 'vi' ? $rs->description_vi : $rs->description_en; ?>
+                            <?php echo $desc; ?>
                         </div><!--/ end des-cate -->
-
+                        @endif
+                        @if($productArr->count() > 0)
                         <div class="box-sort clearfix">
                             <select id="sort-product" class="form-control">
-                                <option value="latest" selected="">Sản phẩm mới nhất</option>
-                                <option value="earliest">Sản phẩm cũ nhất</option>                                
-                                <option value="view">Sản phẩm xem nhiều</option>
-                                <option value="hot">Sản phẩm nổi bật</option>
-                                <option value="hight-to-low">Giá từ cao đến thấp</option>
-                                <option value="low-to-height">Giá từ thấp đến cao</option>
-                                <option value="more-to-less">Khuyến mãi từ nhiều đến ít</option>
-                                <option value="less-to-more">Khuyến mãi từ ít đến nhiều</option>
-                                <option value="a-z">Sắp xếp từ A - Z</option>
-                                <option value="z-a">Sắp xếp từ Z - A</option>
+                                <option value="1" {{ $s == 1 ? "selected" : "" }}>Sản phẩm mới nhất</option>
+                                <option value="2" {{ $s == 2 ? "selected" : "" }}>Sản phẩm cũ nhất</option>
+                                <option value="3" {{ $s == 3 ? "selected" : "" }}>Giá từ cao đến thấp</option>
+                                <option value="4" {{ $s == 4 ? "selected" : "" }}>Giá từ thấp đến cao</option>
                             </select>
                             <select id="number-product" class="form-control">
-                                <option value="9">9 sản phẩm mỗi trang</option>
-                                <option value="12">12 sản phẩm mỗi trang</option>
-                                <option value="15">15 sản phẩm mỗi trang</option>
-                                <option value="20">20 sản phẩm mỗi trang</option>
-                                <option value="24" selected="">24 sản phẩm mỗi trang</option>
-                                <option value="30">30 sản phẩm mỗi trang</option>
-                                <option value="40">40 sản phẩm mỗi trang</option>
-                                <option value="50">50 sản phẩm mỗi trang</option>
-                                <option value="60">60 sản phẩm mỗi trang</option>
-                                <option value="80">80 sản phẩm mỗi trang</option>
-                                <option value="100">100 sản phẩm mỗi trang</option>
+                                <option value="9" {{ $ip == 9 ? "selected" : "" }}>9 sản phẩm mỗi trang</option>
+                                <option value="24" {{ $ip == 24 ? "selected" : "" }}>24 sản phẩm mỗi trang</option>
+                                <option value="57" {{ $ip == 57 ? "selected" : "" }}>57 sản phẩm mỗi trang</option>
+                                <option value="102" {{ $ip == 102 ? "selected" : "" }}>100 sản phẩm mỗi trang</option>
                             </select>
                         </div><!--/ end box-sort -->
-
+                        @endif
                         <div class="box-product row">
                             @if($productArr->count() > 0)
                             @foreach($productArr as $product)
@@ -188,61 +165,102 @@
                         </div>
 
                         <div class="text-center">
-                            <ul class="pagination pagination-custom">
-                                <li>
-                                    <a href="#" >
-                                        <span><i class="icofont icofont-bubble-left"></i> Sau</span>
-                                    </a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">...</a>
-                                </li>
-                                <li>
-                                    <a href="#">5</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>Trước <i class="icofont icofont-bubble-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
+                            {{ $productArr->appends( ['cid' => $cid, 'mid' => $mid, 'pf' => $p_from, 'pt' => $p_to, 'ip' => $ip, 's' => $s] )->links() }}                           
                         </div><!-- pagination -->
 
                     </div><!--/ end product-view -->
                 </div><!--/ end block-main -->
             </div>
         </div>
+        <form method="GET" action="{{ url()->current() }}" id="formSeach">
+            <input type="hidden" name="pf" id="pf" value="{{ $p_from }}">
+            <input type="hidden" name="pt" id="pt" value="{{ $p_to }}">
+            <input type="hidden" name="cid" id="cid" value="{{ $cid }}">
+            <input type="hidden" name="mid" id="mid" value="{{ $mid }}">
+            <input type="hidden" name="ip" id="ip" value="{{ $ip }}">
+            <input type="hidden" name="s" id="s" value="{{ $s }}">            
+        </form>
 @endsection
 @section('javascript')
 <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-ui.min.js') }}"></script>
+
 <script type="text/javascript">
-        (function($) {
+(function($) {
+    var url = '{{ url()->current() }}';
+    "use strict";            
+    /*  [ Filter by price ] */
+    $('#slider-range').slider({
+        range: true,
+        min: 0,
+        max: {{ $maxPrice }},
+        values: [{{ $p_from }}, {{ $p_to }}],
+        step : 200000,
+        slide: function (event, ui) {
+            $('#amount-left').text(number_format(ui.values[0], 0, '.', '.') + ' VNĐ');
+            $('#amount-right').text(number_format(ui.values[1], 0, '.', '.') + ' VNĐ');
 
-            "use strict";
+        },
+        change : function(event, ui){
+            $('#pf').val(ui.values[0]);
+            $('#pt').val(ui.values[1]);
+            $('#formSeach').submit();
+        }
+    });
+    $('#amount-left').text( number_format($('#slider-range').slider('values', 0), 0, '.', '.')  + ' VNĐ');
+    $('#amount-right').text( number_format($('#slider-range').slider('values', 1), 0, '.', '.')  + ' VNĐ');
 
-            /*  [ Filter by price ] */
-            $('#slider-range').slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [0, 250],
-                slide: function (event, ui) {
-                    $('#amount-left').text('$' + ui.values[0] );
-                    $('#amount-right').text('$' + ui.values[1] );
-                }
-            });
-            $('#amount-left').text('$' + $('#slider-range').slider('values', 0));
-            $('#amount-right').text('$' + $('#slider-range').slider('values', 1));
-        })(jQuery);
+})(jQuery);
+$(document).ready(function(){
+    $('.filter-color-item a').click(function(){
+        var obj = $(this);                
+        var id = obj.data('value');
+        $('#mid').val(id);
+        $('#formSeach').submit();                
+    });
+    $('a.filter-category').click(function(){
+        var obj = $(this);                
+        var id = obj.data('value');                
+        $('#cid').val(id);
+        $('#formSeach').submit();
+    });
+    $('#number-product').change(function(){
+        $('#ip').val($(this).val());
+        $('#formSeach').submit();
+    });
+    $('#sort-product').change(function(){
+        $('#s').val($(this).val());
+        $('#formSeach').submit();
+    });
+    $('#filter-category').click(function(){
+        $('#cid').val('');
+        $('#formSeach').submit();
+    });
+    $('a.clear-filter').click(function(){
+        location.href= $('#formSeach').attr('action');
+    });
+});
+function number_format(number, decimals, dec_point, thousands_sep) {
+    number = (number + '').replace(/[^0-9]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+    s = '',
+    toFixedFix = function (n, prec) {
+    var k = Math.pow(10, prec);
+    return '' + Math.round(n * k) / k;
+    };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
 
     </script>
 @endsection

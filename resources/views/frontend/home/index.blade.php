@@ -199,7 +199,7 @@
                   </div>               
                   @endforeach
                 <div class="container clearfix">
-                  <a href="#" class="view-all pull-right">Xem tất cả</a>
+                  <a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$loai->slug_vi]) : route('danh-muc-cha', [$loai->slug_en]) }}" class="view-all pull-right">Xem tất cả</a>
                 </div>
               </div><!-- end spn -->
               @else
@@ -239,7 +239,7 @@
                     </div>               
                     @endforeach
                   <div class="container clearfix">
-                    <a href="#" class="view-all pull-right">Xem tất cả</a>
+                    <a href="{{ $lang == 'vi' ? route('danh-muc-con', [$loai->slug_vi, $cate->slug_vi]) : route('danh-muc-con', [$loai->slug_en, $cate->slug_en]) }}" class="view-all pull-right">Xem tất cả</a>
                   </div>
                 </div><!-- end spn -->
                 @endif
