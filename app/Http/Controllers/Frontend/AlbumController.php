@@ -9,7 +9,9 @@ use App\Models\LoaiSp;
 use App\Models\Cate;
 use App\Models\Settings;
 use App\Models\Album;
-
+use App\Models\AlbumImg;
+use App\Models\MetaData;
+use App\Models\Product;
 
 use App\Models\CustomerNotification;
 use Helper, File, Session, Auth, Hash;
@@ -39,11 +41,7 @@ class AlbumController extends Controller
         $rsLoai = LoaiSp::find( $detail->loai_id );
         $rsCate = Cate::find( $detail->cate_id );
 
-        $hinhArr = AlbumImg::where('product_id', $detail->id)->get()->toArray();                
-                $lienquanArr = Album::where('product.cate_id', $detail->cate_id)                
-                ->where('product.id', '<>', $detail->id)
-                ->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id')
-                ->select('product.id as product_id', 'name_vi', 'slug_vi', 'name_en', 'slug_en', 'price', 'price_sale', 'product_img.image_url')->get();   
+        $hinhArr = AlbumImg::where('album_id', $detail->id)->get()->toArray();                                
 
         if( $detail->meta_id > 0){
            $meta = MetaData::find( $detail->meta_id )->toArray();
@@ -61,8 +59,16 @@ class AlbumController extends Controller
             $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();
         }
 
+
+         //sale product
+        $saleList = Product::where(['is_sale' => 1, 'cate_id' => $detail->cate_id])->where('price_sale', '>', 0)
+                    ->where('product.id', '<>', $id)
+                    ->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id')                
+                    ->select('product_img.image_url', 'product.*')->orderBy('id', 'desc')->limit(5)->get();
+
+
         return view('frontend.album.detail', compact('detail', 'rsLoai', 'rsCate', 'hinhArr', 'productArr', 'lienquanArr', 'seo', 'socialImage', 'lang', 
-            'loaiSp', 'cateList'
+            'loaiSp', 'cateList', 'saleList'
             ));
     }
 
