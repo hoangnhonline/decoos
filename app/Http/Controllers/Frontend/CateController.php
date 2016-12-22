@@ -112,11 +112,14 @@ class CateController extends Controller
                     }
                     $productColorCount[$color->id] =  $queryColor->count();
         }
-
+        //sale product
+        $saleList = Product::where(['is_sale' => 1, 'loai_id' => $loai_id])->where('price_sale', '>', 0)
+                    ->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id')                
+                    ->select('product_img.image_url', 'product.*')->orderBy('id', 'desc')->limit(5)->get();
         return view('frontend.cate.parent', compact(
                     'productArr', 
                     'cateArr', 
-                    'rs', 
+                    'rs',
                     'socialImage', 
                     'seo', 
                     'loaiSp', 
@@ -125,6 +128,7 @@ class CateController extends Controller
                     'productCount', 
                     'cateSelected',
                     'colorSelected',
+                    'saleList',
                     'productColorCount', 'colorList', 'maxPrice', 'p_from', 'p_to', 'mid', 'cid', 'ip', 's')
         );
     }
@@ -144,6 +148,11 @@ class CateController extends Controller
         $rsCate = Cate::where(['loai_id' => $loai_id, 'slug_vi' => $slug])->orWhere('slug_en', $slug)->first();
 
         $cate_id = $rsCate->id;
+
+        //sale product
+        $saleList = Product::where(['is_sale' => 1, 'cate_id' => $cate_id])->where('price_sale', '>', 0)
+                    ->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id')                
+                    ->select('product_img.image_url', 'product.*')->orderBy('id', 'desc')->limit(5)->get();
 
         $cateArr = Cate::where('status', 1)->where('loai_id', $loai_id)->get();
         
@@ -165,7 +174,7 @@ class CateController extends Controller
         if($maxPriceObj){
             $maxPrice = $maxPriceObj->price;
         }else{
-            $maxPrice = 2000000;
+            $maxPrice = -1;
         }
         
         $p_from = $request->pf ? $request->pf : 0;
@@ -178,10 +187,7 @@ class CateController extends Controller
                             ->where('price', '>=', $p_from)
                             ->where('price', '<=', $p_to)
                             ->count();
-        }
-
-
-       
+        }       
           
         $query = Product::where('loai_id', $loai_id)
                 ->where('price', '>=', $p_from)                
@@ -219,7 +225,8 @@ class CateController extends Controller
             'ip',
             'mid',
             'colorList',
-            'colorSelected'
+            'colorSelected',
+            'saleList'
             ));
     } 
   
@@ -254,11 +261,7 @@ class CateController extends Controller
         $moviesArr = Film::where('alias', 'LIKE', '%'.$tu_khoa.'%')->orderBy('id', 'desc')->paginate(20);
 
         return view('frontend.cate', compact('settingArr', 'moviesArr', 'tu_khoa',  'is_search', 'layout_name', 'page_name' ));
-    }
-
-       
-    
-    
+    }    
 
     public function newsList(Request $request)
     {

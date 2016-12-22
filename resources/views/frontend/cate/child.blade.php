@@ -1,6 +1,7 @@
 @extends('frontend.layout')
 
 @section('content')
+@if($maxPrice > -1)
 <div class="container block-filter">
             <div class="block-title">
                 <h2>Chọn Điều Kiện Lọc Nâng Cao</h2>
@@ -49,6 +50,7 @@
                 </div><!--/ end filter-total -->
             </div>
         </div><!--/ end block-filter -->
+@endif
         @if($p_from != 0 || $p_to != $maxPrice || $mid > 0 )
         <div class="container block-filter block-filter-rule">
             <div class="block-title">
@@ -126,7 +128,7 @@
                                       <p class="products-info-price">
                                         @if($product->is_sale == 1 && $product->price_sale > 0)
                                           <span class="price-new">{{ number_format($product->price_sale) }}</span>
-                                          <del class="price-old">{{ number_format($product->price_sale) }}</del>
+                                          <del class="price-old">{{ number_format($product->price) }}</del>
                                         @else
                                           <span class="price-new">{{ number_format($product->price) }}</span>
                                         @endif

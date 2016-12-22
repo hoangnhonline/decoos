@@ -39,36 +39,47 @@
       
     </div>
   </div><!--/ end block-fanpage -->
-
-  <div class="block-tags block-sidebars">
-    <div class="side-title">
-      TAGS THỜI TRANG NAM
-    </div>
-    <div class="site-content">
-        
-    </div>
-  </div><!--/ end block-tags -->
-
+<?php 
+$tagList = $lang == 'vi' ? $tagListVi  : $tagListEn;
+?>
+@if($tagList->count() > 0)
+<div class="block-tags block-sidebars">
+  <div class="side-title">
+    TAGS THỜI TRANG NAM
+  </div>
+  <div class="site-content">
+    @foreach($tagList as $tag)
+    <a class="tag_{{ $tag->level }}" href="{{ route('tag', $tag->slug) }}">{{ $tag->name }}</a>&nbsp;&nbsp;
+    @endforeach
+  </div>
+</div><!--/ end block-tags -->
+@endif
+@if($saleList->count() > 0)
   <div class="block-cate block-sidebars">
     <div class="side-title">
       Sản Phẩm Khuyến Mãi
     </div>
     <div class="site-content">
       <ul  class="owl-carousel owl-theme owl-style2" data-nav="false" data-margin="0" data-items='1' data-autoplayTimeout="1000" data-autoplay="true" data-loop="true">
+        @foreach($saleList as $product)
         <li>
           <div class="products-item">
             <div class="products-img">
-              <a href="#" class="" data-id="">
-                <img src="images/products/that_lung_nam/1.jpg" alt="Bóp nam">
+              <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
+                <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
               </a>
             </div>
             <div class="products-info">
               <h2 class="products-info-name">
-                <a id="" class="ten_sp " title="Bóp nam" href="#">Bóp nam Decoos</a>
+                <a class="ten_sp " title="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}" href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}</a>
               </h2>
               <p class="products-info-price">
-                <span class="price-new">50.000</span>
-                <del class="price-old">100.000</del>
+                @if($product->is_sale == 1 && $product->price_sale > 0)
+                  <span class="price-new">{{ number_format($product->price_sale) }}</span>
+                  <del class="price-old">{{ number_format($product->price) }}</del>
+                @else
+                  <span class="price-new">{{ number_format($product->price) }}</span>
+                @endif
               </p>
               <div class="wishlist-compare">
                 <div class="wishlist"><a href="#" class="wishlist-ss"><i class="icofont icofont-info-square"></i></a></div>
@@ -77,10 +88,11 @@
             </div>
           </div><!-- end products-item -->
         </li>        
+        @endforeach
       </ul>
     </div>
   </div><!--/ end block-tags -->
-
+@endif
   <div class="block-statistics block-sidebars">
     <div class="side-title">
       THỐNG KÊ

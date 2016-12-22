@@ -4,6 +4,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\LoaiSp;
 use App\Models\Cate;
+use App\Models\Tag;
 use App\Models\Settings;
 
 //use App\Models\Entity\SuperStar\Account\Traits\Behavior\SS_Shortcut_Icon;
@@ -44,7 +45,15 @@ class ViewComposerServiceProvider extends ServiceProvider
 		
 		view()->composer( '*' , function( $view ){			
 	        $settingArr = Settings::whereRaw('1')->lists('value', 'name');	       
-			$view->with(['settingArr' => $settingArr] );
+	        $tagListVi = Tag::where('type', 1)->get();	        
+	        $tagListEn = Tag::where('type', 2)->get();
+
+	        $loaiSp = LoaiSp::where('status', 1)->orderBy('display_order')->get();
+	        foreach($loaiSp as $loai){
+	            $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();            
+	        }
+
+			$view->with(['settingArr' => $settingArr, 'tagListVi' => $tagListVi, 'tagListEn' => $tagListEn, 'loaiSp' => $loaiSp, 'cateList' => $cateList]);
 		});
 	}
 	

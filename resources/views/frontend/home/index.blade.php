@@ -55,7 +55,7 @@
                   <p class="products-info-price">
                     @if($product->is_sale == 1 && $product->price_sale > 0)
                       <span class="price-new">{{ number_format($product->price_sale) }}</span>
-                      <del class="price-old">{{ number_format($product->price_sale) }}</del>
+                      <del class="price-old">{{ number_format($product->price) }}</del>
                     @else
                       <span class="price-new">{{ number_format($product->price) }}</span>
                     @endif
@@ -91,7 +91,7 @@
                   <p class="products-info-price">
                     @if($product->is_sale == 1 && $product->price_sale > 0)
                       <span class="price-new">{{ number_format($product->price_sale) }}</span>
-                      <del class="price-old">{{ number_format($product->price_sale) }}</del>
+                      <del class="price-old">{{ number_format($product->price) }}</del>
                     @else
                       <span class="price-new">{{ number_format($product->price) }}</span>
                     @endif
@@ -126,7 +126,7 @@
                   <p class="products-info-price">
                   @if($product->is_sale == 1 && $product->price_sale > 0)
                     <span class="price-new">{{ number_format($product->price_sale) }}</span>
-                    <del class="price-old">{{ number_format($product->price_sale) }}</del>
+                    <del class="price-old">{{ number_format($product->price) }}</del>
                   @else
                     <span class="price-new">{{ number_format($product->price) }}</span>
                   @endif
@@ -185,7 +185,7 @@
                         <p class="products-info-price">
                           @if($product->is_sale == 1 && $product->price_sale > 0)
                             <span class="price-new">{{ number_format($product->price_sale) }}</span>
-                            <del class="price-old">{{ number_format($product->price_sale) }}</del>
+                            <del class="price-old">{{ number_format($product->price) }}</del>
                           @else
                             <span class="price-new">{{ number_format($product->price) }}</span>
                           @endif
@@ -225,7 +225,7 @@
                           <p class="products-info-price">
                             @if($product->is_sale == 1 && $product->price_sale > 0)
                               <span class="price-new">{{ number_format($product->price_sale) }}</span>
-                              <del class="price-old">{{ number_format($product->price_sale) }}</del>
+                              <del class="price-old">{{ number_format($product->price) }}</del>
                             @else
                               <span class="price-new">{{ number_format($product->price) }}</span>
                             @endif

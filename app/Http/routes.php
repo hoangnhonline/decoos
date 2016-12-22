@@ -169,6 +169,7 @@ Route::group(['namespace' => 'Frontend'], function()
     
     Route::get('chi-tiet/{slug}-{id}.html', ['as' => 'chi-tiet-vi', 'uses' => 'DetailController@index']);
     Route::get('detail/{slug}-{id}.html', ['as' => 'chi-tiet-en', 'uses' => 'DetailController@index']);
+    Route::get('tag/{slug}', ['as' => 'tag', 'uses' => 'OtherController@tag']);
 
     Route::get('album/{slug}-{id}.html', ['as' => 'chi-tiet-album', 'uses' => 'AlbumController@detail']);
     Route::get('bo-suu-tap.html', ['as' => 'album-vi', 'uses' => 'AlbumController@index']);

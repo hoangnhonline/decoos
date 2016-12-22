@@ -70,9 +70,14 @@ class DetailController extends Controller
         foreach($loaiSp as $loai){
             $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();
         }
+        //sale product
+        $saleList = Product::where(['is_sale' => 1, 'cate_id' => $detail->cate_id])->where('price_sale', '>', 0)
+                    ->where('product.id', '<>', $id)
+                    ->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id')                
+                    ->select('product_img.image_url', 'product.*')->orderBy('id', 'desc')->limit(5)->get();
 
         return view('frontend.detail.index', compact('detail', 'rsLoai', 'rsCate', 'hinhArr', 'productArr', 'lienquanArr', 'seo', 'socialImage', 'lang', 
-            'loaiSp', 'cateList'
+            'loaiSp', 'cateList', 'saleList'
             ));
     }
 

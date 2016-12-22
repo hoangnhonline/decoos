@@ -18,7 +18,7 @@
   <div class="product-view">
 
     <div class="title-page">
-      <h2 class="page-title">Chi Tiết Sản Phẩm</h2>
+      <h2 class="page-title">Chi tiết sản phẩm</h2>
     </div>
 
     <div class="clearfix"></div>
