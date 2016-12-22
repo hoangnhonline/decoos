@@ -60,4 +60,15 @@
     return false;
   });
 
+  // Read more
+  $(window).load(function() {
+    $('.text-more').hide();
+    $('.textentry').hover(function(){
+      var tem1= $(this).find('.vitext');
+      var tem= $(this).find('.text-more');                      
+      $(this).find('.btn-more').click(function(){tem1.hide();tem.show('slow'); return false;});
+        $(this).find('.btn-less').click(function(){tem.hide();tem1.show('slow'); return false;})
+    });
+  });
+
 })(jQuery); // End of use strict
