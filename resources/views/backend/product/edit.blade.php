@@ -123,7 +123,7 @@
                         </div>
                          <div class="form-group">
                           <label>Tags VI</label>
-                          <select class="form-control select2" name="tags_vi[]" id="tags_vi" multiple="multiple">                  
+                          <select class="form-control select2" name="tags_vi[]" id="tags_vi" multiple="multiple" style="width:100% !important;">                  
                             @if( $tagViList->count() > 0)
                               @foreach( $tagViList as $value )
                               <option value="{{ $value->id }}" {{ in_array($value->id, $tagSelectedVi) ? "selected" : "" }}>{{ $value->name }}</option>
@@ -148,7 +148,7 @@
                         </div>
                         <div class="form-group">
                           <label>Tags EN</label>
-                          <select class="form-control select2" name="tags_en[]" id="tags_en" multiple="multiple">                  
+                          <select class="form-control select2" name="tags_en[]" id="tags_en" multiple="multiple" style="width:100% !important;">                  
                             @if( $tagEnList->count() > 0)
                               @foreach( $tagEnList as $value )
                               <option value="{{ $value->id }}" {{ in_array($value->id, $tagSelectedEn) ? "selected" : "" }}>{{ $value->name }}</option>

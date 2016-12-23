@@ -21,14 +21,14 @@ class ArticlesController extends Controller
     */
     public function index(Request $request)
     {
-        $cate_id = isset($request->cate_id) ? $request->cate_id : 0;
+        $lang_id = isset($request->lang_id) ? $request->lang_id : 0;
 
         $title = isset($request->title) && $request->title != '' ? $request->title : '';
         
         $query = Articles::whereRaw('1');
 
-        if( $cate_id > 0){
-            $query->where('cate_id', $cate_id);
+        if( $lang_id > 0){
+            $query->where('lang_id', $lang_id);
         }
         
         if( $title != ''){
@@ -36,9 +36,7 @@ class ArticlesController extends Controller
         }
         $items = $query->orderBy('id', 'desc')->paginate(20);
         
-        $cateArr = ArticlesCate::all();
-        
-        return view('backend.articles.index', compact( 'items', 'cateArr' , 'title', 'cate_id' ));
+        return view('backend.articles.index', compact( 'items', 'title', 'lang_id' ));
     }
 
     /**
@@ -53,9 +51,17 @@ class ArticlesController extends Controller
         
         $cate_id = $request->cate_id;
 
-        $tagArr = Tag::where('type', 2)->orderBy('id', 'desc')->get();
+        $tagArr = Tag::where('type', 1)->orderBy('id', 'desc')->get();
 
         return view('backend.articles.create', compact( 'tagArr', 'cateArr', 'cate_id'));
+    }
+    public function ajaxTag(Request $request){
+
+        $type = $request->type ? $request->type : 1; // 1 = tieng viet 
+
+        $tagList = Tag::where('type', $type)->orderBy('id', 'desc')->get();
+
+        return view('backend.articles.ajax-tag', compact('tagList'));
     }
 
     /**
@@ -69,12 +75,12 @@ class ArticlesController extends Controller
         $dataArr = $request->all();
         
         $this->validate($request,[            
-            'cate_id' => 'required',            
+            'lang_id' => 'required',            
             'title' => 'required',            
             'slug' => 'required|unique:articles,slug',
         ],
         [            
-            'cate_id.required' => 'Bạn chưa chọn danh mục',            
+            'lang_id.required' => 'Bạn chưa chọn danh mục',            
             'title.required' => 'Bạn chưa nhập tiêu đề',
             'slug.required' => 'Bạn chưa nhập slug',
             'slug.unique' => 'Slug đã được sử dụng.'
@@ -108,14 +114,14 @@ class ArticlesController extends Controller
         $object_id = $rs->id;
 
         // xu ly tags
-        if( !empty( $dataArr['tags'] ) && $object_id ){
-            
+        if( !empty( $dataArr['tags'] ) && $object_id ){           
 
             foreach ($dataArr['tags'] as $tag_id) {
                 $model = new TagObjects;
                 $model->object_id = $object_id;
                 $model->tag_id  = $tag_id;
-                $model->type = 2;
+                $model->type = $dataArr['lang_id'];
+                $model->object_type = 4;
                 $model->save();
             }
         }
@@ -150,7 +156,7 @@ class ArticlesController extends Controller
         
         $cateArr = ArticlesCate::all();        
 
-        $tmpArr = TagObjects::where(['type' => 2, 'object_id' => $id])->get();
+        $tmpArr = TagObjects::where(['type' => $detail->lang_id, 'object_id' => $id, 'object_type' => 4])->get();
         
         if( $tmpArr->count() > 0 ){
             foreach ($tmpArr as $value) {
@@ -158,7 +164,7 @@ class ArticlesController extends Controller
             }
         }
         
-        $tagArr = Tag::where('type', 2)->get();
+        $tagArr = Tag::where('type', $detail->lang_id)->get();
 
         return view('backend.articles.edit', compact('tagArr', 'tagSelected', 'detail', 'cateArr' ));
     }
@@ -175,12 +181,12 @@ class ArticlesController extends Controller
         $dataArr = $request->all();
         
         $this->validate($request,[            
-            'cate_id' => 'required',            
+            'lang_id' => 'required',            
             'title' => 'required',            
             'slug' => 'required|unique:articles,slug,'.$dataArr['id'],
         ],
         [            
-            'cate_id.required' => 'Bạn chưa chọn danh mục',            
+            'lang_id.required' => 'Bạn chưa chọn danh mục',            
             'title.required' => 'Bạn chưa nhập tiêu đề',
             'slug.required' => 'Bạn chưa nhập slug',
             'slug.unique' => 'Slug đã được sử dụng.'
@@ -210,7 +216,7 @@ class ArticlesController extends Controller
 
         $model->update($dataArr);
 
-        TagObjects::where(['object_id' => $dataArr['id'], 'type' => 2])->delete();
+        TagObjects::where(['object_id' => $dataArr['id'], 'object_type' => 4])->delete();
         // xu ly tags
         if( !empty( $dataArr['tags'] ) ){
                        
@@ -218,7 +224,8 @@ class ArticlesController extends Controller
                 $modelTagObject = new TagObjects; 
                 $modelTagObject->object_id = $dataArr['id'];
                 $modelTagObject->tag_id  = $tag_id;
-                $modelTagObject->type = 2;
+                $modelTagObject->type = $dataArr['lang_id'];
+                $modelTagObject->object_type = 4;
                 $modelTagObject->save();
             }
         }

@@ -253,6 +253,7 @@
   </div><!-- end contents -->
 </div><!-- end products -->
 @endforeach
+@if($articlesList->count() > 0)
 <div class="block-news">
   <div class="block-title block-title-b2">
     <div class="container">
@@ -267,70 +268,25 @@
         <div class="tab-content">
 
           <div role="tabpanel" class="tab-pane fade in active" id="tln">
-
+            @foreach($articlesList as $articles)
             <div class="col-md-3 col-sm-4 col-xs-6">
               <div class="news-item">
                 <div class="news-img">
-                  <a href="#" title="">
-                      <img src="{{ URL::asset('assets/images/news/1.jpg') }}" alt="">
-                      </a>
+                  <a title="{{ $articles->title }}" href="{{ $lang == 'vi' ? route('news-detail-vi', [$articles->slug, $articles->id]) : route('news-detail-en', [$articles->slug, $articles->id]) }}">
+                    <img src="{{ Helper::showImage($articles->image_url) }}" alt="{{ $articles->title }}">
+                  </a>
                 </div>
                 <div class="news-info">
                   <h2 class="news-info-name">
-                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
+                    <a title="{{ $articles->title }}" href="{{ $lang == 'vi' ? route('news-detail-vi', [$articles->slug, $articles->id]) : route('news-detail-en', [$articles->slug, $articles->id]) }}">{{ $articles->title }}</a>
                   </h2>
-                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
+                  <p class="news-contents">{{ $articles->description }}</p>
                 </div>
               </div><!-- end news-item -->
             </div>
-            <div class="col-md-3 col-sm-4 col-xs-6">
-              <div class="news-item">
-                <div class="news-img">
-                  <a href="#" title="">
-                        <img src="{{ URL::asset('assets/images/news/2.jpg') }}" alt="">
-                      </a>
-                </div>
-                <div class="news-info">
-                  <h2 class="news-info-name">
-                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
-                  </h2>
-                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
-                </div>
-              </div><!-- end news-item -->
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-6">
-              <div class="news-item">
-                <div class="news-img">
-                  <a href="#" title="">
-                        <img src="{{ URL::asset('assets/images/news/3.jpg') }}" alt="">
-                      </a>
-                </div>
-                <div class="news-info">
-                  <h2 class="news-info-name">
-                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
-                  </h2>
-                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
-                </div>
-              </div><!-- end news-item -->
-            </div>
-            <div class="col-md-3 col-sm-4 col-xs-6">
-              <div class="news-item">
-                <div class="news-img">
-                  <a href="#" title="">
-                        <img src="{{ URL::asset('assets/images/news/4.jpg') }}" alt="">
-                      </a>
-                </div>
-                <div class="news-info">
-                  <h2 class="news-info-name">
-                    <a id="" class="" title="Bóp nam" href="#">Mua dây nịt thắt lưng hermes quận 3, tân bình, quận 10</a>
-                  </h2>
-                  <p class="news-contents">Mua thắt lưng hermes quận 3, Mua dây nịt hermes quận tân bình, Mua dây thắt lưng hermes quận 10, mua dây nịt hermes quận tân bình</p>
-                </div>
-              </div><!-- end news-item -->
-            </div>
-
+            @endforeach
             <div class="clearfix">
-              <a href="#" class="view-all pull-right">Xem tất cả</a>
+              <a href="{{ $lang == 'vi' ? route('news-vi') : route('news-en') }}" class="view-all pull-right">Xem tất cả</a>
             </div>
           </div><!-- end spn -->
 
@@ -339,6 +295,7 @@
     </div>
   </div><!-- end contents -->
 </div><!-- end news -->
+@endif
 @if($albumList->count() > 0)
 <div class="block-album">
   <div class="block-title block-title-b2">

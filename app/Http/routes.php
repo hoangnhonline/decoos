@@ -149,6 +149,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => '
         Route::get('{id}/edit',   ['as' => 'articles.edit', 'uses' => 'ArticlesController@edit']);
         Route::post('/update', ['as' => 'articles.update', 'uses' => 'ArticlesController@update']);
         Route::get('{id}/destroy', ['as' => 'articles.destroy', 'uses' => 'ArticlesController@destroy']);
+        Route::get('/ajax-tag', ['as' => 'articles.ajax-tag', 'uses' => 'ArticlesController@ajaxTag']);
     });
     Route::group(['prefix' => 'color'], function () {
         Route::get('/', ['as' => 'color.index', 'uses' => 'ColorController@index']);
@@ -178,9 +179,14 @@ Route::group(['namespace' => 'Frontend'], function()
     Route::get('video/{slug}-{id}.html', ['as' => 'video-detail', 'uses' => 'VideoController@detail']);
     Route::get('video.html', ['as' => 'video', 'uses' => 'VideoController@index']);
 
-    Route::get('{slugLoaiSp}/{slug}/', ['as' => 'danh-muc-con', 'uses' => 'CateController@cate']);  
-  
-    Route::get('/tin-tuc/{slug}-{id}.html', ['as' => 'news-detail', 'uses' => 'HomeController@newsDetail']);
+    Route::get('tin-tuc/{slug}-{id}.html', ['as' => 'news-detail-vi', 'uses' => 'NewsController@detail']);
+    Route::get('news/{slug}-{id}.html', ['as' => 'news-detail-en', 'uses' => 'NewsController@detail']);
+
+    Route::get('news.html', ['as' => 'news-en', 'uses' => 'NewsController@index']);
+    Route::get('tin-tuc.html', ['as' => 'news-vi', 'uses' => 'NewsController@index']);
+
+    Route::get('{slugLoaiSp}/{slug}/', ['as' => 'danh-muc-con', 'uses' => 'CateController@cate']);    
+    
     Route::get('/tim-kiem.html', ['as' => 'search', 'uses' => 'HomeController@search']);   
     Route::get('lien-he.html', ['as' => 'contact', 'uses' => 'HomeController@contact']);
     

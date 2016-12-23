@@ -8,14 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Models\LoaiSp;
 use App\Models\Cate;
 use App\Models\Settings;
-use App\Models\Video;
+use App\Models\Articles;
 use App\Models\MetaData;
 use App\Models\Product;
 
 use App\Models\CustomerNotification;
 use Helper, File, Session, Auth, Hash;
 
-class VideoController extends Controller
+class NewsController extends Controller
 {
     
     public static $loaiSp = []; 
@@ -30,9 +30,10 @@ class VideoController extends Controller
     }
     public function index(Request $request){
         $lang = 'vi';        
-        $videoList = Video::where('status', 1)->orderBy('id', 'desc')->paginate(24);
+        $lang_id = $lang == 'vi' ? 1 : 2;
+        $articlesList = Articles::where('status', 1)->where('lang_id', $lang_id)->orderBy('id', 'desc')->paginate(24);
 
-        $seo['title'] = $seo['description'] = $seo['keywords'] = "Video";
+        $seo['title'] = $seo['description'] = $seo['keywords'] = "Articles";
 
           //sale product
         $saleList = Product::where(['is_sale' => 1])->where('price_sale', '>', 0)                    
@@ -42,18 +43,18 @@ class VideoController extends Controller
         foreach($loaiSp as $loai){
             $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();
         }
-        return view('frontend.video.index', compact('videoList', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'
+        return view('frontend.news.index', compact('articlesList', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'
             ));
     }
     public function detail(Request $request)
     {             
         $lang = "vi";        
         $id = $request->id;
-        $detail = Video::find($id);
+        $detail = Articles::find($id);
         if(!$detail){
             return redirect()->route('home');
-        }
-       
+        }             
+
         if( $detail->meta_id > 0){
            $meta = MetaData::find( $detail->meta_id )->toArray();
            $seo['title'] = $meta['title_'.$lang] != '' ? $meta['title_'.$lang] : $detail->name_vi;
@@ -75,7 +76,7 @@ class VideoController extends Controller
                     ->select('product_img.image_url', 'product.*')->orderBy('id', 'desc')->limit(5)->get();
 
 
-        return view('frontend.video.detail', compact('detail', 'hinhArr', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'));
+        return view('frontend.news.detail', compact('detail', 'hinhArr', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'));
     }
 
     

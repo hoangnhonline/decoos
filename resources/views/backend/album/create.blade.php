@@ -73,14 +73,21 @@
                         <div class="form-group">                  
                           <label>Slug <span class="red-star">*</span></label>                  
                           <input type="text" class="form-control" name="slug_vi" id="slug_vi" value="{{ old('slug_vi') }}">
-                        </div>                       
+                        </div>                                             
                         <div class="form-group">
-                          <label>Mô tả </label>
-                          <textarea class="form-control" rows="6" name="description_vi" id="description_vi">{{ old('description_vi') }}</textarea>
+                          <label>Tags VI</label>
+                          <select class="form-control select2" name="tags_vi[]" id="tags_vi" multiple="multiple" style="width:100% !important;">                  
+                            @if( $tagViList->count() > 0)
+                              @foreach( $tagViList as $value )
+                              <option value="{{ $value->id }}" {{ old('tags') && in_array($value->id, old('tags_vi') ) ? "selected" : "" }}>{{ $value->name }}</option>
+                              @endforeach
+                            @endif
+                          </select>
                         </div>
+
                          <div class="form-group">
                           <label>Chi tiết</label>
-                          <textarea class="form-control" rows="10" name="content_vi" id="content_vi">{{ old('content_vi') }}</textarea>
+                          <textarea class="form-control" rows="10" name="description_vi" id="description_vi">{{ old('description_vi') }}</textarea>
                         </div>
                         <div class="clearfix"></div>
                     </div><!--end thong tin co ban--> 
@@ -92,14 +99,20 @@
                         <div class="form-group">                  
                           <label>Slug <span class="red-star">*</span></label>                  
                           <input type="text" class="form-control" name="slug_en" id="slug_en" value="{{ old('slug_en') }}">
-                        </div>
+                        </div>                        
                         <div class="form-group">
-                          <label>Description</label>
-                          <textarea class="form-control" rows="6" name="description_en" id="description_en">{{ old('description_en') }}</textarea>
+                          <label>Tags EN</label>
+                          <select class="form-control select2" name="tags_en[]" id="tags_en" multiple="multiple" style="width:100% !important;">                  
+                            @if( $tagEnList->count() > 0)
+                              @foreach( $tagEnList as $value )
+                              <option value="{{ $value->id }}" {{ old('tags') && in_array($value->id, old('tags_en') ) ? "selected" : "" }}>{{ $value->name }}</option>
+                              @endforeach
+                            @endif
+                          </select>
                         </div>
                          <div class="form-group">
                           <label>Detail</label>
-                          <textarea class="form-control" rows="10" name="content_en" id="content_en">{{ old('content_en') }}</textarea>
+                          <textarea class="form-control" rows="10" name="description_en" id="description_en">{{ old('description_en') }}</textarea>
                         </div>
                         <div class="clearfix"></div>
                     </div><!--end thong tin co ban--> 
@@ -218,7 +231,7 @@ $(document).on('click', '.remove-image', function(){
     $(document).ready(function(){        
       
       $(".select2").select2();     
-      var editor = CKEDITOR.replace( 'content_vi',{
+      var editor = CKEDITOR.replace( 'description_vi',{
           language : 'vi',
           height: 300,
           filebrowserBrowseUrl: "{{ URL::asset('/backend/dist/js/kcfinder/browse.php?type=files') }}",
@@ -228,7 +241,7 @@ $(document).on('click', '.remove-image', function(){
           filebrowserImageUploadUrl: "{{ URL::asset('/backend/dist/js/kcfinder/upload.php?type=images') }}",
           filebrowserFlashUploadUrl: "{{ URL::asset('/backend/dist/js/kcfinder/upload.php?type=flash') }}"
       });
-      var editor2 = CKEDITOR.replace( 'content_en',{
+      var editor2 = CKEDITOR.replace( 'description_en',{
           language : 'vi',
           height: 300,
           filebrowserBrowseUrl: "{{ URL::asset('/backend/dist/js/kcfinder/browse.php?type=files') }}",

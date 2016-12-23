@@ -26,7 +26,7 @@
           <h3 class="panel-title">Bộ lọc</h3>
         </div>
         <div class="panel-body">
-          <form class="form-inline" role="form" method="GET" action="{{ route('tag.index') }}">
+          <form class="form-inline" role="form" method="GET" action="{{ route('tag.index') }}" id="formSearch">
             <div class="form-group">
               <label for="email">Ngôn ngữ :</label>
               <select class="form-control" name="type" id="type">                                
@@ -130,6 +130,7 @@ $(document).ready(function(){
     }
     location.href = url;
   });
+  
   $('#table-list-data tbody').sortable({
         placeholder: 'placeholder',
         handle: ".move",

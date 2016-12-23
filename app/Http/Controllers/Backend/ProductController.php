@@ -149,6 +149,7 @@ class ProductController extends Controller
                 $model = new TagObjects;
                 $model->object_id = $sp_id;
                 $model->tag_id  = $tag_id;
+                $model->object_type  = 1;
                 $model->type = 1;
                 $model->save();
             }
@@ -159,6 +160,7 @@ class ProductController extends Controller
                 $model = new TagObjects;
                 $model->object_id = $sp_id;
                 $model->tag_id  = $tag_id;
+                $model->object_type  = 1;
                 $model->type = 2;
                 $model->save();
             }
@@ -293,7 +295,7 @@ class ProductController extends Controller
         $tagViList = Tag::where('type', 1)->orderBy('id', 'desc')->get();
         $tagEnList = Tag::where('type', 2)->orderBy('id', 'desc')->get();
         
-        $tmpArr = TagObjects::where('object_id', $id)->get();
+        $tmpArr = TagObjects::where(['object_id' => $id, 'object_type' => 1])->get();
         $tagSelectedVi = $tagSelectedEn = [];
         if( $tmpArr->count() > 0 ){
             foreach ($tmpArr as $value) {
@@ -364,7 +366,7 @@ class ProductController extends Controller
         
         $sp_id = $dataArr['id'];
         // xu ly tags
-        TagObjects::where(['object_id' => $sp_id])->delete();
+        TagObjects::where(['object_id' => $sp_id, 'object_type' => 1])->delete();
         if( !empty( $dataArr['tags_vi'] ) && $sp_id ){           
 
             foreach ($dataArr['tags_vi'] as $tag_id) {
@@ -372,6 +374,7 @@ class ProductController extends Controller
                 $model->object_id = $sp_id;
                 $model->tag_id  = $tag_id;
                 $model->type = 1;
+                $model->object_type  = 1;
                 $model->save();
             }
         }
@@ -381,6 +384,7 @@ class ProductController extends Controller
                 $model = new TagObjects;
                 $model->object_id = $sp_id;
                 $model->tag_id  = $tag_id;
+                $model->object_type  = 1;
                 $model->type = 2;
                 $model->save();
             }

@@ -39,18 +39,15 @@
                           @endforeach
                       </ul>
                   </div>
-              @endif                
+              @endif    
+              <input type="hidden" name="cate_id" value="1">
                 <div class="form-group">
-                  <label for="email">Danh mục <span class="red-star">*</span></label>
-                  <select class="form-control select2" name="cate_id" id="cate_id">
-                    <option value="">-- chọn --</option>
-                    @if( $cateArr->count() > 0)
-                      @foreach( $cateArr as $value )
-                      <option value="{{ $value->id }}" {{ $value->id == $detail->cate_id ? "selected" : "" }}>{{ $value->name }}</option>
-                      @endforeach
-                    @endif
+                  <label for="email">Ngôn ngữ </label>
+                  <select class="form-control" name="lang_id" id="lang_id">                                
+                    <option value="1" {{ 1 ==  $detail->lang_id ? "selected" : "" }}>Tiếng Việt</option>
+                    <option value="2" {{ 2 ==  $detail->lang_id ? "selected" : "" }}>Tiếng Anh</option>                  
                   </select>
-                </div>                           
+                </div>                          
                 
                 <div class="form-group" >
                   
@@ -179,7 +176,21 @@
       });
       $('#btnUploadImage').click(function(){        
         $('#file-image').click();
-      });      
+      });  
+      $('#lang_id').change(function(){
+        var type = $(this).val();
+        $.ajax({
+          url : '{{ route('articles.ajax-tag')}}',
+          type : 'GET',
+          data : {
+            type : type
+          },
+          success : function(data){
+            $('#tags').html(data);
+            $(".select2").select2();
+          }
+        });
+      });    
       var files = "";
       $('#file-image').change(function(e){
          files = e.target.files;
