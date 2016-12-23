@@ -30,7 +30,7 @@ class AlbumController extends Controller
         return view('frontend.home.ajax-slider');
     }
     public function index(Request $request){
-        $lang = 'vi';        
+       $lang = Session::get('lang') ? Session::get('lang') : 'vi';
         $albumList = Album::where('status', 1)->join('album_img', 'thumbnail_id', '=', 'album_img.id')
                                 ->select('album.*', 'album_img.image_url')
                                 ->orderBy('id', 'desc')->paginate(24);
@@ -50,7 +50,7 @@ class AlbumController extends Controller
     }
     public function detail(Request $request)
     {             
-        $lang = "vi";
+        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
         $productArr = [];
         $id = $request->id;
         $detail = Album::find($id);

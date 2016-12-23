@@ -145,6 +145,23 @@
     with_animations: ['cube', 'cubeRandom', 'block', 'cubeStop', 'cubeHide', 'cubeSize', 'horizontal', 'showBars', 'showBarsRandom', 'tube', 'fade', 'fadeFour', 'paralell', 'blind', 'blindHeight', 'blindWidth', 'directionTop', 'directionBottom', 'directionRight', 'directionLeft', 'cubeStopRandom', 'cubeSpread', 'cubeJelly', 'glassCube', 'glassBlock', 'circles', 'circlesInside', 'circlesRotate', 'cubeShow', 'upBars', 'downBars', 'hideBars', 'swapBars', 'swapBarsBack', 'swapBlocks', 'cut', 'random', 'randomSmart']
   });
   </script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('img.lang').click(function(){
+        $.ajax({
+          url : '{{ route('set-lang') }}',
+          type : 'GET',
+          data : {
+            lang : $(this).data('lang')
+          },
+          success : function(){
+            location.href = "{{ route('home') }}";
+          }
+        });
+      });
+    });
+
+  </script>
   @yield('javascript')
 
 </body>

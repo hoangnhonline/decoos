@@ -47,7 +47,7 @@ class VideoController extends Controller
     }
     public function detail(Request $request)
     {             
-        $lang = "vi";        
+        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
         $id = $request->id;
         $detail = Video::find($id);
         if(!$detail){

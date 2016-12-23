@@ -4,8 +4,8 @@
       <div class="col-sm-6 col-xs-12">
         <div class="block-language">
           <ul>
-            <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt=""></a></li>
-            <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt=""></a></li>
+            <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
+            <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
             <li></li>
           </ul>
         </div>
@@ -30,7 +30,7 @@
           <li><a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$loai->slug_vi]) : route('danh-muc-cha', [$loai->slug_en]) }}">{{ $lang == 'vi' ? $loai->name_vi : $loai->name_en }}</a></li>
           @endforeach
           <li><a href="">Fanpage</a></li>
-          <li><a href="">{{ $lang == 'vi' ? "Liên hệ" : "Contact us" }}</a></li>
+          <li><a href="{{ $lang == 'vi' ? route('contact-vi') : route('contact-en') }}">{{ $lang == 'vi' ? "Liên hệ" : "Contact us" }}</a></li>
           <li><a href="{{ $lang == 'vi' ? route('pages', 'huong-dan-mua-hang') : route('pages', 'shopping-guide')}}">{{ $lang == 'vi' ? "Hướng dẫn mua hàng" : "Shopping guide" }}</a></li>
         </ul>
       </nav>

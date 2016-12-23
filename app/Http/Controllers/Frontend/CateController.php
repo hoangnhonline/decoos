@@ -30,7 +30,7 @@ class CateController extends Controller
     */
     public function index(Request $request)
     {   
-        $lang = 'vi';        
+        $lang = Session::get('lang') ? Session::get('lang') : 'vi';     
         $productArr = [];
         $slug = $request->slug;        
         $rs = LoaiSp::where('slug_vi', $slug)->orWhere('slug_en', $slug)->first();
@@ -135,7 +135,7 @@ class CateController extends Controller
 
     public function cate(Request $request)
     {
-        $lang = 'vi';
+        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
         $productArr = [];
         $slugLoaiSp = $request->slugLoaiSp;
         $slug = $request->slug;

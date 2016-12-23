@@ -164,6 +164,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'backend', 'middleware' => '
 Route::group(['namespace' => 'Frontend'], function()
 {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+    Route::get('/lang/set-lang', ['as' => 'set-lang', 'uses' => 'HomeController@setLang']);
     Route::get('/{slug}', ['as' => 'danh-muc-cha', 'uses' => 'CateController@index']);
     Route::post('/send-contact', ['as' => 'send-contact', 'uses' => 'ContactController@store']);
     Route::post('/set-service', ['as' => 'set-service', 'uses' => 'CartController@setService']);    
@@ -188,7 +189,8 @@ Route::group(['namespace' => 'Frontend'], function()
     Route::get('{slugLoaiSp}/{slug}/', ['as' => 'danh-muc-con', 'uses' => 'CateController@cate']);    
     
     Route::get('/tim-kiem.html', ['as' => 'search', 'uses' => 'HomeController@search']);   
-    Route::get('lien-he.html', ['as' => 'contact', 'uses' => 'HomeController@contact']);
+    Route::get('contact.html', ['as' => 'contact-en', 'uses' => 'HomeController@contact']);
+    Route::get('lien-he.html', ['as' => 'contact-vi', 'uses' => 'HomeController@contact']);
     Route::get('{slug}.html', ['as' => 'pages', 'uses' => 'PageController@index']);
 
 });

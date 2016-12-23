@@ -30,7 +30,7 @@ class OtherController extends Controller
     */
     public function tag(Request $request)
     {   
-        $lang = 'vi';        
+        $lang = Session::get('lang') ? Session::get('lang') : 'vi';     
         $productArr = [];
         $slug = $request->slug;        
         $rs = Tag::where('slug', $slug)->first();

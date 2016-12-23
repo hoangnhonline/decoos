@@ -29,13 +29,16 @@ class HomeController extends Controller
     public function __construct(){
 
     }
-    
+    public function setLang(Request $request){
+        $lang = $request->lang;
+        Session::set('lang', $lang);
+    }
     public function loadSlider(){
         return view('frontend.home.ajax-slider');
     }
     public function index(Request $request)
     {             
-        $lang = 'vi';
+        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
         $productArr = [];
         
         $loaiSp = LoaiSp::where('status', 1)->orderBy('display_order')->get();
@@ -78,13 +81,7 @@ class HomeController extends Controller
         return view('frontend.home.index', compact('loaiSp', 'cateList', 'productArr', 'socialImage', 'seo', 'newProduct', 'hotProduct', 'saleProduct', 'lang', 'albumList', 'videoList', 'articlesList'));
     }
 
-    public function getNoti(){
-        $countMess = 0;
-        if(Session::get('userId') > 0){
-            $countMess = CustomerNotification::where(['customer_id' => Session::get('userId'), 'status' => 1])->count();    
-        }
-        return $countMess;
-    }
+    
     /**
     * Show the form for creating a new resource.
     *
@@ -116,7 +113,8 @@ class HomeController extends Controller
         $seo['description'] = 'Liên hệ';
         $seo['keywords'] = 'Liên hệ';
         $socialImage = '';
-        return view('frontend.contact.index', compact('seo', 'socialImage'));
+        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
+        return view('frontend.contact.index', compact('seo', 'socialImage', 'lang'));
     }
 
     public function newsList(Request $request)
