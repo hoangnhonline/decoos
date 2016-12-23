@@ -49,6 +49,19 @@
           <span>Video</span>         
         </a>       
       </li>
+      <li class="treeview {{ in_array(\Request::route()->getName(), ['articles.index', 'articles.create', 'articles.edit']) ? 'active' : '' }}">
+        <a href="#">
+          <i class="fa fa-twitch"></i> 
+          <span>Tin tức</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li {{ in_array(\Request::route()->getName(), ['articles.index', 'articles.edit']) ? "class=active" : "" }}><a href="{{ route('articles.index') }}"><i class="fa fa-circle-o"></i> Tin tức</a></li>
+          <li {{ in_array(\Request::route()->getName(), ['articles.create']) ? "class=active" : "" }}><a href="{{ route('articles.create') }}"><i class="fa fa-circle-o"></i> Thêm tin tức</a></li>          
+        </ul>
+      </li>
       <li class="treeview {{ in_array(\Request::route()->getName(), ['pages.index', 'pages.create', 'pages.edit']) ? 'active' : '' }}">
         <a href="#">
           <i class="fa fa-twitch"></i> 
