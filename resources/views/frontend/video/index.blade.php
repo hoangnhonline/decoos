@@ -4,7 +4,7 @@
 <div class="block-headline-detail container">
   <ul class="breadcrumb breadcrumb-customize">
       <li><a href="{{ route('home') }}">Trang Chủ</a></li>
-      <li><a href="{{ $lang == 'vi' ? route('album-vi') : route('album-en') }}">{{ $lang == 'vi' ? "Bộ sưu tập" : "Album" }}</a></li>
+      <li><a href="{{ route('video') }}">Video</a></li>
   </ul>
 </div>
 <div class="container page">
@@ -16,26 +16,26 @@
       <div class="page-view">
 
         <div class="title-page">
-          <h2 class="page-title">{{ $lang == 'vi' ? "Bộ sưu tập" : "Album" }}</h2>
+          <h2 class="page-title">Video</h2>
         </div>
 
         <div class="clearfix"></div>
 
         <div class="page-layout-2columns page-child grid page-child-grid">
           <div class="page-child-items row">
-            @if($albumList->count() > 0)
-              @foreach($albumList as $album)
+            @if($videoList->count() > 0)
+              @foreach($videoList as $video)
               <div class="page-child-item">
                 <div class="album-item">
-                   <a href="{{ $lang == 'vi' ? route('chi-tiet-album', [$album->slug_vi, $album->id]) : route('chi-tiet-album', [$album->slug_en, $album->id]) }}" title="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
+                   <a href="{{ $lang == 'vi' ? route('video-detail', [$video->slug_vi, $video->id]) : route('video-detail', [$video->slug_en, $video->id]) }}" title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
                     <i class="icofont icofont-search-alt-1"></i>
                   </a>
                   <div class="album-img">
-                        <img src="{{ Helper::showImage($album->image_url) }}" alt="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
+                        <img src="{{ Helper::showImage($video->image_url) }}" alt="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
                       </div>
                   <div class="album-info">
                     <h2 class="album-info-name">
-                       <a href="{{ $lang == 'vi' ? route('chi-tiet-album', [$album->slug_vi, $album->id]) : route('chi-tiet-album', [$album->slug_en, $album->id]) }}" title="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}</a>
+                       <a href="{{ $lang == 'vi' ? route('video-detail', [$video->slug_vi, $video->id]) : route('video-detail', [$video->slug_en, $video->id]) }}" title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}</a>
                     </h2>
                   </div>
                 </div>
@@ -45,7 +45,7 @@
           </div><!-- end page child items -->
 
           <div class="text-center pagination-custom">
-              {{ $albumList->links() }}
+              {{ $videoList->links() }}
           </div><!-- pagination -->
         </div>
 

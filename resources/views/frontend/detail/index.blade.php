@@ -3,7 +3,7 @@
 @section('content')
 <div class="block-headline-detail container">
   <ul class="breadcrumb breadcrumb-customize">
-      <li><a href="index.html">Trang Chủ</a></li>
+      <li><a href="{{ route('home') }}">Trang chủ</a></li>
       <li><a href="#">Sản Phẩm</a></li>
       <li><a href="#">Thắt Lưng Nam</a></li>
       <li><a href="#">Dây lưng Louis Vuitton thời trang cao cấp TLN176</a></li>

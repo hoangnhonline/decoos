@@ -372,7 +372,7 @@
             </div>          
             @endforeach
             <div class="clearfix">
-              <a href="#" class="view-all pull-right">Xem tất cả</a>
+              <a href="{{ $lang == 'vi' ? route('album-vi') : route('album-en') }}" class="view-all pull-right">Xem tất cả</a>
             </div>
           </div><!-- end spn -->
 
@@ -415,7 +415,7 @@
             </div>        
             @endforeach
             <div class="clearfix">
-              <a href="#" class="view-all pull-right">Xem tất cả</a>
+              <a href="{{ route('video') }}" class="view-all pull-right">Xem tất cả</a>
             </div>
           </div><!-- end spn -->
 
