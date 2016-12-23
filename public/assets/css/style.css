@@ -1299,3 +1299,36 @@ footer {
   float: left;
   padding: 0 15px;
 }
+.block-tags .site-content {
+  padding: 10px;
+}
+.block-tags .tag_1 {
+  font-size: 12px;
+  color: #808080;
+}
+.block-tags .tag_2 {
+  font-size: 14px;
+  color: Purple;
+}
+.block-tags .tag_3 {
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+}
+.block-tags .tag_4 {
+  font-size: 18px;
+  color: blue;
+  font-weight: bold;
+}
+.block-tags .tag_5 {
+  font-size: 20px;
+  color: red;
+  font-weight: bold;
+}
+.block-tags .tag_1:hover,
+.block-tags .tag_2:hover,
+.block-tags .tag_3:hover,
+.block-tags .tag_4:hover,
+.block-tags .tag_5:hover {
+  color: #CA2323;
+}
