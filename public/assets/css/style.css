@@ -1233,7 +1233,9 @@ footer {
   padding: 10px 60px;
 }
 
-.products-img img {
+.products-img img,
+.album-item img,
+.video-item img {
   width: 268px;
   height: 268px;
 }
