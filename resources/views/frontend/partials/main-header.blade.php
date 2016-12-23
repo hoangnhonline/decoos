@@ -24,14 +24,14 @@
     <div class="container menu-top">
       <nav class="header-menu">
         <ul class="header-topmenu">
-          <li><a href="{{ route('home') }}" class="active">Trang Chủ</a></li>
-          <li><a href="">Giới Thiệu</a></li>
-          <li><a href="category.html">Thắt Lưng Nam</a></li>
-          <li><a href="">Giày Nam</a></li>
-          <li><a href="">Ví Nam</a></li>
+          <li><a href="{{ route('home') }}" class="active">{{ $lang == 'vi' ? "Trang chủ" : "Home" }}</a></li>
+          <li><a href="{{ $lang == 'vi' ? route('pages', 'gioi-thieu') : route('pages', 'about-us')}}">{{ $lang == 'vi' ? "Giới thiệu" : "About us" }}</a></li>
+          @foreach($loaiSp as $loai)
+          <li><a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$loai->slug_vi]) : route('danh-muc-cha', [$loai->slug_en]) }}">{{ $lang == 'vi' ? $loai->name_vi : $loai->name_en }}</a></li>
+          @endforeach
           <li><a href="">Fanpage</a></li>
-          <li><a href="">Liên Hệ</a></li>
-          <li><a href="">Hướng Dẫn Mua Hàng</a></li>
+          <li><a href="">{{ $lang == 'vi' ? "Liên hệ" : "Contact us" }}</a></li>
+          <li><a href="{{ $lang == 'vi' ? route('pages', 'huong-dan-mua-hang') : route('pages', 'shopping-guide')}}">{{ $lang == 'vi' ? "Hướng dẫn mua hàng" : "Shopping guide" }}</a></li>
         </ul>
       </nav>
     </div>

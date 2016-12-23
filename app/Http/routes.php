@@ -189,7 +189,7 @@ Route::group(['namespace' => 'Frontend'], function()
     
     Route::get('/tim-kiem.html', ['as' => 'search', 'uses' => 'HomeController@search']);   
     Route::get('lien-he.html', ['as' => 'contact', 'uses' => 'HomeController@contact']);
-    
+    Route::get('{slug}.html', ['as' => 'pages', 'uses' => 'PageController@index']);
 
 });
 
