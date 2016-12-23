@@ -39,7 +39,7 @@
                   </div>
               @endif      
               <div class="form-group">
-                <label for="email">Loại </label>
+                <label for="email">Ngôn ngữ </label>
                 <select class="form-control" name="type">                                
                   <option value="1" {{ 1 ==  $detail->type ? "selected" : "" }}>Tiếng Việt</option>
                   <option value="2" {{ 2 ==  $detail->type ? "selected" : "" }}>Tiếng Anh</option>                  

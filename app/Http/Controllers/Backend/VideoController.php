@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use App\Models\MetaData;
+use App\Models\Tag;
+use App\Models\TagObjects;
 
 use Helper, File, Session, Auth;
 
@@ -39,7 +41,9 @@ class VideoController extends Controller
     */
     public function create()
     {
-        return view('backend.video.create');
+        $tagViList = Tag::where('type', 1)->orderBy('id', 'desc')->get();
+        $tagEnList = Tag::where('type', 2)->orderBy('id', 'desc')->get();
+        return view('backend.video.create', compact('tagViList', 'tagEnList'));
     }  
 
     
@@ -91,6 +95,30 @@ class VideoController extends Controller
         $rs = Video::create($dataArr);
         $id = $rs->id;
 
+        // xu ly tags
+        if( !empty( $dataArr['tags_vi'] ) && $id ){           
+
+            foreach ($dataArr['tags_vi'] as $tag_id) {
+                $model = new TagObjects;
+                $model->object_id = $id;
+                $model->tag_id  = $tag_id;
+                $model->object_type  = 3;
+                $model->type = 1;
+                $model->save();
+            }
+        }
+        if( !empty( $dataArr['tags_en'] ) && $id ){           
+
+            foreach ($dataArr['tags_en'] as $tag_id) {
+                $model = new TagObjects;
+                $model->object_id = $id;
+                $model->tag_id  = $tag_id;
+                $model->object_type  = 3;
+                $model->type = 2;
+                $model->save();
+            }
+        }
+
         $this->storeMeta( $id, 0, $dataArr);
 
         Session::flash('message', 'Tạo mới video thành công');
@@ -123,8 +151,21 @@ class VideoController extends Controller
         if ( $detail->meta_id > 0){
             $meta = MetaData::find( $detail->meta_id );
         }
+        $tagViList = Tag::where('type', 1)->orderBy('id', 'desc')->get();
+        $tagEnList = Tag::where('type', 2)->orderBy('id', 'desc')->get();
 
-        return view('backend.video.edit', compact( 'detail', 'meta'));
+        $tmpArr = TagObjects::where(['object_id' => $id, 'object_type' => 3])->get();
+        $tagSelectedVi = $tagSelectedEn = [];
+        if( $tmpArr->count() > 0 ){
+            foreach ($tmpArr as $value) {
+                if($value->type == 1){
+                    $tagSelectedVi[] = $value->tag_id;
+                }else{
+                    $tagSelectedEn[] = $value->tag_id;
+                }
+            }
+        }
+        return view('backend.video.edit', compact( 'detail', 'meta', 'tagViList', 'tagEnList', 'tagSelectedVi', 'tagSelectedEn'));
     }
 
     /**
@@ -172,6 +213,30 @@ class VideoController extends Controller
 
         $model = Video::find($dataArr['id']);
         $model->update($dataArr);
+        // xu ly tags
+        TagObjects::where(['object_id' => $dataArr['id'], 'object_type' => 3])->delete();
+        if( !empty( $dataArr['tags_vi'] ) && $dataArr['id'] ){           
+
+          foreach ($dataArr['tags_vi'] as $tag_id) {
+              $model = new TagObjects;
+              $model->object_id = $dataArr['id'];
+              $model->tag_id  = $tag_id;
+              $model->type = 1;
+              $model->object_type  = 3;
+              $model->save();
+          }
+          }
+          if( !empty( $dataArr['tags_en'] ) && $dataArr['id'] ){           
+
+          foreach ($dataArr['tags_en'] as $tag_id) {
+              $model = new TagObjects;
+              $model->object_id = $dataArr['id'];
+              $model->tag_id  = $tag_id;
+              $model->object_type  = 3;
+              $model->type = 2;
+              $model->save();
+          }
+        }
 
         $this->storeMeta( $dataArr['id'], $dataArr['meta_id'], $dataArr);
 

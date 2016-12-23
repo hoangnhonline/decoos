@@ -3,10 +3,9 @@
 @section('content')
 <div class="block-headline-detail container">
   <ul class="breadcrumb breadcrumb-customize">
-      <li><a href="index.html">Trang Chủ</a></li>
-      <li><a href="#">Sản Phẩm</a></li>
-      <li><a href="#">Thắt Lưng Nam</a></li>
-      <li><a href="#">Dây lưng Louis Vuitton thời trang cao cấp TLN176</a></li>
+      <li><a href="{{ route('home') }}">Trang chủ</a></li>
+      <li><a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$rsLoai->slug_vi]) :  route('danh-muc-cha', [$rsLoai->slug_en]) }}">{{ $lang == 'vi' ? $rsLoai->name_vi : $rsLoai->name_en }}</a></li>
+      <li><a href="{{ $lang == 'vi' ? route('danh-muc-con', [$rsLoai->slug_vi, $rsCate->slug_vi]) :  route('danh-muc-con', [$rsLoai->slug_en, $rsCate->slug_en]) }}">{{ $lang == 'vi' ? $rsCate->name_vi : $rsCate->name_en }}</a></li>      
   </ul>
 </div>
 
@@ -27,9 +26,11 @@
       <div class="product-img-box col-md-5 col-sm-5 col-xs-12">        
         @if( !empty( $hinhArr ))
         <div class="bxslider product-img-gallery">
+          <?php $k = 0; ?>
             @foreach( $hinhArr as $hinh )
+            <?php $k++; ?>
             <div class="item">
-                <img src="{{ Helper::showImage($hinh['image_url']) }}" alt="#" />
+                <img src="{{ Helper::showImage($hinh['image_url']) }}" alt="{{ $lang == "vi" ? $detail->name_vi : $detail->name_en }} {{ $k }}" />
             </div>
             @endforeach
         </div>
@@ -40,7 +41,7 @@
                 <
                 <div class="item">
                     <a href="#" data-slide-index="{{ $i }}">
-                        <img src="{{ Helper::showImage($hinh['image_url']) }}" alt="#" />
+                        <img src="{{ Helper::showImage($hinh['image_url']) }}" alt="{{ $lang == "vi" ? $detail->name_vi : $detail->name_en }} {{ $i }}" />
                     </a>
                 </div>
                 <?php $i++; ?>
@@ -81,7 +82,7 @@
                     <div class="product-detail">
                       <div class="tab product-tab">
                           <ul data-sequence="400" role="tablist">
-                            <li role="presentation"><a href="#mota" aria-controls="mota" role="tab" data-toggle="tab">Mô Tả</a></li>
+                            <li role="presentation" class="active"><a href="#mota" aria-controls="mota" role="tab" data-toggle="tab">Mô Tả</a></li>
                             <li role="presentation"><a href="#danhgia" aria-controls="danhgia" role="tab" data-toggle="tab">Đánh Giá</a></li>
                             @if($detail->video_url)
                             <li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Video</a></li>

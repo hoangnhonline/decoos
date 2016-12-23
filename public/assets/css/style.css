@@ -799,16 +799,16 @@ footer {
   -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
-.pagination-custom>li>a,
-.pagination-custom>li>span {
+.pagination-custom .pagination>li>a,
+.pagination-custom .pagination>li>span {
   color: #333;
 }
-.pagination-custom>.active>a,
-.pagination-custom>.active>a:focus,
-.pagination-custom>.active>a:hover,
-.pagination-custom>.active>span,
-.pagination-custom>.active>span:focus,
-.pagination-custom>.active>span:hover {
+.pagination-custom .pagination>.active>a,
+.pagination-custom .pagination>.active>a:focus,
+.pagination-custom .pagination>.active>a:hover,
+.pagination-custom .pagination>.active>span,
+.pagination-custom .pagination>.active>span:focus,
+.pagination-custom .pagination>.active>span:hover {
   z-index: 3;
   color: #fff;
   cursor: default;

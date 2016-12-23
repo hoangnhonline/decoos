@@ -3,10 +3,9 @@
 @section('content')
 <div class="block-headline-detail container">
   <ul class="breadcrumb breadcrumb-customize">
-      <li><a href="index.html">Trang Chủ</a></li>
-      <li><a href="#">Sản Phẩm</a></li>
-      <li><a href="#">Thắt Lưng Nam</a></li>
-      <li><a href="#">Dây lưng Louis Vuitton thời trang cao cấp TLN176</a></li>
+      <li><a href="{{ route('home') }}">Trang chủ</a></li>
+      <li><a href="{{ $lang == 'vi' ? route('album-vi') : route('album-en') }}">{{ $lang == 'vi' ? "Bộ sưu tập" : "Album" }}</a></li>      
+      <li><a href="{{ $lang == 'vi' ? route('chi-tiet-album', [$detail->slug_vi, $detail->id]) : route('chi-tiet-album', [$detail->slug_en, $detail->id]) }}">{{ $lang == 'vi' ? $detail->name_vi : $detail->name_en }}</a></li>
   </ul>
 </div>
 <div class="container page">
@@ -18,69 +17,27 @@
     <div class="page-view">
 
       <div class="title-page">
-        <h2 class="page-title">Chi Tiết Album</h2>
+        <h2 class="page-title">Chi tiết album</h2>
       </div>
 
       <div class="clearfix"></div>
 
       <div class="albumdetail">
         <div class="contentdetail">
-          <h1>Ví Nam Bóp Nam Thời Trang</h1>
+          <h1>{{ $lang == 'vi' ? $detail->name_vi : $detail->name_en }}</h1>
           <ul id="imageGallery" class="imageGallery_ct">
-            <li data-thumb="images/products/that_lung_nam/1.jpg" data-src="images/products/that_lung_nam/1.jpg">
-              <img src="images/products/that_lung_nam/1.jpg" />
+            @foreach( $hinhArr as $hinh )            
+            <li data-thumb="{{ Helper::showImage($hinh['image_url']) }}" data-src="{{ Helper::showImage($hinh['image_url']) }}">
+              <img src="{{ Helper::showImage($hinh['image_url']) }}" />
             </li>
-            <li data-thumb="images/products/that_lung_nam/2.jpg" data-src="images/products/that_lung_nam/2.jpg">
-              <img src="images/products/that_lung_nam/2.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/3.jpg" data-src="images/products/that_lung_nam/3.jpg">
-              <img src="images/products/that_lung_nam/3.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/4.jpg" data-src="images/products/that_lung_nam/4.jpg">
-              <img src="images/products/that_lung_nam/4.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/5.jpg" data-src="images/products/that_lung_nam/5.jpg">
-              <img src="images/products/that_lung_nam/5.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/6.jpg" data-src="images/products/that_lung_nam/6.jpg">
-              <img src="images/products/that_lung_nam/6.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/7.jpg" data-src="images/products/that_lung_nam/7.jpg">
-              <img src="images/products/that_lung_nam/7.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/8.jpg" data-src="images/products/that_lung_nam/8.jpg">
-              <img src="images/products/that_lung_nam/8.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/1.jpg" data-src="images/products/that_lung_nam/1.jpg">
-              <img src="images/products/that_lung_nam/1.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/2.jpg" data-src="images/products/that_lung_nam/2.jpg">
-              <img src="images/products/that_lung_nam/2.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/3.jpg" data-src="images/products/that_lung_nam/3.jpg">
-              <img src="images/products/that_lung_nam/3.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/4.jpg" data-src="images/products/that_lung_nam/4.jpg">
-              <img src="images/products/that_lung_nam/4.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/5.jpg" data-src="images/products/that_lung_nam/5.jpg">
-              <img src="images/products/that_lung_nam/5.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/6.jpg" data-src="images/products/that_lung_nam/6.jpg">
-              <img src="images/products/that_lung_nam/6.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/7.jpg" data-src="images/products/that_lung_nam/7.jpg">
-              <img src="images/products/that_lung_nam/7.jpg" />
-            </li>
-            <li data-thumb="images/products/that_lung_nam/8.jpg" data-src="images/products/that_lung_nam/8.jpg">
-              <img src="images/products/that_lung_nam/8.jpg" />
-            </li>
-            </li>
+            @endforeach                        
           </ul>
-
+          <div class="detail-album">
+            <?php echo $lang == 'vi' ? $detail->content_vi : $detail->content_en; ?>
+          </div>
           <div class="ttin_tag">
             <div class="top_tt">
-              <img src="images/icon_ttin_tag.png" class="ttin_left_tag">
+              <img src="{{ URL::asset('assets/images/icon_ttin_tag.png') }}" class="ttin_left_tag">
               <div class="chu_tag">
                 <a href="#">dây nịt nam</a>,
                 <a href="#">day nit nam</a>,
@@ -117,25 +74,34 @@
 }
 </style>
 <!-- Js zoom -->
-<script src="{{ URL::asset('assets/js/jquery.zoom.min.js') }}"></script>
-<!-- Js bxslider -->
-<script src="{{ URL::asset('assets/js/jquery.bxslider.min.js') }}"></script>
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(".bxslider").bxSlider({
-        pagerCustom: '.pro-thumb-img',
-        nextText: '<i class="icofont icofont-rounded-right"></i>',
-        prevText: '<i class="icofont icofont-rounded-left"></i>'
+<link href="{{ URL::asset('assets/css/lightslider.css') }}" type="text/css" media="all" rel="stylesheet" />
+  <!-- ===== Owl Lightgallery ===== -->
+<link href="{{ URL::asset('assets/lightgallery/css/lightgallery.min.css') }}" type="text/css" media="all" rel="stylesheet" />
+<script src="{{ URL::asset('assets/js/lightslider.js') }}"></script>
+    <!-- Js lightslider Integrate with lightGallery -->
+<script src="{{ URL::asset('assets/lightgallery/js/lightgallery.min.js') }}"></script>
+<script>
+    // Album details width thumbnail
+    $(document).ready(function() {
+      $('#imageGallery').lightSlider({
+        gallery:true,
+        item:1,
+        loop:true,
+        thumbItem:9,
+        slideMargin:0,
+        enableDrag: false,
+        currentPagerPosition:'left',
+        slideMargin: 0,
+        speed:800,
+        auto:true,
+        loop:true,
+        onSliderLoad: function(el) {
+          el.lightGallery({
+          selector: '#imageGallery .lslide',
+          });
+        }
+      });
     });
+  </script>
 
-    $(".pro-thumb-img").bxSlider({
-        slideMargin: 10,
-        maxSlides: 4,
-        pager: false,
-        controls: false,
-        slideWidth: 75,
-        infiniteLoop: false
-    });
-  });
-</script>
 @endsection

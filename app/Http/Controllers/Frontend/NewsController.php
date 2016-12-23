@@ -8,15 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Models\LoaiSp;
 use App\Models\Cate;
 use App\Models\Settings;
-use App\Models\Album;
-use App\Models\AlbumImg;
+use App\Models\Articles;
 use App\Models\MetaData;
 use App\Models\Product;
 
 use App\Models\CustomerNotification;
 use Helper, File, Session, Auth, Hash;
 
-class AlbumController extends Controller
+class NewsController extends Controller
 {
     
     public static $loaiSp = []; 
@@ -31,11 +30,10 @@ class AlbumController extends Controller
     }
     public function index(Request $request){
         $lang = 'vi';        
-        $albumList = Album::where('status', 1)->join('album_img', 'thumbnail_id', '=', 'album_img.id')
-                                ->select('album.*', 'album_img.image_url')
-                                ->orderBy('id', 'desc')->paginate(24);
+        $lang_id = $lang == 'vi' ? 1 : 2;
+        $articlesList = Articles::where('status', 1)->where('lang_id', $lang_id)->orderBy('id', 'desc')->paginate(24);
 
-        $seo['title'] = $seo['description'] = $seo['keywords'] = $lang == 'vi' ? "Bộ sưu tập" : "Album";
+        $seo['title'] = $seo['description'] = $seo['keywords'] = "Articles";
 
           //sale product
         $saleList = Product::where(['is_sale' => 1])->where('price_sale', '>', 0)                    
@@ -45,20 +43,17 @@ class AlbumController extends Controller
         foreach($loaiSp as $loai){
             $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();
         }
-        return view('frontend.album.index', compact('albumList', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'
+        return view('frontend.news.index', compact('articlesList', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'
             ));
     }
     public function detail(Request $request)
     {             
-        $lang = "vi";
-        $productArr = [];
+        $lang = "vi";        
         $id = $request->id;
-        $detail = Album::find($id);
+        $detail = Articles::find($id);
         if(!$detail){
             return redirect()->route('home');
-        }
-
-        $hinhArr = AlbumImg::where('album_id', $detail->id)->get()->toArray();                                
+        }             
 
         if( $detail->meta_id > 0){
            $meta = MetaData::find( $detail->meta_id )->toArray();
@@ -68,11 +63,11 @@ class AlbumController extends Controller
         }else{
             $seo['title'] = $seo['description'] = $seo['keywords'] = $detail->name_vi;
         }               
+
         $loaiSp = LoaiSp::where('status', 1)->orderBy('display_order')->get();
         foreach($loaiSp as $loai){
             $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();
         }
-
 
          //sale product
         $saleList = Product::where(['is_sale' => 1, 'cate_id' => $detail->cate_id])->where('price_sale', '>', 0)
@@ -81,9 +76,7 @@ class AlbumController extends Controller
                     ->select('product_img.image_url', 'product.*')->orderBy('id', 'desc')->limit(5)->get();
 
 
-        return view('frontend.album.detail', compact('detail', 'hinhArr', 'seo', 'lang', 
-            'loaiSp', 'cateList', 'saleList'
-            ));
+        return view('frontend.news.detail', compact('detail', 'hinhArr', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'));
     }
 
     

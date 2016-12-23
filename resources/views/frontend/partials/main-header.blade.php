@@ -24,7 +24,7 @@
     <div class="container menu-top">
       <nav class="header-menu">
         <ul class="header-topmenu">
-          <li><a href="index.html" class="active">Trang Chủ</a></li>
+          <li><a href="{{ route('home') }}" class="active">Trang Chủ</a></li>
           <li><a href="">Giới Thiệu</a></li>
           <li><a href="category.html">Thắt Lưng Nam</a></li>
           <li><a href="">Giày Nam</a></li>

@@ -26,18 +26,14 @@
           <h3 class="panel-title">Bộ lọc</h3>
         </div>
         <div class="panel-body">
-          <form class="form-inline" role="form" method="GET" action="{{ route('articles.index') }}">            
-            <div class="form-group">
-              <label for="email">Danh mục </label>
-              <select class="form-control select2" name="cate_id" id="cate_id">
-                <option value="">--Tất cả--</option>
-                @if( $cateArr->count() > 0)
-                  @foreach( $cateArr as $value )
-                  <option value="{{ $value->id }}" {{ $value->id == $cate_id ? "selected" : "" }}>{{ $value->name }}</option>
-                  @endforeach
-                @endif
+          <form class="form-inline" role="form" method="GET" action="{{ route('articles.index') }}" id="formSearch">            
+             <div class="form-group">
+              <label for="email">Ngôn ngữ :</label>
+              <select class="form-control" name="lang_id" id="lang_id">                                
+                <option value="1" {{ 1 == $lang_id ? "selected" : "" }}>Tiếng Việt</option>
+                <option value="2" {{ 2 == $lang_id ? "selected" : "" }}>Tiếng Anh</option>                
               </select>
-            </div>            
+           </div>           
             <div class="form-group">
               <label for="email">Từ khóa :</label>
               <input type="text" class="form-control" name="title" value="{{ $title }}">
@@ -55,7 +51,7 @@
         <!-- /.box-header -->
         <div class="box-body">
           <div style="text-align:center">
-            {{ $items->appends( ['cate_id' => $cate_id, 'title' => $title] )->links() }}
+            {{ $items->appends( ['lang_id' => $lang_id, 'title' => $title] )->links() }}
           </div>  
           <table class="table table-bordered" id="table-list-data">
             <tr>
@@ -84,7 +80,7 @@
                   <p>{{ $item->description }}</p>
                 </td>
                 <td style="white-space:nowrap"> 
-                  <a class="btn btn-default btn-sm" href="{{ route('news-detail', [$item->slug, $item->id ]) }}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i> Xem</a>                 
+                            
                   <a href="{{ route( 'articles.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning">Chỉnh sửa</a>                 
                   
                   <a onclick="return callDelete('{{ $item->title }}','{{ route( 'articles.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger">Xóa</a>
@@ -101,7 +97,7 @@
           </tbody>
           </table>
           <div style="text-align:center">
-            {{ $items->appends( ['cate_id' => $cate_id, 'title' => $title] )->links() }}
+            {{ $items->appends( ['lang_id' => $lang_id, 'title' => $title] )->links() }}
           </div>  
         </div>        
       </div>
@@ -131,6 +127,9 @@ function callDelete(name, url){
   return flag;
 }
 $(document).ready(function(){
+  $('#lang_id').change(function(){
+    $('#formSearch').submit();
+  });
   $('#parent_id').change(function(){
     $.ajax({
         url: $('#route_get_cate_by_parent').val(),
