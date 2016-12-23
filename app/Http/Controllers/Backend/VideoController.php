@@ -208,7 +208,7 @@ class VideoController extends Controller
         }
         $dataArr['alias_vi'] = Helper::stripUnicode($dataArr['name_vi']);
         $dataArr['alias_en'] = Helper::stripUnicode($dataArr['name_en']);
-        $dataArr['is_menu'] = isset($dataArr['is_menu']) ? 1 : 0;        
+              
         $dataArr['updated_user'] = Auth::user()->id; 
 
         $model = Video::find($dataArr['id']);

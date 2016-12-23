@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Pages;
+use App\Models\MetaData;
+use App\Models\Tag;
+use App\Models\TagObjects;
+
 use Helper, File, Session, Auth;
 
 class PagesController extends Controller
@@ -18,20 +22,16 @@ class PagesController extends Controller
     */
     public function index(Request $request)
     {
+        $arrSearch['name'] = $name = isset($request->name) && trim($request->name) != '' ? trim($request->name) : '';
         
-
-        $title = isset($request->title) && $request->title != '' ? $request->title : '';
-        
-        $query = Pages::whereRaw('1');
-
-        
-        if( $title != ''){
-            $query->where('alias', 'LIKE', '%'.$title.'%');
+        $query = Pages::where('pages.status', 1);
+              
+        if( $name != ''){
+            $query->where('pages.title_vi', 'LIKE', '%'.$name.'%');
+            $query->orWhere('pages.title_en', 'LIKE', '%'.$name.'%');
         }
-        $items = $query->orderBy('id', 'desc')->paginate(20);
-        
-      
-        return view('backend.pages.index', compact( 'items' , 'title' ));
+        $items = $query->paginate(50);
+        return view('backend.pages.index', compact( 'items', 'arrSearch'));
     }
 
     /**
@@ -39,12 +39,12 @@ class PagesController extends Controller
     *
     * @return Response
     */
-    public function create(Request $request)
-    {          
-
+    public function create()
+    {
         return view('backend.pages.create');
-    }
+    }  
 
+    
     /**
     * Store a newly created resource in storage.
     *
@@ -55,19 +55,20 @@ class PagesController extends Controller
     {
         $dataArr = $request->all();
         
-        $this->validate($request,[            
-                        
-            'title' => 'required',            
-            'slug' => 'required|unique:pages,slug',
+        $this->validate($request,[
+            'title_vi' => 'required',
+            'slug_vi' => 'required',
+            'title_en' => 'required',
+            'slug_en' => 'required',
+            'pages_url' => 'required'
         ],
-        [            
-                        
-            'title.required' => 'Bạn chưa nhập tiêu đề',
-            'slug.required' => 'Bạn chưa nhập slug',
-            'slug.unique' => 'Slug đã được sử dụng.'
-        ]);       
-        
-        $dataArr['alias'] = Helper::stripUnicode($dataArr['title']);
+        [
+            'title_vi.required' => 'Bạn chưa nhập tên trang VI',
+            'slug_vi.required' => 'Bạn chưa nhập slug VI',
+            'title_en.required' => 'Bạn chưa nhập tên trang EN',
+            'slug_en.required' => 'Bạn chưa nhập slug EN',
+            'pages_url.required' => 'Bạn chưa nhập VIDEO URL',
+        ]);        
         
         if($dataArr['image_url'] && $dataArr['image_name']){
             
@@ -82,17 +83,19 @@ class PagesController extends Controller
             File::move(config('decoos.upload_path').$dataArr['image_url'], config('decoos.upload_path').$destionation);
             
             $dataArr['image_url'] = $destionation;
-        }        
-        
+        } 
+
+        $dataArr['alias_vi'] = Helper::stripUnicode($dataArr['title_vi']);
+        $dataArr['alias_en'] = Helper::stripUnicode($dataArr['title_en']);
+                   
         $dataArr['created_user'] = Auth::user()->id;
-
         $dataArr['updated_user'] = Auth::user()->id;
-
         $rs = Pages::create($dataArr);
+        $id = $rs->id;       
 
-        $object_id = $rs->id;
+        $this->storeMeta( $id, 0, $dataArr);
 
-        Session::flash('message', 'Tạo mới trang thành công');
+        Session::flash('message', 'Tạo mới pages thành công');
 
         return redirect()->route('pages.index');
     }
@@ -115,11 +118,15 @@ class PagesController extends Controller
     * @return Response
     */
     public function edit($id)
-    {        
-
+    {
         $detail = Pages::find($id);
 
-        return view('backend.pages.edit', compact('detail'));
+        $meta = (object) [];
+        if ( $detail->meta_id > 0){
+            $meta = MetaData::find( $detail->meta_id );
+        }
+        
+        return view('backend.pages.edit', compact( 'detail', 'meta'));
     }
 
     /**
@@ -133,20 +140,19 @@ class PagesController extends Controller
     {
         $dataArr = $request->all();
         
-        $this->validate($request,[            
-                        
-            'title' => 'required',            
-            'slug' => 'required|unique:pages,slug,'.$dataArr['id'],
+        $this->validate($request,[
+            'title_vi' => 'required',
+            'slug_vi' => 'required',
+            'title_en' => 'required',
+            'slug_en' => 'required'
         ],
-        [            
-                        
-            'title.required' => 'Bạn chưa nhập tiêu đề',
-            'slug.required' => 'Bạn chưa nhập slug',
-            'slug.unique' => 'Slug đã được sử dụng.'
-        ]);       
-        
-        $dataArr['alias'] = Helper::stripUnicode($dataArr['title']);
-        
+        [
+            'title_vi.required' => 'Bạn chưa nhập tên trang VI',
+            'slug_vi.required' => 'Bạn chưa nhập slug VI',
+            'title_en.required' => 'Bạn chưa nhập tên trang EN',
+            'slug_en.required' => 'Bạn chưa nhập slug EN',
+        ]);
+
         if($dataArr['image_url'] && $dataArr['image_name']){
             
             $tmp = explode('/', $dataArr['image_url']);
@@ -161,18 +167,46 @@ class PagesController extends Controller
             
             $dataArr['image_url'] = $destionation;
         }
-
-        $dataArr['updated_user'] = Auth::user()->id;
+        $dataArr['alias_vi'] = Helper::stripUnicode($dataArr['title_vi']);
+        $dataArr['alias_en'] = Helper::stripUnicode($dataArr['title_en']);
+            
+        $dataArr['updated_user'] = Auth::user()->id; 
 
         $model = Pages::find($dataArr['id']);
+        $model->update($dataArr);        
 
-        $model->update($dataArr);
-       
-        Session::flash('message', 'Cập nhật thông tin trang thành công');        
+        $this->storeMeta( $dataArr['id'], $dataArr['meta_id'], $dataArr);
+
+        Session::flash('message', 'Cập nhật trang thành công');
 
         return redirect()->route('pages.edit', $dataArr['id']);
     }
-
+    public function storeMeta( $id, $meta_id, $dataArr ){
+       
+        $arrData = [
+            'title_vi' => $dataArr['meta_title_vi'], 
+            'description_vi' => $dataArr['meta_description_vi'], 
+            'keywords_vi'=> $dataArr['meta_keywords_vi'], 
+            'custom_text_vi' => $dataArr['custom_text_vi'], 
+            'title_en' => $dataArr['meta_title_en'], 
+            'description_en' => $dataArr['meta_description_en'], 
+            'keywords_en'=> $dataArr['meta_keywords_en'], 
+            'custom_text_en' => $dataArr['custom_text_en'], 
+            'updated_user' => Auth::user()->id
+        ];
+        if( $meta_id == 0){
+            $arrData['created_user'] = Auth::user()->id;            
+            $rs = MetaData::create( $arrData );
+            $meta_id = $rs->id;
+            
+            $modelSp = Pages::find( $id );
+            $modelSp->meta_id = $meta_id;
+            $modelSp->save();
+        }else {
+            $model = MetaData::find($meta_id);           
+            $model->update( $arrData );
+        }              
+    }
     /**
     * Remove the specified resource from storage.
     *
@@ -188,5 +222,5 @@ class PagesController extends Controller
         // redirect
         Session::flash('message', 'Xóa trang thành công');
         return redirect()->route('pages.index');
-    }
+    }   
 }

@@ -4,11 +4,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Thông tin trang
+    Trang 
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{{ route( 'pages.index' ) }}">Thông tin trang</a></li>
+    <li><a href="{{ route( 'pages.index' ) }}">Trang</a></li>
     <li class="active">Danh sách</li>
   </ol>
 </section>
@@ -21,33 +21,18 @@
       <p class="alert alert-info" >{{ Session::get('message') }}</p>
       @endif
       <a href="{{ route('pages.create') }}" class="btn btn-info" style="margin-bottom:5px">Tạo mới</a>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Bộ lọc</h3>
-        </div>
-        <div class="panel-body">
-          <form class="form-inline" role="form" method="GET" action="{{ route('pages.index') }}">                        
-            <div class="form-group">
-              <label for="email">Từ khóa :</label>
-              <input type="text" class="form-control" name="title" value="{{ $title }}">
-            </div>
-            <button type="submit" class="btn btn-default">Lọc</button>
-          </form>         
-        </div>
-      </div>
       <div class="box">
 
         <div class="box-header with-border">
-          <h3 class="box-title">Danh sách ( <span class="value">{{ $items->total() }} trang )</span></h3>
+          <h3 class="box-title">Danh sách</h3>
         </div>
         
         <!-- /.box-header -->
         <div class="box-body">
-            
           <table class="table table-bordered" id="table-list-data">
             <tr>
-              <th style="width: 1%">#</th>                            
-              <th>Tiêu đề</th>
+              <th style="width: 1%">#</th>              
+              <th>Tên</th>                          
               <th width="1%;white-space:nowrap">Thao tác</th>
             </tr>
             <tbody>
@@ -56,24 +41,14 @@
               @foreach( $items as $item )
                 <?php $i ++; ?>
               <tr id="row-{{ $item->id }}">
-                <td><span class="order">{{ $i }}</span></td>      
-                     
+                <td><span class="order">{{ $i }}</span></td>                
                 <td>                  
-                  <a href="{{ route( 'pages.edit', [ 'id' => $item->id ]) }}">{{ $item->title }}</a>
-                  
-                  @if( $item->is_hot == 1 )
-                  <img class="img-thumbnail" src="{{ URL::asset('admin/dist/img/star.png')}}" alt="Nổi bật" title="Nổi bật" />
-                  @endif
-
-                  <p>{{ $item->description }}</p>
-                </td>
-                <td style="white-space:nowrap">   
-                
-                  <a class="btn btn-default btn-sm" href="{{ route('danh-muc-cha', $item->slug ) }}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i> Xem</a>               
-                  <a href="{{ route( 'pages.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning">Chỉnh sửa</a>                 
-                  
-                  <a onclick="return callDelete('{{ $item->title }}','{{ route( 'pages.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger">Xóa</a>
-                  
+                  <a href="{{ route( 'pages.edit', [ 'id' => $item->id ]) }}">{{ $item->title_vi }}</a>                                 
+                  <p>{{ $item->description_vi }}</p>
+                </td>                              
+                <td style="white-space:nowrap; text-align:right">               
+                  <a href="{{ route( 'pages.edit', [ 'id' => $item->id ]) }}" class="btn-sm btn btn-warning">Chỉnh sửa</a>                                   
+                  <a onclick="return callDelete('{{ $item->title_vi }}','{{ route( 'pages.destroy', [ 'id' => $item->id ]) }}');" class="btn-sm btn btn-danger">Xóa</a>
                   
                 </td>
               </tr> 
@@ -86,7 +61,6 @@
 
           </tbody>
           </table>
-           
         </div>        
       </div>
       <!-- /.box -->     
@@ -114,22 +88,6 @@ function callDelete(name, url){
   return flag;
 }
 $(document).ready(function(){
-  $('#parent_id').change(function(){
-    $.ajax({
-        url: $('#route_get_cate_by_parent').val(),
-        type: "POST",
-        async: false,
-        data: {          
-            parent_id : $(this).val(),
-            type : 'list'
-        },
-        success: function(data){
-            $('#cate_id').html(data).select2('refresh');                      
-        }
-    });
-  });
-  $('.select2').select2();
-
   $('#table-list-data tbody').sortable({
         placeholder: 'placeholder',
         handle: ".move",
