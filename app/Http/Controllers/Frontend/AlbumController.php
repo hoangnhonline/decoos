@@ -29,6 +29,25 @@ class AlbumController extends Controller
     public function loadSlider(){
         return view('frontend.home.ajax-slider');
     }
+    public function index(Request $request){
+        $lang = 'vi';        
+        $albumList = Album::where('status', 1)->join('album_img', 'thumbnail_id', '=', 'album_img.id')
+                                ->select('album.*', 'album_img.image_url')
+                                ->orderBy('id', 'desc')->paginate(1);
+
+        $seo['title'] = $seo['description'] = $seo['keywords'] = $lang == 'vi' ? "Bộ sưu tập" : "Album";
+
+          //sale product
+        $saleList = Product::where(['is_sale' => 1])->where('price_sale', '>', 0)                    
+                    ->leftJoin('product_img', 'product_img.id', '=','product.thumbnail_id')                
+                    ->select('product_img.image_url', 'product.*')->orderBy('id', 'desc')->limit(5)->get();
+        $loaiSp = LoaiSp::where('status', 1)->orderBy('display_order')->get();
+        foreach($loaiSp as $loai){
+            $cateList[$loai->id] = Cate::where('loai_id', $loai->id)->orderBy('display_order')->get();
+        }
+        return view('frontend.album.index', compact('albumList', 'seo', 'lang', 'loaiSp', 'cateList', 'saleList'
+            ));
+    }
     public function detail(Request $request)
     {             
         $lang = "vi";

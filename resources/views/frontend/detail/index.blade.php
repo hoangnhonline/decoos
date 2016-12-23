@@ -81,7 +81,7 @@
                     <div class="product-detail">
                       <div class="tab product-tab">
                           <ul data-sequence="400" role="tablist">
-                            <li role="presentation"><a href="#mota" aria-controls="mota" role="tab" data-toggle="tab">Mô Tả</a></li>
+                            <li role="presentation" class="active"><a href="#mota" aria-controls="mota" role="tab" data-toggle="tab">Mô Tả</a></li>
                             <li role="presentation"><a href="#danhgia" aria-controls="danhgia" role="tab" data-toggle="tab">Đánh Giá</a></li>
                             @if($detail->video_url)
                             <li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Video</a></li>

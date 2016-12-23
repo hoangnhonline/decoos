@@ -355,18 +355,18 @@
 
           <div role="tabpanel" class="tab-pane fade in active" id="bst">
             @foreach($albumList as $album)
-            <div class="col-md-3 col-sm-4 col-xs-6">
+            <div class="col-md-3 col-sm-4 col-xs-6">             
               <div class="album-item">
+                 <a href="{{ $lang == 'vi' ? route('chi-tiet-album', [$album->slug_vi, $album->id]) : route('chi-tiet-album', [$album->slug_en, $album->id]) }}" title="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
+                  <i class="icofont icofont-search-alt-1"></i>
+                </a>
                 <div class="album-img">
-                  <a href="{{ $lang == 'vi' ? route('chi-tiet-album', [$album->slug_vi, $album->id]) : route('chi-tiet-album', [$album->slug_en, $album->id]) }}" title="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
-                        <img src="{{ Helper::showImage($album->image_url) }}" alt="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
-                      </a>
+                  <img src="{{ Helper::showImage($album->image_url) }}" alt="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
                 </div>
                 <div class="album-info">
                   <h2 class="album-info-name">
-                    <a title="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}" href="{{ $lang == 'vi' ? route('chi-tiet-album', [$album->slug_vi, $album->id]) : route('chi-tiet-album', [$album->slug_en, $album->id]) }}">{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}</a>
+                     <a href="{{ $lang == 'vi' ? route('chi-tiet-album', [$album->slug_vi, $album->id]) : route('chi-tiet-album', [$album->slug_en, $album->id]) }}" title="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}</a>
                   </h2>
-                  <p class="album-contents">{{ $lang == 'vi' ? $album->description_vi : $album->description_en }}</p>
                 </div>
               </div><!-- end news-item -->
             </div>          
@@ -399,17 +399,17 @@
           <div role="tabpanel" class="tab-pane fade in active" id="bst">
           @foreach($videoList as $video)
             <div class="col-md-3 col-sm-4 col-xs-6">
-              <div class="album-item">
-                <div class="album-img">
+              <div class="video-item">
+                <div class="video-img">
                   <a href="{{ $lang == 'vi' ? route('video-detail', [$video->slug_vi, $video->id]) : route('video-detail', [$video->slug_en, $video->id]) }}" title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
                         <img src="{{ Helper::showImage($video->image_url) }}" alt="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
                       </a>
                 </div>
-                <div class="album-info">
-                  <h2 class="album-info-name">
+                <div class="video-info">
+                  <h2 class="video-info-name">
                     <a title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}" href="{{ $lang == 'vi' ? route('video-detail', [$video->slug_vi, $video->id]) : route('video-detail', [$video->slug_en, $video->id]) }}">{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}</a>
                   </h2>
-                  <p class="album-contents">{{ $lang == 'vi' ? $video->description_vi : $video->description_en }}</p>
+                  <p class="video-contents">{{ $lang == 'vi' ? $video->description_vi : $video->description_en }}</p>
                 </div>
               </div><!-- end news-item -->
             </div>        
