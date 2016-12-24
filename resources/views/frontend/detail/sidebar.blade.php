@@ -1,7 +1,7 @@
 <div class="block-sidebar col-lg-3 col-md-4 col-sm-4">
   <div class="block-category block-sidebars">
     <div class="side-title">
-      Danh Mục Sản Phẩm
+      {{ trans('text.category') }}
     </div>
     <div class="site-content">
       <ul class="list-category">
@@ -21,7 +21,7 @@
 
   <div class="block-contact block-sidebars">
     <div class="side-title">
-      Hỗ Trợ Trực Tuyến
+      {{ trans('text.online-support') }}
     </div>
     <div class="site-content">
       <ul class="list-category">
@@ -57,7 +57,7 @@ $tagList = $lang == 'vi' ? $tagListVi  : $tagListEn;
 @if($saleList->count() > 0)
   <div class="block-cate block-sidebars">
     <div class="side-title">
-      Sản Phẩm Khuyến Mãi
+     {{ trans('text.sale-product') }}
     </div>
     <div class="site-content">
       <ul  class="owl-carousel owl-theme owl-style2" data-nav="false" data-margin="0" data-items='1' data-autoplayTimeout="1000" data-autoplay="true" data-loop="true">
@@ -95,7 +95,7 @@ $tagList = $lang == 'vi' ? $tagListVi  : $tagListEn;
 @endif
   <div class="block-statistics block-sidebars">
     <div class="side-title">
-      THỐNG KÊ
+      {{ trans('text.statictis') }}
     </div>
     <div class="site-content">
       <p><span class="statistics-tit"><i class="fa fa-check" aria-hidden="true"></i> Tổng truy cập</span> <span class="statistics-num">000006</span></p>

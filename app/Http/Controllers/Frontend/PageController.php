@@ -18,6 +18,9 @@ class PageController extends Controller
     public function index(Request $request)
     {
        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('locale') : 'vi';
+$lang = Session::get('locale') ? Session::get('locale') : 'vi';
        $slug = $request->slug;
        $detail = Pages::where('slug_vi', $slug)->orWhere('slug_en', $slug)->first();
        

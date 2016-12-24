@@ -13,7 +13,7 @@
       <div class="col-sm-6 col-xs-12">
         <div class="block-search">
           <form method="post" id="idf" action="" name="">
-            <input value="" class="top_input" type="text" placeholder="Tìm kiếm theo tên hoặc mã sản phẩm..." name="block_name_search">
+            <input value="" class="top_input" type="text" placeholder="{{ trans('text.search-by-product-name-or-code')}}" name="block_name_search">
             <a href="javascript:void()" class="btn_search" onclick="javascript:$('#idf').submit();"><i class="fa fa-search"></i></a>
           </form>
         </div>

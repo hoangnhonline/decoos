@@ -31,6 +31,9 @@ class AlbumController extends Controller
     }
     public function index(Request $request){
        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('locale') : 'vi';
+$lang = Session::get('locale') ? Session::get('locale') : 'vi';
         $albumList = Album::where('status', 1)->join('album_img', 'thumbnail_id', '=', 'album_img.id')
                                 ->select('album.*', 'album_img.image_url')
                                 ->orderBy('id', 'desc')->paginate(24);
@@ -51,6 +54,9 @@ class AlbumController extends Controller
     public function detail(Request $request)
     {             
         $lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('locale') : 'vi';
+$lang = Session::get('locale') ? Session::get('locale') : 'vi';
         $productArr = [];
         $id = $request->id;
         $detail = Album::find($id);

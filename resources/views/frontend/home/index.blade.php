@@ -27,9 +27,9 @@
   <div class="block-title block-title-b2">
     <div class="container">
       <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
-        <li role="presentation" class="active"><a href="#spn" aria-controls="home" role="tab" data-toggle="tab">Sản Phẩm Mới</a></li>
-        <li role="presentation"><a href="#sph" aria-controls="profile" role="tab" data-toggle="tab">Sản Phẩm HOT</a></li>
-        <li role="presentation"><a href="#spkm" aria-controls="messages" role="tab" data-toggle="tab">Sản Phẩm Khuyến Mãi</a></li>
+        <li role="presentation" class="active"><a href="#spn" aria-controls="home" role="tab" data-toggle="tab">{{ trans('text.new-product') }}</a></li>
+        <li role="presentation"><a href="#sph" aria-controls="profile" role="tab" data-toggle="tab">{{ trans('text.hot-product') }}</a></li>
+        <li role="presentation"><a href="#spkm" aria-controls="messages" role="tab" data-toggle="tab">{{ trans('text.sale-product') }}</a></li>
       </ul><!-- end nav tabs -->
     </div><!-- end title -->
   </div>
@@ -70,7 +70,7 @@
             @endforeach
             @endif
             <div class="container clearfix">
-              <a href="#" class="view-all pull-right">Xem tất cả</a>
+              <a href="#" class="view-all pull-right">{{ trans('text.view-all') }}</a>
             </div>
           </div><!-- end spn -->
 
@@ -105,7 +105,7 @@
             </div>
             @endforeach
             @else
-            <div class="col-md-12"><p style="padding:10px">Đang cập nhật dữ liệu.</p></div>
+            <div class="col-md-12"><p style="padding:10px">{{ trans('text.updating-data') }}</p></div>
             @endif
           </div><!-- end sph -->
 
@@ -140,7 +140,7 @@
             </div>
             @endforeach
             @else
-            <div class="col-md-12"><p style="padding:10px">Đang cập nhật dữ liệu.</p></div>
+            <div class="col-md-12"><p style="padding:10px">{{ trans('text.updating-data') }}</p></div>
             @endif
           </div><!-- end spkm -->
 
@@ -199,11 +199,11 @@
                   </div>               
                   @endforeach
                 <div class="container clearfix">
-                  <a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$loai->slug_vi]) : route('danh-muc-cha', [$loai->slug_en]) }}" class="view-all pull-right">Xem tất cả</a>
+                  <a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$loai->slug_vi]) : route('danh-muc-cha', [$loai->slug_en]) }}" class="view-all pull-right">{{ trans('text.view-all') }}</a>
                 </div>
               </div><!-- end spn -->
               @else
-            <div class="col-md-12"><p style="padding:10px">Đang cập nhật dữ liệu.</p></div>
+            <div class="col-md-12"><p style="padding:10px">{{ trans('text.updating-data') }}</p></div>
             @endif
             @if($cateList[$loai->id]->count() > 0)
               @foreach($cateList[$loai->id] as $cate)
@@ -239,13 +239,13 @@
                     </div>               
                     @endforeach
                   <div class="container clearfix">
-                    <a href="{{ $lang == 'vi' ? route('danh-muc-con', [$loai->slug_vi, $cate->slug_vi]) : route('danh-muc-con', [$loai->slug_en, $cate->slug_en]) }}" class="view-all pull-right">Xem tất cả</a>
+                    <a href="{{ $lang == 'vi' ? route('danh-muc-con', [$loai->slug_vi, $cate->slug_vi]) : route('danh-muc-con', [$loai->slug_en, $cate->slug_en]) }}" class="view-all pull-right">{{ trans('text.view-all') }}</a>
                   </div>
                 </div><!-- end spn -->
                 @endif
               @endforeach
             @else
-            <div class="col-md-12"><p style="padding:10px">Đang cập nhật dữ liệu.</p></div>
+            <div class="col-md-12"><p style="padding:10px">{{ trans('text.updating-data') }}</p></div>
             @endif
         </div><!-- end tab panes -->
       </div>
@@ -258,7 +258,7 @@
   <div class="block-title block-title-b2">
     <div class="container">
       <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
-        <li role="presentation" class="active"><a href="#tln" aria-controls="home" role="tab" data-toggle="tab">Tin Tức Mới</a></li>
+        <li role="presentation" class="active"><a href="#tln" aria-controls="home" role="tab" data-toggle="tab">{{ trans('text.lastest-news') }}</a></li>
       </ul><!-- end nav tabs -->
     </div><!-- end title -->
   </div>
@@ -286,7 +286,7 @@
             </div>
             @endforeach
             <div class="clearfix">
-              <a href="{{ $lang == 'vi' ? route('news-vi') : route('news-en') }}" class="view-all pull-right">Xem tất cả</a>
+              <a href="{{ $lang == 'vi' ? route('news-vi') : route('news-en') }}" class="view-all pull-right">{{ trans('text.view-all') }}</a>
             </div>
           </div><!-- end spn -->
 
@@ -301,7 +301,7 @@
   <div class="block-title block-title-b2">
     <div class="container">
       <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
-        <li role="presentation" class="active"><a href="#bst" aria-controls="home" role="tab" data-toggle="tab">Bộ Sưu Tập</a></li>
+        <li role="presentation" class="active"><a href="#bst" aria-controls="home" role="tab" data-toggle="tab">{{ trans('text.album') }}</a></li>
       </ul><!-- end nav tabs -->
     </div><!-- end title -->
   </div>
@@ -329,7 +329,7 @@
             </div>          
             @endforeach
             <div class="clearfix">
-              <a href="{{ $lang == 'vi' ? route('album-vi') : route('album-en') }}" class="view-all pull-right">Xem tất cả</a>
+              <a href="{{ $lang == 'vi' ? route('album-vi') : route('album-en') }}" class="view-all pull-right">{{ trans('text.view-all') }}</a>
             </div>
           </div><!-- end spn -->
 
@@ -372,7 +372,7 @@
             </div>        
             @endforeach
             <div class="clearfix">
-              <a href="{{ route('video') }}" class="view-all pull-right">Xem tất cả</a>
+              <a href="{{ route('video') }}" class="view-all pull-right">{{ trans('text.view-all') }}</a>
             </div>
           </div><!-- end spn -->
 

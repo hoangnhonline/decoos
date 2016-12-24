@@ -3,7 +3,7 @@
 @section('content')
 <div class="block-headline-detail container">
   <ul class="breadcrumb breadcrumb-customize">
-      <li><a href="{{ route('home') }}">Trang chủ</a></li>
+      <li><a href="{{ route('home') }}">{{ trans('text.home') }}</a></li>
       <li><a href="{{ $lang == 'vi' ? route('news-vi') : route('news-en') }}">{{ $lang == 'vi' ? "Tin tức" : "News" }}</a></li>
   </ul>
 </div>
@@ -15,7 +15,7 @@
 		<div class="page-view">
 
 			<div class="title-page">
-				<h2 class="page-title">Tin Tức</h2>
+				<h2 class="page-title">{{ trans('text.news') }}</h2>
 			</div>
 
 			<div class="clearfix"></div>

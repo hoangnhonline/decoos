@@ -3,7 +3,7 @@
 @section('content')
 <div class="block-headline-detail container">
   <ul class="breadcrumb breadcrumb-customize">
-      <li><a href="{{ route('home') }}">Trang chủ</a></li>
+      <li><a href="{{ route('home') }}">{{ trans('text.home') }}</a></li>
       <li><a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$rsLoai->slug_vi]) :  route('danh-muc-cha', [$rsLoai->slug_en]) }}">{{ $lang == 'vi' ? $rsLoai->name_vi : $rsLoai->name_en }}</a></li>
       <li><a href="{{ $lang == 'vi' ? route('danh-muc-con', [$rsLoai->slug_vi, $rsCate->slug_vi]) :  route('danh-muc-con', [$rsLoai->slug_en, $rsCate->slug_en]) }}">{{ $lang == 'vi' ? $rsCate->name_vi : $rsCate->name_en }}</a></li>      
   </ul>
@@ -17,7 +17,7 @@
   <div class="product-view">
 
     <div class="title-page">
-      <h2 class="page-title">Chi tiết sản phẩm</h2>
+      <h2 class="page-title">{{ trans('text.product-detail') }}</h2>
     </div>
 
     <div class="clearfix"></div>
@@ -59,20 +59,20 @@
                 <label id="tenss_5282698" class="block_sp_new_tensp" style="display:none">Dây lưng Louis ...</label> -->
                 <!-- <a href="javascript:void()" title="So sánh sản phẩm" class="btn_ss_vsp" id="ss_5282698_0">So sánh</a>&nbsp;&nbsp;|&nbsp; -->
                 Lượt xem : <span class="view">575</span>&nbsp;&nbsp;|&nbsp;
-                Ngày đăng : <span class="view">{{ date('d-m-Y', strtotime($detail->created_at)) }}</span> 
+                {{ trans('text.published-at') }} : <span class="view">{{ date('d-m-Y', strtotime($detail->created_at)) }}</span> 
             </div>
             <div class="txPro ui-mark">
-          <span class="lbLeft">Giá sản phẩm:</span>
+          <span class="lbLeft">{{ trans('text.price') }}:</span>
           <span class="giasp">{{ ($detail->is_sale == 1 && $detail->price_sale > 0) ? number_format($detail->price_sale) : number_format($detail->price) }} <b>VNĐ</b></span>
             </div>
             <div class="txPro ui-mark">
-          <span class="lbLeft">Mã sản phẩm:</span>
+          <span class="lbLeft">{{ trans('text.code') }}:</span>
           <span class="masp">{{ $detail->code }}</span>
             </div>
             <div class="product-description">
-                          <label class="title">Liên hệ mua hàng:</label>
+                          <label class="title">{{ trans('text.contact-shopping') }}:</label>
                           <div class="pro-desc-info">
-                              <p>Vui lòng liên hệ số điện thoại: 0909 090 090</p>
+                              <p>{{ trans('text.please-contact-phone-number') }}</p>
                           </div>
                       </div>
                     </div><!--/ end product-shop -->
@@ -82,8 +82,8 @@
                     <div class="product-detail">
                       <div class="tab product-tab">
                           <ul data-sequence="400" role="tablist">
-                            <li role="presentation" class="active"><a href="#mota" aria-controls="mota" role="tab" data-toggle="tab">Mô Tả</a></li>
-                            <li role="presentation"><a href="#danhgia" aria-controls="danhgia" role="tab" data-toggle="tab">Đánh Giá</a></li>
+                            <li role="presentation" class="active"><a href="#mota" aria-controls="mota" role="tab" data-toggle="tab">{{ trans('text.description') }}</a></li>
+                            <li role="presentation"><a href="#danhgia" aria-controls="danhgia" role="tab" data-toggle="tab">{{ trans('text.comment') }}</a></li>
                             @if($detail->video_url)
                             <li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Video</a></li>
                             @endif

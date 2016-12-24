@@ -4,13 +4,13 @@
 @if($maxPrice > -1)
 <div class="container block-filter">
             <div class="block-title">
-                <h2>Chọn Điều Kiện Lọc Nâng Cao</h2>
+                <h2>{{ trans('text.advanced-search') }}</h2>
             </div>
             <div class="block-content">
                 <div class="filter-total"> 
                     <div class="filter-price clearfix">
                         <div class="col-sm-2 block-title">
-                            <h2>Khoảng giá</h2>
+                            <h2>{{ trans('text.price-range') }}</h2>
                         </div>
                         <div class="col-sm-10">
                             <div class="filter-options-item">
@@ -28,7 +28,7 @@
                     @if($colorList->count() > 0)
                     <div class="filter-color clearfix">
                         <div class="col-sm-2 block-title">
-                            <h2>Màu sắc</h2>
+                            <h2>{{ trans('text.color') }}</h2>
                         </div>
                         <div class="col-sm-10 block-content">
                             <div class="row">
@@ -54,15 +54,15 @@
         @if($p_from != 0 || $p_to != $maxPrice || $mid > 0 )
         <div class="container block-filter block-filter-rule">
             <div class="block-title">
-                <h2>Điều Kiện Lọc</h2>
+                <h2>{{ trans('text.filter') }}</h2>
             </div>
             <div class="block-content">
                 <ul>
                     @if($p_from != 0 || $p_to != $maxPrice )
-                    <li id="filter-price"><b>Giá:</b> <a href="javascript:;">{{ number_format($p_from) }} VNĐ - {{ number_format($p_to) }} VNĐ</a></li>
+                    <li id="filter-price"><b>{{ trans('text.price') }}:</b> <a href="javascript:;">{{ number_format($p_from) }} VNĐ - {{ number_format($p_to) }} VNĐ</a></li>
                     @endif                   
                     @if($mid > 0)
-                    <li id="filter-color"><b>Màu sắc:</b> <a href="javascript:;"  style="background:{{ $colorSelected->color_code }} url(images/filter_close.png) no-repeat right center;border-radius:5px;padding:0px 15px 0px 15px;text-indent:-9999px;width:20px;border:1px solid #CCC"><span>#000000</span></a></li>
+                    <li id="filter-color"><b>{{ trans('text.color') }}:</b> <a href="javascript:;"  style="background:{{ $colorSelected->color_code }} url(images/filter_close.png) no-repeat right center;border-radius:5px;padding:0px 15px 0px 15px;text-indent:-9999px;width:20px;border:1px solid #CCC"><span>#000000</span></a></li>
                     @endif
                 </ul>
                 <a href="javascript:;" class="clear-filter" title="Xóa tất cả điều kiện lọc"></a>
@@ -71,7 +71,7 @@
         @endif
         <div class="block-headline-detail container">
             <ul class="breadcrumb breadcrumb-customize">
-                <li><a href="{{ route('home') }}">Trang chủ</a></li>                
+                <li><a href="{{ route('home') }}">{{ trans('text.home') }}</a></li>                
                 <li><a href="{{ $lang == 'vi' ? route('danh-muc-cha', [$rs->slug_vi]) : route('danh-muc-cha', [$rs->slug_en]) }}">{{ $lang == 'vi' ? $rs->name_vi : $rs->name_en }}</a></li>
                 <li>
                     <a href="{{ $lang == 'vi' ? route('danh-muc-con', [$rs->slug_vi, $rsCate->slug_vi]) : route('danh-muc-con', [$rs->slug_en, $rsCate->lang_en]) }}">{{ $lang == 'vi' ? $rsCate->name_vi : $rsCate->name_en }}</a>
@@ -98,16 +98,16 @@
                         @if($productArr->count() > 0)
                         <div class="box-sort clearfix">
                             <select id="sort-product" class="form-control">
-                                <option value="1" {{ $s == 1 ? "selected" : "" }}>Sản phẩm mới nhất</option>
-                                <option value="2" {{ $s == 2 ? "selected" : "" }}>Sản phẩm cũ nhất</option>
-                                <option value="3" {{ $s == 3 ? "selected" : "" }}>Giá từ cao đến thấp</option>
-                                <option value="4" {{ $s == 4 ? "selected" : "" }}>Giá từ thấp đến cao</option>
+                                <option value="1" {{ $s == 1 ? "selected" : "" }}>{{ trans('text.lastest-product') }}</option>
+                                <option value="2" {{ $s == 2 ? "selected" : "" }}>{{ trans('text.oldest-product') }}</option>
+                                <option value="3" {{ $s == 3 ? "selected" : "" }}>{{ trans('text.price-height-to-low') }}</option>
+                                <option value="4" {{ $s == 4 ? "selected" : "" }}>{{ trans('text.price-low-to-height') }}</option>
                             </select>
                             <select id="number-product" class="form-control">
-                                <option value="9" {{ $ip == 9 ? "selected" : "" }}>9 sản phẩm mỗi trang</option>
-                                <option value="24" {{ $ip == 24 ? "selected" : "" }}>24 sản phẩm mỗi trang</option>
-                                <option value="57" {{ $ip == 57 ? "selected" : "" }}>57 sản phẩm mỗi trang</option>
-                                <option value="102" {{ $ip == 102 ? "selected" : "" }}>100 sản phẩm mỗi trang</option>
+                                <option value="9" {{ $ip == 9 ? "selected" : "" }}>9 {{ trans('text.product-per-page') }}</option>
+                                <option value="24" {{ $ip == 24 ? "selected" : "" }}>24 {{ trans('text.product-per-page') }}</option>
+                                <option value="57" {{ $ip == 57 ? "selected" : "" }}>57 {{ trans('text.product-per-page') }}</option>
+                                <option value="102" {{ $ip == 102 ? "selected" : "" }}>100 {{ trans('text.product-per-page') }}</option>
                             </select>
                         </div><!--/ end box-sort -->
                         @endif

@@ -18,7 +18,7 @@ use App\Models\Album;
 use App\Models\Video;
 
 use App\Models\CustomerNotification;
-use Helper, File, Session, Auth, Hash;
+use Helper, File, Session, Auth, Hash, App;
 
 class HomeController extends Controller
 {
@@ -30,15 +30,15 @@ class HomeController extends Controller
 
     }
     public function setLang(Request $request){
-        $lang = $request->lang;
-        Session::set('lang', $lang);
-    }
-    public function loadSlider(){
-        return view('frontend.home.ajax-slider');
-    }
+        $lang = $request->lang;        
+        Session::put('locale', $lang);
+    }    
     public function index(Request $request)
     {             
         $lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('locale') : 'vi';
+$lang = Session::get('locale') ? Session::get('locale') : 'vi';
         $productArr = [];
         
         $loaiSp = LoaiSp::where('status', 1)->orderBy('display_order')->get();
@@ -114,6 +114,9 @@ class HomeController extends Controller
         $seo['keywords'] = 'Liên hệ';
         $socialImage = '';
         $lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('locale') : 'vi';
+$lang = Session::get('locale') ? Session::get('locale') : 'vi';
         return view('frontend.contact.index', compact('seo', 'socialImage', 'lang'));
     }
 

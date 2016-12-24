@@ -9,7 +9,7 @@
                     <div class="icon">
                         <img src="{{ URL::asset('assets/images/contact/icon/icon_address.png') }}" alt="">
                     </div>
-                    <span class="title">Address</span>
+                    <span class="title">{{ trans('text.address') }}</span>
                     <p>PO Box 16122 Collins Street, Victoria<br>007 Australia</p>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                     <div class="icon">
                         <img src="{{ URL::asset('assets/images/contact/icon/icon_phone.png') }}" alt="">
                     </div>
-                    <span class="title">Phone</span>
+                    <span class="title">{{ trans('text.phone') }}</span>
                     <p><span>Phone: 1800-900-300</span><span>Fax: 1800-900-200</span></p>
                 </div>
             </div>
@@ -41,23 +41,23 @@
 
     <div class="container">
     <div class="contact-form">
-        <h2 class="about-title text-center">Liên Hệ Với Chúng Tôi</h2>
+        <h2 class="about-title text-center">{{ trans('text.contact-us') }}</h2>
         <form action="contact" method="POST">
             <div class="form-group"> 
-                <label>Tên</label>                     
+                <label>{{ trans('text.name') }}</label>                     
                 <input type="text" class="form-control" id="forName" placeholder="">
             </div>
             <div class="form-group">
-                <label>Địa Chỉ Email</label>
+                <label>Email</label>
                 <input type="email" class="form-control" id="forEmail" placeholder="">
             </div>
             <div class="form-group">
-                <label>Nội Dung</label>
+                <label>{{ trans('text.content') }}</label>
                 <textarea class="form-control" id="forConment" rows="8" placeholder=""></textarea>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Gửi</button>
-                <button type="reset" class="btn btn-default">Hủy</button>
+                <button type="submit" class="btn btn-primary">{{ trans('text.send') }}</button>
+                <button type="reset" class="btn btn-default">{{ trans('text.cancel') }}</button>
             </div>
         </form>
     </div>

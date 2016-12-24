@@ -40,6 +40,9 @@ class DetailController extends Controller
     {   
        
         $lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('lang') : 'vi';
+$lang = Session::get('lang') ? Session::get('locale') : 'vi';
+$lang = Session::get('locale') ? Session::get('locale') : 'vi';
         $productArr = [];
         $id = $request->id;
         $detail = Product::find($id);

@@ -63,7 +63,7 @@
     <div class="block-partners">
       <div class="container">
         <div class="block-title block-title-b2">
-          <h2>Đối Tác</h2>
+          <h2>{{ trans('text.partner') }}</h2>
         </div><!-- end title -->
       </div>
       <div class="block-contents">
