@@ -3,7 +3,7 @@
 @section('content')
 <div class="block-headline-detail container">
   <ul class="breadcrumb breadcrumb-customize">
-      <li><a href="{{ route('home') }}">Trang Chủ</a></li>
+      <li><a href="{{ route('home') }}">{{ trans('text.home') }}</a></li>
       <li><a href="{{ route('video') }}">Video</a></li>
   </ul>
 </div>

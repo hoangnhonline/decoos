@@ -5,7 +5,7 @@
         
         <div class="block-headline-detail container">
             <ul class="breadcrumb breadcrumb-customize">
-                <li><a href="{{ route('home') }}">Trang chủ</a></li>                
+                <li><a href="{{ route('home') }}">{{ trans('text.home') }}</a></li>                
                 <li><a href="javascript:;">Tag</a></li>
                 <li>
                     <a href="{{ route('tag', [$rs->slug]) }}">{{ $rs->name }}</a>
