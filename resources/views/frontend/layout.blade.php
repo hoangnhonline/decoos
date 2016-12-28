@@ -139,12 +139,15 @@
 
   <script>
     $('.box_skitter_large').skitter({
-    theme: 'square',
-    numbers: false,
-    dots: false,
-    with_animations: ['cube', 'cubeRandom', 'block', 'cubeStop', 'cubeHide', 'cubeSize', 'horizontal', 'showBars', 'showBarsRandom', 'tube', 'fade', 'fadeFour', 'paralell', 'blind', 'blindHeight', 'blindWidth', 'directionTop', 'directionBottom', 'directionRight', 'directionLeft', 'cubeStopRandom', 'cubeSpread', 'cubeJelly', 'glassCube', 'glassBlock', 'circles', 'circlesInside', 'circlesRotate', 'cubeShow', 'upBars', 'downBars', 'hideBars', 'swapBars', 'swapBarsBack', 'swapBlocks', 'cut', 'random', 'randomSmart']
-  });
+      theme: 'square',
+      numbers: false,
+      dots: false,
+      navigation: true,
+      progressbar: true,
+      with_animations: ['cube', 'cubeRandom', 'block', 'cubeStop', 'cubeHide', 'cubeSize', 'horizontal', 'showBars', 'showBarsRandom', 'tube', 'fade', 'fadeFour', 'paralell', 'blind', 'blindHeight', 'blindWidth', 'directionTop', 'directionBottom', 'directionRight', 'directionLeft', 'cubeStopRandom', 'cubeSpread', 'cubeJelly', 'glassCube', 'glassBlock', 'circles', 'circlesInside', 'circlesRotate', 'cubeShow', 'upBars', 'downBars', 'hideBars', 'swapBars', 'swapBarsBack', 'swapBlocks', 'cut', 'random', 'randomSmart']
+    });
   </script>
+  
   <script type="text/javascript">
     $(document).ready(function(){
       $('img.lang').click(function(){

@@ -71,4 +71,19 @@
     });
   });
 
+  /** Menu Resposive **/
+  $(".icon-menu .fa-bars").on( 'click', function() {
+    $( this ).parent().toggleClass('has-open');
+    $(".menu-top").toggleClass("has-open");
+    $("body").toggleClass("menu-open");
+  });
+
+  // Icon Plus Menu Parent
+  $(document).ready(function(){
+    $('.menu ul li.parent').append('<span class="plus"></span>');
+    $('.menu ul li.parent .plus').click(function(){
+      $(this).toggleClass('open').siblings('.submenu').slideToggle();
+    });
+  });
+
 })(jQuery); // End of use strict

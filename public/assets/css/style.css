@@ -144,9 +144,8 @@ header { background: #000; }
 }
 
 /*===== Menu =====*/
-.menu { background: #000; }
+.menu { background: rgba(0, 0, 0, 0.48) url(../images/header_bar_bg.png) no-repeat center bottom; }
 .menu-top {
-  background: rgba(0, 0, 0, 0.48) url(../images/header_bar_bg.png) no-repeat center bottom;
   position: relative;
   text-align: center;
 }
@@ -1299,36 +1298,21 @@ footer {
   float: left;
   padding: 0 15px;
 }
-.block-tags .site-content {
-  padding: 10px;
+
+
+.icon-menu {
+  width: 40px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  float: right;
+  display: none;
 }
-.block-tags .tag_1 {
-  font-size: 12px;
-  color: #808080;
+.icon-menu i {
+  line-height: 40px;
+  color: #fff;
+  font-size: 30px;
 }
-.block-tags .tag_2 {
-  font-size: 14px;
-  color: Purple;
-}
-.block-tags .tag_3 {
-  font-size: 16px;
-  color: green;
-  font-weight: bold;
-}
-.block-tags .tag_4 {
-  font-size: 18px;
-  color: blue;
-  font-weight: bold;
-}
-.block-tags .tag_5 {
-  font-size: 20px;
-  color: red;
-  font-weight: bold;
-}
-.block-tags .tag_1:hover,
-.block-tags .tag_2:hover,
-.block-tags .tag_3:hover,
-.block-tags .tag_4:hover,
-.block-tags .tag_5:hover {
-  color: #CA2323;
-}
+
+.mini_logo_left { display: none; }
