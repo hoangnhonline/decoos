@@ -57,8 +57,7 @@
                         <div class="compare">
                 <!-- <a href="javascript:void()" title="Theo dõi sản phẩm" onclick="alert('Chức năng đang được cập nhật');">Theo dõi</a>&nbsp;&nbsp;|&nbsp;
                 <label id="tenss_5282698" class="block_sp_new_tensp" style="display:none">Dây lưng Louis ...</label> -->
-                <!-- <a href="javascript:void()" title="So sánh sản phẩm" class="btn_ss_vsp" id="ss_5282698_0">So sánh</a>&nbsp;&nbsp;|&nbsp; -->
-                Lượt xem : <span class="view">575</span>&nbsp;&nbsp;|&nbsp;
+                <!-- <a href="javascript:void()" title="So sánh sản phẩm" class="btn_ss_vsp" id="ss_5282698_0">So sánh</a>&nbsp;&nbsp;|&nbsp; -->                
                 {{ trans('text.published-at') }} : <span class="view">{{ date('d-m-Y', strtotime($detail->created_at)) }}</span> 
             </div>
             <div class="txPro ui-mark">

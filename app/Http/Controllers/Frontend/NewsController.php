@@ -29,10 +29,8 @@ class NewsController extends Controller
         return view('frontend.home.ajax-slider');
     }
     public function index(Request $request){
-        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('locale') : 'vi';
-$lang = Session::get('locale') ? Session::get('locale') : 'vi';    
+  
+        $lang = Session::get('locale') ? Session::get('locale') : 'vi';    
         $lang_id = $lang == 'vi' ? 1 : 2;
         $articlesList = Articles::where('status', 1)->where('lang_id', $lang_id)->orderBy('id', 'desc')->paginate(24);
 
@@ -51,10 +49,8 @@ $lang = Session::get('locale') ? Session::get('locale') : 'vi';
     }
     public function detail(Request $request)
     {             
-        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('locale') : 'vi';
-$lang = Session::get('locale') ? Session::get('locale') : 'vi';   
+       
+        $lang = Session::get('locale') ? Session::get('locale') : 'vi';   
         $id = $request->id;
         $detail = Articles::find($id);
         if(!$detail){

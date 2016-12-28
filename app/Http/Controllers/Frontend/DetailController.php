@@ -38,11 +38,7 @@ class DetailController extends Controller
     */
     public function index(Request $request)
     {   
-       
-        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('locale') : 'vi';
-$lang = Session::get('locale') ? Session::get('locale') : 'vi';
+        $lang = Session::get('locale') ? Session::get('locale') : 'vi';
         $productArr = [];
         $id = $request->id;
         $detail = Product::find($id);

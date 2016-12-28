@@ -34,11 +34,9 @@ class HomeController extends Controller
         Session::put('locale', $lang);
     }    
     public function index(Request $request)
-    {             
-        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('locale') : 'vi';
-$lang = Session::get('locale') ? Session::get('locale') : 'vi';
+    {            
+           
+        $lang = Session::get('locale') ? Session::get('locale') : 'vi';
         $productArr = [];
         
         $loaiSp = LoaiSp::where('status', 1)->orderBy('display_order')->get();
@@ -113,10 +111,8 @@ $lang = Session::get('locale') ? Session::get('locale') : 'vi';
         $seo['description'] = 'Liên hệ';
         $seo['keywords'] = 'Liên hệ';
         $socialImage = '';
-        $lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('lang') : 'vi';
-$lang = Session::get('lang') ? Session::get('locale') : 'vi';
-$lang = Session::get('locale') ? Session::get('locale') : 'vi';
+        
+        $lang = Session::get('locale') ? Session::get('locale') : 'vi';
         return view('frontend.contact.index', compact('seo', 'socialImage', 'lang'));
     }
 
