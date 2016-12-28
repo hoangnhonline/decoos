@@ -4,8 +4,8 @@
       <div class="col-sm-6 col-xs-12">
         <div class="block-language">
           <ul>
-            <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
-            <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
+            <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
+            <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
             <li></li>
           </ul>
         </div>
@@ -31,11 +31,11 @@
             <div class="header_bar" style="float: left; clear: both;">
               <div style="background: #ffffff; height: 37px; padding: 7px 0px 0px 5px ">
                 <a href="#">
-                  <img src="{{ URL::asset('assets/images/logo-res.png') }}" width="102" height="30" style="max-width: 102px; max-height: 30px;" alt="logo decoos res">
+                  <img class="lazy" src="{{ URL::asset('assets/images/logo-res.png') }}" width="102" height="30" style="max-width: 102px; max-height: 30px;" alt="logo decoos res">
                 </a>
               </div>
               <div>
-                <img src="{{ URL::asset('assets/images/last_logo_res.png') }}" height="38" width="38" style="max-width: 38px; max-height: 37px;" alt="last_logo_res">
+                <img class="lazy" src="{{ URL::asset('assets/images/last_logo_res.png') }}" height="38" width="38" style="max-width: 38px; max-height: 37px;" alt="last_logo_res">
               </div>
             </div>
           </div>
@@ -65,6 +65,6 @@
     </div><!-- end menu -->
   </div>
   <h1 class="container text-center">
-    <a href="{{ route('home') }}" class="logo"><img src="{{ URL::asset('assets/images/decoos.jpg') }}" alt="Logo decoos.com"></a>
+    <a href="{{ route('home') }}" class="logo"><img class="lazy" src="{{ URL::asset('assets/images/decoos.jpg') }}" alt="Logo decoos.com"></a>
   </h1>
 </header>

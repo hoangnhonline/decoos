@@ -129,7 +129,8 @@
   <script type="text/javascript" src="{{ URL::asset('assets/skitter-master/js/jquery.easing.1.3.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('assets/skitter-master/js/jquery.skitter.min.js') }}"></script>
   <!-- Sticky -->
-    <script type="text/javascript" src="{{ URL::asset('assets/js/jquery.sticky.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('assets/js/jquery.sticky.js') }}"></script>
+  <script type="text/javascript" src="{{ URL::asset('assets/js/lazy.js') }}"></script>
   <!-- JS WOW -->
   <script type="text/javascript" src="{{ URL::asset('assets/js/wow.min.js') }}"></script>
   <!-- JS WOW -->
@@ -150,6 +151,7 @@
   
   <script type="text/javascript">
     $(document).ready(function(){
+      $("img.lazy").lazyload();
       $('img.lang').click(function(){
         $.ajax({
           url : '{{ route('set-lang') }}',

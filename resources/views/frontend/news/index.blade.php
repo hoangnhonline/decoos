@@ -28,7 +28,7 @@
                         <div class="news-item">
 							<div class="news-img">
 								<a title="{{ $articles->title }}" href="{{ $lang == 'vi' ? route('news-detail-vi', [$articles->slug, $articles->id]) : route('news-detail-en', [$articles->slug, $articles->id]) }}">
-									<img src="{{ Helper::showImage($articles->image_url) }}" alt="{{ $articles->title }}">
+									<img class="lazy" src="{{ Helper::showImage($articles->image_url) }}" alt="{{ $articles->title }}">
 								</a>
 							</div>
 							<div class="news-info">

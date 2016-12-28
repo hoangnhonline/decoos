@@ -45,7 +45,7 @@
               <div class="products-item">
                 <div class="products-img">
                   <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
-                    <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
+                    <img class="lazy" src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
                   </a>
                 </div>
                 <div class="products-info">
@@ -81,7 +81,7 @@
               <div class="products-item">
                 <div class="products-img">
                    <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
-                    <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
+                    <img class="lazy" src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
                   </a>
                 </div>
                 <div class="products-info">
@@ -116,7 +116,7 @@
               <div class="products-item">
                 <div class="products-img">
                   <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
-                    <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
+                    <img class="lazy" src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
                   </a>
                 </div>
                 <div class="products-info">
@@ -175,7 +175,7 @@
                     <div class="products-item">
                       <div class="products-img">
                         <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
-                          <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
+                          <img class="lazy" src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
                         </a>
                       </div>
                       <div class="products-info">
@@ -215,7 +215,7 @@
                       <div class="products-item">
                         <div class="products-img">
                           <a href="{{ $lang == 'vi' ? route('chi-tiet-vi',['slug' => $product->slug_vi, 'id' => $product->id]) : route('chi-tiet-en', ['slug' => $product->slug_en, 'id' => $product->id]) }}">
-                            <img src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
+                            <img class="lazy" src="{{ Helper::showImage($product->image_url) }}" alt="{{ $lang == 'vi' ? $product->name_vi : $product->name_en }}">
                           </a>
                         </div>
                         <div class="products-info">
@@ -273,7 +273,7 @@
               <div class="news-item">
                 <div class="news-img">
                   <a title="{{ $articles->title }}" href="{{ $lang == 'vi' ? route('news-detail-vi', [$articles->slug, $articles->id]) : route('news-detail-en', [$articles->slug, $articles->id]) }}">
-                    <img src="{{ Helper::showImage($articles->image_url) }}" alt="{{ $articles->title }}">
+                    <img class="lazy" src="{{ Helper::showImage($articles->image_url) }}" alt="{{ $articles->title }}">
                   </a>
                 </div>
                 <div class="news-info">
@@ -318,7 +318,7 @@
                   <i class="icofont icofont-search-alt-1"></i>
                 </a>
                 <div class="album-img">
-                  <img src="{{ Helper::showImage($album->image_url) }}" alt="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
+                  <img class="lazy" src="{{ Helper::showImage($album->image_url) }}" alt="{{ $lang == 'vi' ? $album->name_vi : $album->name_en }}">
                 </div>
                 <div class="album-info">
                   <h2 class="album-info-name">
@@ -359,7 +359,7 @@
               <div class="video-item">
                 <div class="video-img">
                   <a href="{{ $lang == 'vi' ? route('video-detail', [$video->slug_vi, $video->id]) : route('video-detail', [$video->slug_en, $video->id]) }}" title="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
-                        <img src="{{ Helper::showImage($video->image_url) }}" alt="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
+                        <img class="lazy" src="{{ Helper::showImage($video->image_url) }}" alt="{{ $lang == 'vi' ? $video->name_vi : $video->name_en }}">
                       </a>
                 </div>
                 <div class="video-info">
