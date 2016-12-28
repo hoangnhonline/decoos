@@ -137,7 +137,9 @@
         nextText: '<i class="icofont icofont-rounded-right"></i>',
         prevText: '<i class="icofont icofont-rounded-left"></i>'
     });
-
+    $('.bxslider .item').each(function () {
+        $(this).zoom();
+    });
     $(".pro-thumb-img").bxSlider({
         slideMargin: 10,
         maxSlides: 4,
