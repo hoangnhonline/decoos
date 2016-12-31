@@ -71,11 +71,10 @@
     });
   });
 
-  /** Menu Resposive **/
-  $(".icon-menu .fa-bars").on( 'click', function() {
-    $( this ).parent().toggleClass('has-open');
-    $(".menu-top").toggleClass("has-open");
-    $("body").toggleClass("menu-open");
+   /** Menu Fixed **/
+  $('.menu-fixed').append('<p class="icon-menu"><i class="icofont icofont-navigation-menu"></i></p>');
+  $(".icon-menu .icofont-navigation-menu").on( 'click', function() {
+    $( this ).toggleClass('icofont-close-line icofont-navigation-menu');
   });
 
   // Icon Plus Menu Parent

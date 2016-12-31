@@ -127,6 +127,7 @@ header { background: #000; }
 .block-search { 
   text-align: right;
   position: relative;
+  margin-top: 5px;
 }
 .block-search .top_input {
   background: #000000;
@@ -1299,20 +1300,67 @@ footer {
   padding: 0 15px;
 }
 
+.slide-home .skitter-square .prev_button {
+  background-position: -13px -123px;
+  width: 28PX;
+  height: 28PX;
+  top: auto;
+  left: auto;
+  bottom: 10px;
+  right: 65px;
+}
+.slide-home .skitter-square .next_button {
+  background-position: -13px -68px;
+  width: 28PX;
+  height: 28PX;
+  top: auto;
+  left: auto;
+  bottom: 10px;
+  right: 10px;
+}
 
+.menu-fixed {
+  position: fixed;
+  top: 20%;
+  right: -150px;
+  z-index: 99;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+}
+.menu-fixed.has-open {
+  right: 0;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+}
 .icon-menu {
   width: 40px;
   border: 1px solid #fff;
-  border-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
   text-align: center;
   cursor: pointer;
-  float: right;
-  display: none;
+  background: #fbfbfb;
+  position: absolute;
+  left: -40px;
 }
 .icon-menu i {
   line-height: 40px;
-  color: #fff;
+  color: #252525;
   font-size: 30px;
+  font-weight: normal;
 }
-
-.mini_logo_left { display: none; }
+.menu-fixed-child {
+  max-width: 150px;
+  background: #fff;
+  padding: 10px;
+  float: left;
+  width: 100%;
+}
+.menu-fixed-child li {
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #707070;
+  line-height: 25px;
+}

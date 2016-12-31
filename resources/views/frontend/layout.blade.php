@@ -53,6 +53,15 @@
           </div>
     </div>
     <!-- preloader -->
+
+    <div class="menu-fixed">
+      <ul class="menu-fixed-child">
+        <li><a href="">Hướng Dẫn Mua Hàng</a></li>
+        <li><a href="">Sơ Đồ Trang</a></li>
+        <li><a href="">Về Chúng Tôi</a></li>
+      </ul>
+    </div>
+
     @include('frontend.partials.main-header')
     <!-- end header -->
 

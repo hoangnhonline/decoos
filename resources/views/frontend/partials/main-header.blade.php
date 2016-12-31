@@ -1,27 +1,37 @@
 <header>
   <div class="header-top">
-    <div class="container">
-      <div class="col-sm-6 col-xs-12">
-        <div class="block-language">
-          <ul>
-            <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
-            <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
-            <li></li>
-          </ul>
+    <div class="container">         
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="block-language">
+            <ul>
+              <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
+                    <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
+            </ul>
+          </div>
+        </div><!-- end block-language -->
+        <div class="col-sm-4 hidden-xs">
+          <h1 class="text-center">
+            <a href="{{ route('home') }}" class="logo"><img class="lazy" src="{{ URL::asset('assets/images/logo2.png') }}" alt="Logo decoos.com"></a>
+          </h1>
         </div>
-      </div><!-- end block-language -->
-      <div class="col-sm-6 col-xs-12">
-        <div class="block-search">
-          <form method="post" id="idf" action="" name="">
-            <input value="" class="top_input" type="text" placeholder="{{ trans('text.search-by-product-name-or-code')}}" name="block_name_search">
-            <a href="javascript:void()" class="btn_search" onclick="javascript:$('#idf').submit();"><i class="fa fa-search"></i></a>
-          </form>
-        </div>
-      </div><!-- end block-search -->
+        <div class="col-sm-4">
+          <div class="row">
+            <div class="col-xs-4 hidden-sm hidden-lg hidden-md">
+              <a href="{{ route('home') }}" class="logo"><img class="lazy" src="{{ URL::asset('assets/images/logo2.png') }}" alt="Logo decoos.com"></a>
+            </div>
+            <div class="col-xs-8">
+              <div class="block-search row">
+                <form method="post" id="idf" action="" name="">
+                        <input value="" class="top_input" type="text" placeholder="{{ trans('text.search-by-product-name-or-code')}}" name="block_name_search">
+                        <a href="javascript:void()" class="btn_search" onclick="javascript:$('#idf').submit();"><i class="fa fa-search"></i></a>
+                      </form>
+              </div>
+            </div>
+          </div>
+        </div><!-- end block-search -->
+      </div>
     </div>
-  </div>
-  <div class="container mid-header">
-    <p class="icon-menu"><i class="fa fa-bars"></i></p>
   </div>
   <div class="clearfix mid-header">
     <div class="menu">
@@ -64,7 +74,4 @@
       </div>
     </div><!-- end menu -->
   </div>
-  <h1 class="container text-center">
-    <a href="{{ route('home') }}" class="logo"><img class="lazy" src="{{ URL::asset('assets/images/decoos.jpg') }}" alt="Logo decoos.com"></a>
-  </h1>
 </header>
