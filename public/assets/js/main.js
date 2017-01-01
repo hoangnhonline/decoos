@@ -75,6 +75,9 @@
   $('.menu-fixed').append('<p class="icon-menu"><i class="icofont icofont-navigation-menu"></i></p>');
   $(".icon-menu .icofont-navigation-menu").on( 'click', function() {
     $( this ).toggleClass('icofont-close-line icofont-navigation-menu');
+
+    $(".menu-fixed").toggleClass("has-open");
+    $("body").toggleClass("menu-open");
   });
 
   // Icon Plus Menu Parent
