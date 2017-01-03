@@ -6,7 +6,7 @@
           <div class="block-language">
             <ul>
               <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
-                    <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
+              <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
             </ul>
           </div>
         </div><!-- end block-language -->
@@ -14,22 +14,22 @@
           <h1 class="text-center">
             <a href="{{ route('home') }}" class="logo"><img class="lazy" src="{{ URL::asset('assets/images/logo2.png') }}" alt="Logo decoos.com"></a>
           </h1>
-        </div>
+        </div><!-- end block-logo -->
         <div class="col-sm-4">
-          <div class="row">
-            <div class="col-xs-4 hidden-sm hidden-lg hidden-md">
+          <div class="col-xs-4 hidden-sm hidden-lg hidden-md">
+            <div class="row">
               <a href="{{ route('home') }}" class="logo"><img class="lazy" src="{{ URL::asset('assets/images/logo2.png') }}" alt="Logo decoos.com"></a>
-            </div>
-            <div class="col-xs-8">
-              <div class="block-search row">
-                <form method="post" id="idf" action="" name="">
-                        <input value="" class="top_input" type="text" placeholder="{{ trans('text.search-by-product-name-or-code')}}" name="block_name_search">
-                        <a href="javascript:void()" class="btn_search" onclick="javascript:$('#idf').submit();"><i class="fa fa-search"></i></a>
-                      </form>
-              </div>
-            </div>
+            </div><!-- end block-logo -->
           </div>
-        </div><!-- end block-search -->
+          <div class="col-xs-8 col-sm-12">
+            <div class="block-search row">
+              <form method="post" id="idf" action="" name="">
+                <input value="" class="top_input" type="text" placeholder="{{ trans('text.search-by-product-name-or-code')}}" name="block_name_search">
+                <a href="javascript:void()" class="btn_search" onclick="javascript:$('#idf').submit();"><i class="fa fa-search"></i></a>
+              </form>
+            </div><!-- end block-search -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -63,3 +63,4 @@
     </div><!-- end menu -->
   </div>
 </header>
+<!-- end header -->

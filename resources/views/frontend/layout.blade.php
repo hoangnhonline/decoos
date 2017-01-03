@@ -15,8 +15,8 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="robots" content="index,follow" />
-  <!-- <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}" type="image/x-icon">
-  <link rel="icon" href="{{ URL::asset('assets/images/favicon.ico') }}" type="image/x-icon"> -->
+  <!-- <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}" type="image/x-icon"> -->
+  <link rel="icon" href="{{ URL::asset('assets/images/favicon.ico') }}" type="image/x-icon">
 
   <!-- ===== CSS ===== -->
   <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/bootstrap.min.css') }}">
