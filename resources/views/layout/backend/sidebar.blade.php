@@ -101,7 +101,7 @@
         </a>       
       </li>     
     
-      <li class="treeview {{ in_array(\Request::route()->getName(), ['loai-thuoc-tinh.index', 'thuoc-tinh.index', 'color.index']) ? 'active' : '' }}">
+      <li class="treeview {{ in_array(\Request::route()->getName(), ['banner.index', 'banner.create', 'banner.edit', 'settings.index', 'info-seo.index', 'color.index']) ? 'active' : '' }}">
         <a href="#">
           <i class="fa  fa-gears"></i>
           <span>Cài đặt</span>
@@ -112,6 +112,12 @@
         <ul class="treeview-menu">
           <li {{ \Request::route()->getName() == "settings.index" ? "class=active" : "" }}><a href="{{ route('settings.index') }}"><i class="fa fa-circle-o"></i> Thông tin decoos.com</a></li>
           <li {{ \Request::route()->getName() == "color.index" ? "class=active" : "" }}><a href="{{ route('color.index') }}"><i class="fa fa-circle-o"></i> Color</a></li>
+          <li {{ in_array(\Request::route()->getName(), ['banner.index', 'banner.create', 'banner.edit']) ? 'class=active' : '' }}>
+            <a href="{{ route('banner.index', ['object_type' => 3 , 'object_id'=> 1 ] ) }}"><i class="fa fa-circle-o"></i> Banner</a>
+          </li>
+          <li>
+            <a href="{{ route('banner.index', ['object_type' => 4 , 'object_id'=> 1 ] ) }}"><i class="fa fa-circle-o"></i> Đối tác</a>
+          </li>
           <li {{ \Request::route()->getName() == "info-seo.index" ? "class=active" : "" }}><a href="{{ route('info-seo.index') }}"><i class="fa fa-circle-o"></i> Cài đặt SEO</a></li>   
         </ul>
       </li>

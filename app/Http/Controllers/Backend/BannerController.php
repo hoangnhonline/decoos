@@ -17,10 +17,15 @@ class BannerController extends Controller
     * Display a listing of the resource.
     *
     * @return Response
+    *
+    1.banner slideshow trang chu : object_type = 3, object_id = 1
+
+
     */
     public function index(Request $request)
     {
         $arrSearch['status'] = $status = isset($request->status) ? $request->status : null;
+        $arrSearch['lang_id'] = $lang_id = isset($request->lang_id) ? $request->lang_id : 1;
         $arrSearch['object_id'] = $object_id = $request->object_id;
         $arrSearch['object_type'] = $object_type = $request->object_type;
         $detail = (object) [];
@@ -42,16 +47,21 @@ class BannerController extends Controller
                 $detail->name = "Banner phải phía trên phần 'Tin tức công nghệ'";
             }            
         }
+
+        if($object_type == 4){
+            $detail->name = "Đối tác";    
+        }
         $query = Banner::where(['object_id'=>$object_id, 'object_type' => $object_type]);
+        $query->where('lang_id', $lang_id);
         if( $status ){
             $query->where('status', $status);
         }
        
         $items = $query->orderBy('display_order')->get();
-       // dd($items->count());die;
+       
         return view('backend.banner.index', compact( 'items', 'detail', 'arrSearch'));
     }
-    public function list(Request $request){
+    public function lists(Request $request){
         return view('backend.banner.list');   
     }
     /**
@@ -64,6 +74,7 @@ class BannerController extends Controller
         $detail = (object) [];
         $object_id = $request->object_id;
         $object_type = $request->object_type;
+        $lang_id = $request->lang_id;
         if( $object_type == 1){
             $detail = LoaiSp::find( $object_id );
         }
@@ -81,7 +92,10 @@ class BannerController extends Controller
                 $detail->name = "Banner phải phía trên phần 'Tin tức công nghệ'";
             }            
         }
-        return view('backend.banner.create', compact('object_id', 'object_type', 'detail'));
+        if($object_type == 4){
+            $detail->name = "Đối tác";    
+        }
+        return view('backend.banner.create', compact('object_id', 'object_type', 'detail', 'lang_id'));
     }
 
     /**
@@ -126,7 +140,7 @@ class BannerController extends Controller
 
         Session::flash('message', 'Tạo mới banner thành công');
 
-        return redirect()->route('banner.index', ['object_id' => $dataArr['object_id'], 'object_type' => $dataArr['object_type']]);
+        return redirect()->route('banner.index', ['object_id' => $dataArr['object_id'], 'object_type' => $dataArr['object_type'], 'lang_id' => $dataArr['lang_id']]);
     }
 
     /**
@@ -198,7 +212,7 @@ class BannerController extends Controller
 
         Session::flash('message', 'Cập nhật banner thành công');
 
-        return redirect()->route('banner.index', ['object_id' => $dataArr['object_id'], 'object_type' => $dataArr['object_type']]);
+        return redirect()->route('banner.index', ['object_id' => $dataArr['object_id'], 'object_type' => $dataArr['object_type'], 'lang_id' => $dataArr['lang_id']]);
     }
 
     /**

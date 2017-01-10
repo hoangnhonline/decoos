@@ -28,12 +28,12 @@
         <div class="panel-body">
           <form class="form-inline" role="form" method="GET" action="{{ route('articles.index') }}" id="formSearch">            
              <div class="form-group">
-              <label for="email">Ngôn ngữ :</label>
-              <select class="form-control" name="lang_id" id="lang_id">                                
-                <option value="1" {{ 1 == $lang_id ? "selected" : "" }}>Tiếng Việt</option>
-                <option value="2" {{ 2 == $lang_id ? "selected" : "" }}>Tiếng Anh</option>                
-              </select>
-           </div>           
+                <label for="email">Ngôn ngữ :</label>
+                <select class="form-control" name="lang_id" id="lang_id">                                
+                  <option value="1" {{ 1 == $lang_id ? "selected" : "" }}>Tiếng Việt</option>
+                  <option value="2" {{ 2 == $lang_id ? "selected" : "" }}>Tiếng Anh</option>                
+                </select>
+             </div>           
             <div class="form-group">
               <label for="email">Từ khóa :</label>
               <input type="text" class="form-control" name="title" value="{{ $title }}">
