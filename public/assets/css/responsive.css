@@ -5,8 +5,8 @@
   }
 }
 
-@media (max-width: 991px) {
-  .icon-menu { display: block; }
+/*@media (max-width: 991px) {*/
+ /* .icon-menu { display: block; }
   .header-menu { padding: 0; }
   .menu-top {
     float: none;
@@ -112,7 +112,7 @@
     height: 38px;
     position: relative;
   }
-}
+}*/
 
 @media (min-width: 1024px) {
   .products-item:hover {
@@ -152,6 +152,8 @@
 @media (max-width: 768px) {
   .block-filter,
   .block-filter-rule { display: none; }
+  .block-language { margin-bottom: 10px; }
+  .block-search { margin-top: 0; }
 }
 
 @media (min-width: 769px) {
@@ -163,8 +165,8 @@
 
 @media (max-width: 480px) {
   .products-img img, .news-item img, .album-item img, .video-item img {
-    width: 210px;
-    height: 210px;
+    width: 180px;
+    height: 180px;
   }
 }
 
