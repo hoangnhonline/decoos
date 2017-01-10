@@ -1,26 +1,30 @@
 @extends('frontend.layout')
 @section('slider')
+<?php 
+$lang_id = $lang == 'vi'  ? 1 : 2;
+$bannerArr = DB::table('banner')->where(['object_id' => 1, 'object_type' => 3, 'lang_id' => $lang_id])->orderBy('display_order', 'asc')->get();
+?>
+@if($bannerArr)
 <div class="slide-home">
   <div class="skitter box_skitter box_skitter_large skitter-square">
     <ul>
+      <?php $i = 0; ?>
+      @foreach($bannerArr as $banner)
+      <?php $i++; ?>
       <li>
-        <a href="#cut">
-          <img src="{{ URL::asset('assets/images/slide/1.jpg') }}" />
-        </a>
+      @if($banner->ads_url !='')
+      <a href="{{ $banner->ads_url }}">
+      @endif
+      <img alt="decoos slide {{ $i }}" src="{{ Helper::showImage($banner->image_url) }}" title="decoos slide {{ $i }}">
+      @if($banner->ads_url !='')
+      </a>
+      @endif
       </li>
-      <li>
-        <a href="#swapBlocks">
-          <img src="{{ URL::asset('assets/images/slide/2.jpg') }}" />
-        </a>
-      </li>
-      <li>
-        <a href="#swapBarsBack">
-          <img src="{{ URL::asset('assets/images/slide/3.jpg') }}" />
-        </a>
-      </li>
+      @endforeach
     </ul>
   </div>
 </div><!-- end slide home -->
+@endif
 @endsection
 @section('content')
 <div class="block-products">

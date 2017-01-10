@@ -5,8 +5,8 @@
         <div class="col-sm-4">
           <div class="block-language">
             <ul>
-              <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
-              <li><a href="javascript:void(0);"><img class="lazy" src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
+              <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_vn.png') }}" alt="Tiếng Việt" data-lang='vi' class="lang"></a></li>
+              <li><a href="javascript:void(0);"><img src="{{ URL::asset('assets/images/language/lang_en.png') }}" alt="English" data-lang="en" class="lang"></a></li>
             </ul>
           </div>
         </div><!-- end block-language -->

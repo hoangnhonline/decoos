@@ -75,28 +75,27 @@
           <h2>{{ trans('text.partner') }}</h2>
         </div><!-- end title -->
       </div>
+      <?php      
+      $bannerArr = DB::table('banner')->where(['object_id' => 1, 'object_type' => 4])->orderBy('display_order', 'asc')->get();
+      ?>
+      @if($bannerArr)
       <div class="block-contents">
         <div class="container">
           <div class="slide-partners">
             <ul  class="owl-carousel owl-theme" data-nav="false" data-dots="false" data-margin="0" data-autoplayTimeout="700" data-autoplay="true" data-loop="true" data-responsive='{"0":{"items":1},"480":{"items":2},"600":{"items":2},"768":{"items":3},"800":{"items":3},"992":{"items":7}}'>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners1.jpg') }}" alt="partners1"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners2.jpg') }}" alt="partners2"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners3.jpg') }}" alt="partners3"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners4.jpg') }}" alt="partners4"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners5.jpg') }}" alt="partners5"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners6.jpg') }}" alt="partners6"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners6.jpg') }}" alt="partners7"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners1.jpg') }}" alt="partners7"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners2.jpg') }}" alt="partners6"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners3.jpg') }}" alt="partners5"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners4.jpg') }}" alt="partners4"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners5.jpg') }}" alt="partners3"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners6.jpg') }}" alt="partners2"></li>
-              <li class="item"><img src="{{ URL::asset('assets/images/partners/partners6.jpg') }}" alt="partners7"></li>
+              <?php $i = 0; ?>
+              @foreach($bannerArr as $banner)
+              <?php $i++; ?>
+              <li class="item">              
+                <img alt="Đối tác {{ $i }}" src="{{ Helper::showImage($banner->image_url) }}" title="Đối tác {{ $i }}">              
+              </li>
+              @endforeach              
+
             </ul>
           </div>
         </div>
       </div><!-- end contents -->
+      @endif
     </div><!-- end partners -->
 
     <footer>
